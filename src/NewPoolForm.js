@@ -33,6 +33,8 @@ export const NewPoolForm = ({formClass}) => {
     const handleNameSubmit = (e) => {
         e.preventDefault()
         handleNewGameDisabled();
+        console.log(e)
+        
     }
 
     const handleNewGameDisabled = () => {
@@ -48,36 +50,44 @@ export const NewPoolForm = ({formClass}) => {
     const handleGameSubmit = (e) => {
         e.preventDefault();
         handleNewGameDisabled();
+        // games[games.length - 1]
+        console.log(games[games.length - 1])
+        console.log(e.target[0].value)
 
     }
 
     return(
         <div className={formClass}>
             <NameForm handleSubmit={handleNameSubmit}/>
-            
-            <ul className='no-bullet'>
-                {games.map(game => {
+            <div>
+                
+                <ul className='no-bullet'>
+                    {games.map(game => {
+                       const id = game.getGameId()
+                    return <GameForm key={id} gameId={id} handleSubmit={handleGameSubmit}/>
+                    })}
+                </ul>
 
-                return <GameForm key={game.getGameId()} handleSubmit={handleGameSubmit}/>
-                })}
-            </ul>
-
-            <Button 
-            variant='btn btn-dark' 
-            disabled={newGameDisabled}
-            onClick={handlesNewGameClick}
-            >
-                Add Game
-            </Button>
+                <Button 
+                variant='btn btn-dark' 
+                disabled={newGameDisabled}
+                onClick={handlesNewGameClick}
+                >
+                    Add Game
+                </Button>
+            </div>
         </div>
     )
 }
 
-const GameForm = ({handleSubmit}) => {
+const GameForm = ({handleSubmit, gameId}) => {
 
     return(
         <li>
             <form onSubmit={handleSubmit}>
+                <span className='pool-input'>
+                    <input type="hidden" value ={gameId} ></input> 
+                </span>
                 <span className='pool-input'>
                     <input type="text"></input> 
                 </span>
@@ -93,6 +103,10 @@ const GameForm = ({handleSubmit}) => {
         </li>
     )
 }
+
+// const GameEditForm = ({teamOne, teamTwo}) => {
+
+// }
 
 const NameForm = ({formClass, handleSubmit}) => {
 
