@@ -17,9 +17,16 @@ const App = () => {
     setButtonClass("hide-element")
   }
 
+  const handleHeadingClick = () => {
+ 
+    setButtonClass('button-container')
+    setNewGameClass("hide-element")
+    // New picks class needs to be added once it's funtional
+  }
+
   return (
     <div className="container">
-      <h1 className='heading'>Football Pool</h1>
+      <h1 className='heading' onClick={handleHeadingClick}>Football Pool</h1>
       <div className={buttonClass}>
         <Button 
         size="lg" 

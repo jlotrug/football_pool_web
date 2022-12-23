@@ -13,6 +13,8 @@ div.container{
  .heading{
   font-family: monospace, Monaco;
   font-size: 80px;
+  cursor: pointer;
+   
 } 
 
 .button-container{
@@ -56,6 +58,10 @@ label{
 .button-style{
   margin: 5px;
   width: 175px;
+}
+
+.no-bullet{
+  list-style-type: none;
 }
 
 
