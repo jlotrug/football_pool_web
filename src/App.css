@@ -64,6 +64,34 @@ label{
   list-style-type: none;
 }
 
+.done-button{
+  width: 150px;
+  height: 80px;
+  border-radius: 50%;
+  margin-top: 100px;
+  font-family: monospace, Monaco;
+  background-color: #D2691E;
+  color: white;
+  border: 2px solid black;
+  font-size: 35px;;
+}
+
+.done-button:hover{
+  color: #000;
+  border: 5px solid black;
+  font-weight: bold;
+}
+
+
+.done-div{
+  margin-top: 50px;
+  border: 5px dashed red; 
+  height: 200px;
+  text-align: center;
+
+  /* display: table; */
+}
+
 
 /*
  .App {

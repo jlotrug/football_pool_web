@@ -4,10 +4,11 @@ import Button from 'react-bootstrap/Button'
 
 
 class Game{
-    constructor(id, teamOne="", teamTwo=""){
+    constructor(id, poolId, teamOne="", teamTwo=""){
         this.teamOne = teamOne;
         this.teamTwo = teamTwo;
         this.id = id;
+        this.poolId = poolId
     }
 
     setTeamOne(name){
@@ -26,6 +27,7 @@ class Game{
 export const NewPoolForm = ({formClass}) => {
     const [games, setGames] = React.useState([])
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
+    const [poolId, setPoolId] = React.useState(0) // Eventually this will be set by the Pool name submission
 
     // Temp to handle keys 
     const [gameId, setGameId] = React.useState(0);
@@ -43,16 +45,21 @@ export const NewPoolForm = ({formClass}) => {
 
     const handlesNewGameClick = () => {
         handleNewGameDisabled();
-        setGames([...games, new Game(gameId)])
+        setGames([...games, new Game(gameId, poolId)])
         setGameId(gameId +1);
     }
 
     const handleGameSubmit = (e) => {
         e.preventDefault();
         handleNewGameDisabled();
-        // games[games.length - 1]
-        console.log(games[games.length - 1])
-        console.log(e.target[0].value)
+
+        const teamOne = e.target[1].value
+        const teamTwo = e.target[2].value
+        const game = games.find(g => g.gameId = e.target[0].value)
+
+
+        game.setTeamOne(teamOne)
+        game.setTeamTwo(teamTwo)
 
     }
 
@@ -64,6 +71,7 @@ export const NewPoolForm = ({formClass}) => {
                 <ul className='no-bullet'>
                     {games.map(game => {
                        const id = game.getGameId()
+                       // Passes id down as a prop so it can be accessed
                     return <GameForm key={id} gameId={id} handleSubmit={handleGameSubmit}/>
                     })}
                 </ul>
@@ -74,7 +82,22 @@ export const NewPoolForm = ({formClass}) => {
                 onClick={handlesNewGameClick}
                 >
                     Add Game
-                </Button>
+                </Button><br/>
+                <button className='done-button'>
+                    Done
+
+                </button>
+                {/* <div className='done-div'> */}
+                    {/* <Button 
+                    variant='btn btn-dark' 
+                    disabled={newGameDisabled}
+                    onClick={handlesNewGameClick}
+                    className="done-button"
+                    bsClass='custom-class'
+                    >
+                        Done
+                    </Button> */}
+                {/* </div> */}
             </div>
         </div>
     )
@@ -86,6 +109,7 @@ const GameForm = ({handleSubmit, gameId}) => {
         <li>
             <form onSubmit={handleSubmit}>
                 <span className='pool-input'>
+                    {/* Makes the game id accessible for edits */}
                     <input type="hidden" value ={gameId} ></input> 
                 </span>
                 <span className='pool-input'>
