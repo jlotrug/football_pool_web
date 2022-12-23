@@ -1,23 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import Button from 'react-bootstrap/Button'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { NewPoolForm } from './NewPoolForm';
+import React from 'react'
 
-function App() {
+const App = () => {
+  const [newGameClass, setNewGameClass] = React.useState("hide-element")
+  const [buttonClass, setButtonClass] = React.useState("button-container")
+
+  const handleNewPoolClick = () => {
+    setButtonClass("hide-element")
+    setNewGameClass("")
+  }
+
+  const handleMakePicksClick = () => {
+    setButtonClass("hide-element")
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="container">
+      <h1 className='heading'>Football Pool</h1>
+      <div className={buttonClass}>
+        <Button 
+        size="lg" 
+        variant="outline-dark" 
+        onClick={handleNewPoolClick}
+        className= "button-style"
         >
-          Learn React
-        </a>
-      </header>
+          Start New Pool
+        </Button>
+
+        <Button 
+        size="lg" 
+        variant="outline-dark" 
+        onClick={handleMakePicksClick}
+        className="button-style"
+        >
+          Make Picks
+        </Button>
+        </div>
+      <NewPoolForm formClass ={newGameClass}/>
     </div>
   );
 }
