@@ -92,6 +92,11 @@ label{
   /* display: table; */
 }
 
+.input-vs{
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
 
 /*
  .App {
