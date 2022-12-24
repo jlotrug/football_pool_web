@@ -11,6 +11,8 @@ const App = () => {
   const [newGameClass, setNewGameClass] = React.useState("hide-element")
   const [buttonClass, setButtonClass] = React.useState("button-container")
   const [makePicksClass, setMakePicksClass] = React.useState("hide-element")
+  const [allPoolsClass, setAllPicksClass] = React.useState("all-pools")
+  const [picksForm, setPicksForm] = React.useState("hide-element")
 
   // Maybe just for rough draft
   const [allGames, setAllGames] = React.useState([])
@@ -44,6 +46,8 @@ const App = () => {
     setButtonClass('button-container')
     setNewGameClass("hide-element")
     setMakePicksClass("hide-element")
+    // setAllPicksClass("")
+    // setMakePicksClass("hide-element")
     // New picks class needs to be added once it's funtional
   }
 

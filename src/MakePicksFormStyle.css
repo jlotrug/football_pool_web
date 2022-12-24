@@ -19,12 +19,13 @@
     border: 2px solid black;
     background: none;
     font-size: 25px;
-    font-family: monospace, Monaco;
+    font-family: monospace;
+    font-weight: bold;
     margin: 5px;
     border-radius: 50%;
     width: 200px;
     height: 100px;
-    background-color: #D2691E;
+    background-color: #af6024; /* #D2691E;*/
     color: white;
   }
 

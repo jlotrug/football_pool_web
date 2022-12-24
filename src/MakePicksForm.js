@@ -82,24 +82,51 @@ const createMockGames = () => {
 export const MakePicksForm = ({formClass}) => {
     const [weeks, setWeeks] = React.useState([])
     const [games, setGames] = React.useState([])
+    const [allPoolsClass, setAllPoolsClass] = React.useState("all-pools")
+    const [picksForm, setPicksForm] = React.useState("hide-element")
 
     React.useEffect(() => {
         setWeeks(createMockPools)
     },[])
 
+    // Reset Make Picks Form when heading is clicked
+    React.useEffect(() => {
+        setAllPoolsClass("all-pools")
+        setPicksForm("hide-element")
+    }, [formClass])
+
+    const poolSelected = () => {
+        setAllPoolsClass("hide-element")
+        setPicksForm("picks-form-div")
+    }
+
+    const handlePoolSelect = () => {
+        poolSelected()
+    }
+
     // console.log(classForm)
     return(
         <div className={formClass}>
             
-            <div className='all-pools'>
-            <h2 className='pools-heading'>Pick a Pool</h2>
-                <ul className='no-bullet'>
-                    {weeks.map(week =>(
-                        <li key={week.getId()}><button className='pool-button'>{week.getName()}</button></li>
-                    ))}
-                </ul>
+            <div className={allPoolsClass}>
+                <h2 className='pools-heading'>Pick a Pool</h2>
+                    <ul className='no-bullet'>
+                        {weeks.map(week =>(
+                            <li key={week.getId()}>
+                                <button 
+                                className='pool-button'
+                                onClick={handlePoolSelect}
+                                >
+                                    {week.getName()}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
             </div>
 
+            <div className={picksForm}>
+
+            </div>
 
         </div>
     )

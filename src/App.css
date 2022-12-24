@@ -70,7 +70,8 @@ label{
   border-radius: 50%;
   margin-top: 50px;
   font-family: monospace, Monaco;
-  background-color: #D2691E;
+  /* background-color: #D2691E; */
+  background-color: #af6024;
   color: white;
   border: 2px solid black;
   font-size: 35px;;

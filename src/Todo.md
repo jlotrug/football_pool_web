@@ -13,3 +13,7 @@ Eventually
 ## App
 Maybe
 - Reducer for hiding different forms
+
+## MakePicksForm
+- Button functionality
+- Reducer for fetching data, Loading, Failure, etc
