@@ -68,7 +68,7 @@ label{
   width: 150px;
   height: 80px;
   border-radius: 50%;
-  margin-top: 100px;
+  margin-top: 50px;
   font-family: monospace, Monaco;
   background-color: #D2691E;
   color: white;
@@ -83,14 +83,13 @@ label{
 }
 
 
-.done-div{
-  margin-top: 50px;
+/* .done-div{
+  margin-top: 20px;
   border: 5px dashed red; 
   height: 200px;
   text-align: center;
 
-  /* display: table; */
-}
+} */
 
 .input-vs{
   margin-left: 15px;

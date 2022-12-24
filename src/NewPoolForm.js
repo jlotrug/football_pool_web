@@ -98,10 +98,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
                 >
                     Add Game
                 </Button><br/>
-                <button className='done-button' onClick={handleDone}>
-                    Done
-
-                </button>
+                <button className='done-button' onClick={handleDone}>Done</button>
             </div>
         </div>
     )
