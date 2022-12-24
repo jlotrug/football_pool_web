@@ -1,4 +1,5 @@
 import React from 'react'
+import './MakePicksFormStyle.css'
 
 // If I keep using these classes, create file with them and import where needed.
 class Pool{
@@ -9,6 +10,10 @@ class Pool{
 
     getName(){
         return this.name;
+    }
+
+    getId(){
+        return this.poolId
     }
 }
 
@@ -74,6 +79,29 @@ const createMockGames = () => {
 }
 
 
-export const MakePicksForm = () => {
+export const MakePicksForm = ({formClass}) => {
+    const [weeks, setWeeks] = React.useState([])
+    const [games, setGames] = React.useState([])
+
+    React.useEffect(() => {
+        setWeeks(createMockPools)
+    },[])
+
+    // console.log(classForm)
+    return(
+        <div className={formClass}>
+            
+            <div className='all-pools'>
+            <h2 className='pools-heading'>Pick a Pool</h2>
+                <ul className='no-bullet'>
+                    {weeks.map(week =>(
+                        <li key={week.getId()}><button className='pool-button'>{week.getName()}</button></li>
+                    ))}
+                </ul>
+            </div>
+
+
+        </div>
+    )
 
 }

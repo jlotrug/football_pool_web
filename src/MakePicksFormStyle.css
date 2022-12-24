@@ -1,0 +1,53 @@
+.hide-element{
+    display: none;
+  }
+
+  .no-bullet{
+    list-style-type: none;
+  }
+
+  /* .all-pools{
+    margin-top: 30px;
+  } */
+
+  h2.pools-heading{
+    font-size: 35px;
+    font-family: monospace, Monaco;
+  }
+
+  .pool-button{
+    border: 2px solid black;
+    background: none;
+    font-size: 25px;
+    font-family: monospace, Monaco;
+    margin: 5px;
+    border-radius: 50%;
+    width: 200px;
+    height: 100px;
+    background-color: #D2691E;
+    color: white;
+  }
+
+  .pool-button:hover{
+    border: 5px solid black;
+    color: black;
+    font-weight: bold;
+  }
+
+  /* .pool-button{
+    width: 150px;
+    height: 80px;
+    border-radius: 50%;
+    margin-top: 50px;
+    font-family: monospace, Monaco;
+    background-color: #D2691E;
+    color: white;
+    border: 2px solid black;
+    font-size: 35px;;
+  }
+  
+  .pool-button:hover{
+    color: #000;
+    border: 5px solid black;
+    font-weight: bold;
+  } */
