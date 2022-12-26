@@ -69,6 +69,10 @@ export const MakePicksForm = ({formClass}) => {
         console.log(games)
     }
 
+    const handleDone = () => {
+        alert("Hello")
+    }
+
     return(
         <div className={formClass}>
             <div className={allPoolsClass}>
@@ -96,6 +100,7 @@ export const MakePicksForm = ({formClass}) => {
                         <PickForm key={game.getGameId()} game={game} />
                     ))}
                 </ul>
+                <button className='done-button' onClick={handleDone}>Done</button>
             </div>
         </div>
     )
