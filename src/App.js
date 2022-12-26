@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { NewPoolForm } from './NewPoolForm';
 import React from 'react'
-import { ShowAllPools } from './ShowAllPools';
+// import { ShowAllPools } from './ShowAllPools';
 import { MakePicksForm } from './MakePicksForm';
 
 
@@ -11,8 +11,8 @@ const App = () => {
   const [newGameClass, setNewGameClass] = React.useState("hide-element")
   const [buttonClass, setButtonClass] = React.useState("button-container")
   const [makePicksClass, setMakePicksClass] = React.useState("hide-element")
-  const [allPoolsClass, setAllPicksClass] = React.useState("all-pools")
-  const [picksForm, setPicksForm] = React.useState("hide-element")
+  // const [allPoolsClass, setAllPicksClass] = React.useState("all-pools")
+  // const [picksForm, setPicksForm] = React.useState("hide-element")
 
   // Maybe just for rough draft
   const [allGames, setAllGames] = React.useState([])

@@ -17,3 +17,4 @@ Maybe
 ## MakePicksForm
 - Button functionality
 - Reducer for fetching data, Loading, Failure, etc
+- Make Loading and error prettier
