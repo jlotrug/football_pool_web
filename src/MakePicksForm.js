@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import './MakePicksFormStyle.css'
-import { poolsReducer } from './GameWeekReducers';
+import { poolsReducer } from './GamePoolReducers';
 import { createMockPools, createMockGames } from './MockClasses';
-import { toBePartiallyChecked } from '@testing-library/jest-dom/dist/matchers';
+// import { toBePartiallyChecked } from '@testing-library/jest-dom/dist/matchers';
 
 const pools = createMockPools();
 
@@ -17,11 +17,10 @@ const getAsyncPools = () => {
 
 
 export const MakePicksForm = ({formClass}) => {
-    // const [weeks, setWeeks] = React.useState([])
     const [games, setGames] = React.useState([])
     const [allPoolsClass, setAllPoolsClass] = React.useState("all-pools")
     const [picksForm, setPicksForm] = React.useState("hide-element")
-    const [currentWeek, setCurrentWeek] = React.useState()
+    const [currentPool, setCurrentPool] = React.useState()
 
     const [pools, dispatchPools] = React.useReducer(
         poolsReducer, {data: [], isLoading: false, isError: false}
@@ -29,7 +28,6 @@ export const MakePicksForm = ({formClass}) => {
 
         useEffect(() => {
             dispatchPools({type: 'POOLS_FETCH_INIT'})
-            console.log(pools.data.isLoading)
 
             getAsyncPools().then(result => {
                 dispatchPools({
@@ -37,58 +35,40 @@ export const MakePicksForm = ({formClass}) => {
                     payload: result.data.pools
                 })
             }).catch(() => dispatchPools({type: 'POOLS_FETCH_FAILURE'}))
-            // console.log(pools.data)
         }, [])
 
-    // React.useEffect(() => {
-    //     setWeeks(createMockPools)
-    // },[])
-
-    // Reset MakePicksForm when heading is clicked
     React.useEffect(() => {
         setAllPoolsClass("all-pools")
         setPicksForm("hide-element")
     }, [formClass])
 
+    // Hides list of pools and shows div with Pool Form
     const poolSelected = () => {
         setAllPoolsClass("hide-element")
         setPicksForm("picks-form-div")
     }
 
     const fetchGames = (week) => {
-        // console.log(week)
         const allGames = createMockGames();
 
         return allGames.filter(game => {
-            // console.log(game)
             return game.getPoolId() === week.getId()
         })
-    }
-
-    
+    }    
 
     const handlePoolSelect = (e) => {
-        // console.log(e)
-        const selectedWeek = pools.find(pool => {
+        const selectedPool = pools.data.find(pool => {
            return pool.getId() === e
         })
-        // console.log(selectedWeek)
+        
         poolSelected()
        
-
-        setCurrentWeek(selectedWeek)
-
-        setGames(fetchGames(currentWeek))
-        // console.log("error catch reached")
-        
-        // console.log(currentWeek)
-        // console.log(fetchGames(currentWeek))
-        
+        setCurrentPool(selectedPool)
+        setGames(fetchGames(selectedPool))
 
         console.log(games)
     }
 
-    // console.log(classForm)
     return(
         <div className={formClass}>
             <div className={allPoolsClass}>
@@ -110,12 +90,44 @@ export const MakePicksForm = ({formClass}) => {
                         ))}
                     </ul>
             </div>
-
             <div className={picksForm}>
-
+                <ul className='no-bullet'>
+                    {games.map(game => (
+                        <PickForm key={game.getGameId()} game={game} />
+                    ))}
+                </ul>
             </div>
-
         </div>
     )
+}
 
+const PickForm = ({game}) => {
+
+
+
+    return(
+        <li>
+            <form className='pick-form'>
+                <label className='left-pick'>
+                    <input 
+                        type="radio"
+                        value={game.teamOne}
+                        name="game-pick"
+                        className='radio-pick'
+                    />
+                    {game.teamOne}
+                </label>
+                <label className='right-pick'>
+                {game.teamTwo}
+                    <input 
+                        type="radio"
+                        value={game.teamTwo}
+                        name="game-pick"
+                        className='radio-pick'
+                    />
+                    
+                </label>
+            </form>
+        </li>
+    )
 }

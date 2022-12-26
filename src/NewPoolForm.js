@@ -11,6 +11,10 @@ class Pool{
     getName(){
         return this.name;
     }
+
+    getId(){
+        return this.poolId;
+    }
 }
 
 class Game{

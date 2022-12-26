@@ -35,6 +35,54 @@
     font-weight: bold;
   }
 
+
+  .radio-pick{
+    border-radius: 0%;
+    margin-left: 20px;
+    margin-right: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    background: white;
+    height: 22px;
+    width: 22px;
+    border: 1px solid white;
+    
+  }
+
+  .pick-form{
+    /* text-align: center; */
+    border: 5px solid black;
+    /* width: 800px;
+    margin: 20px;
+    height: 80px;
+    position: relative; */
+    width: 50%;
+    height: 50%;
+  }
+
+  .right-pick{
+    text-align: right;
+    margin-left: 40px;
+    border: 5px solid red;
+    float: right;
+    
+  }
+
+  .picks-form-div{
+    border: 5px solid black;
+    text-align: center;
+  }
+
+  .left-pick{
+    text-align: left;
+    margin-right: 40px;
+    border: 5px solid red;
+    float: left;
+  }
+
+
   /* .pool-button{
     width: 150px;
     height: 80px;
