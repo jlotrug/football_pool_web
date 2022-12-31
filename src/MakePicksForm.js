@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import './MakePicksFormStyle.css'
 import { poolsReducer } from './GamePoolReducers';
 import { createMockPools, createMockGames } from './MockClasses';
@@ -21,6 +21,7 @@ export const MakePicksForm = ({formClass}) => {
     const [allPoolsClass, setAllPoolsClass] = React.useState("all-pools")
     const [picksForm, setPicksForm] = React.useState("hide-element")
     const [currentPool, setCurrentPool] = React.useState()
+    const [done, setDone] = React.useState(false)
 
     const [pools, dispatchPools] = React.useReducer(
         poolsReducer, {data: [], isLoading: false, isError: false}
@@ -66,11 +67,17 @@ export const MakePicksForm = ({formClass}) => {
         setCurrentPool(selectedPool)
         setGames(fetchGames(selectedPool))
 
-        console.log(games)
+        // console.log(games)
     }
 
     const handleDone = () => {
-        alert("Hello")
+        // alert("Hello")
+        setDone(true)
+        // console.log(done)
+    }
+
+    const resetDone = () =>{
+        setDone(false)
     }
 
     return(
@@ -97,7 +104,13 @@ export const MakePicksForm = ({formClass}) => {
             <div className={picksForm}>
                 <ul className='no-bullet'>
                     {games.map(game => (
-                        <PickForm key={game.getGameId()} game={game} />
+                        <PickForm 
+                        key={game.getGameId()} 
+                        game={game}  
+                        triggerDone={done}
+                        currentPool={currentPool}
+                        resetDone={resetDone}
+                        />
                     ))}
                 </ul>
                 <button className='done-button' onClick={handleDone}>Done</button>
@@ -106,9 +119,23 @@ export const MakePicksForm = ({formClass}) => {
     )
 }
 
-const PickForm = ({game}) => {
+const PickForm = ({game, triggerDone, currentPool, resetDone}) => {
+    const [selectedPick, setSelectedPick] = React.useState();
+
+    React.useEffect(() => {
+        // console.log(done)
+        if(!triggerDone) return;
+        resetDone();
+        
+        const pick = {gameId: game.getGameId(), pick:selectedPick, poolId: currentPool.getId()}
+        console.log(pick)
+    }, [triggerDone, game, currentPool, selectedPick])
 
 
+    const handleSelection = (e) => {
+        console.log(e.target.value)
+        setSelectedPick(e.target.value)
+    }
 
     return(
         <li>
@@ -119,6 +146,7 @@ const PickForm = ({game}) => {
                         value={game.teamOne}
                         name="game-pick"
                         className='radio-pick'
+                        onChange={handleSelection}
                     />
                     {game.teamOne}
                 </label>
@@ -129,6 +157,7 @@ const PickForm = ({game}) => {
                         value={game.teamTwo}
                         name="game-pick"
                         className='radio-pick'
+                        onChange={handleSelection}
                     />
                     
                 </label>
