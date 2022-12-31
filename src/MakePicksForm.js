@@ -2,6 +2,8 @@ import React, { useCallback, useEffect } from 'react'
 import './MakePicksFormStyle.css'
 import { poolsReducer } from './GamePoolReducers';
 import { createMockPools, createMockGames } from './MockClasses';
+import { FetchPools } from './FetchPools';
+import axios from 'axios';
 // import { toBePartiallyChecked } from '@testing-library/jest-dom/dist/matchers';
 
 const pools = createMockPools();
@@ -13,9 +15,15 @@ const getAsyncPools = () => {
             2000 // Mocking wait time to fetch data
         )
     )
+    // return new Promise(resolve =>
+    //     setTimeout(
+    //         () => resolve({data: {pools: pools}}),
+    //         2000 // Mocking wait time to fetch data
+    //     )
+    // )
 }
 
-
+const url = "http://localhost:8080/api/pools"
 export const MakePicksForm = ({formClass}) => {
     const [games, setGames] = React.useState([])
     const [allPoolsClass, setAllPoolsClass] = React.useState("all-pools")
@@ -27,16 +35,51 @@ export const MakePicksForm = ({formClass}) => {
         poolsReducer, {data: [], isLoading: false, isError: false}
     )
 
-        useEffect(() => {
+        const handleFetchPools = useCallback(async() =>{
+
             dispatchPools({type: 'POOLS_FETCH_INIT'})
 
-            getAsyncPools().then(result => {
+            try{
+                const result = await axios.get(url)
+                console.log(result.data)
                 dispatchPools({
                     type: 'POOLS_FETCH_SUCCESS',
-                    payload: result.data.pools
+                    payload: result.data
                 })
-            }).catch(() => dispatchPools({type: 'POOLS_FETCH_FAILURE'}))
+            }catch{
+                dispatchPools({type: 'POOLS_FETCH_FAILURE'})
+            }
+
         }, [])
+
+        React.useEffect(() => {
+            handleFetchPools()
+        }, [handleFetchPools])
+        // React.useEffect(() => {
+        //     handleFetchPools()
+        // }, [handleFetchPools])
+        
+        // useEffect(() => {
+        //     dispatchPools({type: 'POOLS_FETCH_INIT'})
+
+        //     try{
+        //         const result = FetchPools()
+        //         dispatchPools({
+        //             type: 'POOLS_FETCH_SUCCESS',
+        //             payload: result
+        //         })
+        //     }catch{
+        //         dispatchPools({type: 'POOLS_FETCH_FAILURE'})
+        //     }
+
+
+            // getAsyncPools().then(result => {
+            //     dispatchPools({
+            //         type: 'POOLS_FETCH_SUCCESS',
+            //         payload: result.data.pools
+            //     })
+            // }).catch(() => dispatchPools({type: 'POOLS_FETCH_FAILURE'}))
+        // }, [])
 
     React.useEffect(() => {
         setAllPoolsClass("all-pools")
@@ -59,7 +102,9 @@ export const MakePicksForm = ({formClass}) => {
 
     const handlePoolSelect = (e) => {
         const selectedPool = pools.data.find(pool => {
-           return pool.getId() === e
+        //    return pool.getId() === e
+                console.log(pool.id)
+                return pool.id === e
         })
         
         poolSelected()
@@ -74,6 +119,20 @@ export const MakePicksForm = ({formClass}) => {
         // alert("Hello")
         setDone(true)
         // console.log(done)
+        // FetchPools()
+
+        // try{
+        //     const result = axios.post("http://localhost:8080/api/pools/", {
+        //         pool_name: "Week 100"
+        //     }).then( response =>{
+        //         console.log(response)
+        //     })
+        //     console.log(result)
+        // }catch{
+        //     console.log("")
+        // }
+        
+
     }
 
     const resetDone = () =>{
@@ -86,7 +145,7 @@ export const MakePicksForm = ({formClass}) => {
                 <h2 className='pools-heading'>Pick a Pool</h2>
                     <ul className='no-bullet'>
                         {pools.isError &&<p>Something went wrong...</p>}
-                        {pools.isLoading ? (<p>Loading...</p>):
+                        {/* {pools.isLoading ? (<p>Loading...</p>):
                         pools.data.map(pool =>(
                             <li key={pool.getId()}>
                                 <button 
@@ -96,6 +155,19 @@ export const MakePicksForm = ({formClass}) => {
                                 onClick={() => handlePoolSelect(pool.getId())}
                                 >
                                     {pool.getName()}
+                                </button>
+                            </li>
+                        ))} */}
+                        {pools.isLoading ? (<p>Loading...</p>):
+                        pools.data.map(pool =>(
+                            <li key={pool.id}>
+                                <button 
+                                className='pool-button'
+
+                                // This is how you pass data into 
+                                onClick={() => handlePoolSelect(pool.id)}
+                                >
+                                    {pool.pool_name}
                                 </button>
                             </li>
                         ))}
@@ -131,7 +203,7 @@ const PickForm = ({game, triggerDone, currentPool, resetDone}) => {
         console.log(pick)
     }, [triggerDone, game, currentPool, selectedPick])
 
-
+    // Tracks the current selection 
     const handleSelection = (e) => {
         console.log(e.target.value)
         setSelectedPick(e.target.value)
