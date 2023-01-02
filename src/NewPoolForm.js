@@ -1,70 +1,87 @@
 import './App.css';
 import React from 'react';
 import Button from 'react-bootstrap/Button'
-
-class Pool{
-    constructor(name, poolId){
-        this.name = name;
-        this.poolId = poolId;
-    }
-
-    getName(){
-        return this.name;
-    }
-
-    getId(){
-        return this.poolId;
-    }
-}
-
-class Game{
-    constructor(id, poolId, teamOne="", teamTwo=""){
-        this.teamOne = teamOne;
-        this.teamTwo = teamTwo;
-        this.id = id;
-        this.poolId = poolId
-    }
-
-    setTeamOne(name){
-        this.teamOne = name;
-    }
-
-    setTeamTwo(name){
-        this.teamTwo = name
-    }
-
-    getGameId(){
-        return this.id;
-    }
-}
-
+import axios from 'axios';
+import {NewPoolReducer} from './NewPoolReducer'
+import { GameForm } from './NewGameForm';
+import { GamesReducer } from './GamesReducer';
+import {Game, Pool} from './MockClasses'
+import { NewGameReducer } from './NewGameReducer';
 
 export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDone}) => {
-    const [games, setGames] = React.useState([])
+    // const [games, setGames] = React.useState([])
+    const [numGames, setNumGames] = React.useState(0)
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
-    const [poolId, setPoolId] = React.useState(0) // Eventually this will be set by the Pool name submission
+    const [games, dispatchGame] = React.useReducer(
+        GamesReducer, {data:[], usLoading: false, isError: false}
+    )
+    // const [poolId, setPoolId] = React.useState(0) // Eventually this will be set by the Pool name submission
+
+    // const [newGame, dispatchNewGame] = React.useReducer(
+    //     NewGameReducer, {data: null, isLoading: false, isError: true}
+    // )
+
+    
+    const [newPool, dispatchNewPool] = React.useReducer(
+        NewPoolReducer, {data: {}, isLoading: false, isError: false}
+    )
+    const poolUrl = "http://localhost:8080/api/pools/"
+    const gamesUrl = "http://localhost:8080/api/games/"
+    
+
 
     // Temp to handle keys 
     const [gameId, setGameId] = React.useState(0);
 
+    const createNewGame = async() =>{
+        // e.preventDefault()
 
-    const handleNameSubmit = (e) => {
-        e.preventDefault()
-        setNewGameDisabled(false)
-        
-        // Will eventually be the returned poolId
-        setPoolId(poolId + 1)
+        dispatchGame({type: 'CREATE_GAME_INIT'})
 
-        const poolName = e.target[0].value
-
-        const newPool = new Pool(poolName, poolId)
-        handleAllPools(newPool);
+        try{
+            const result = await axios.post(gamesUrl, {
+                pool: newPool.data.id,
+            })
+            // console.log([...games.data, result.data])
+            dispatchGame({
+                type: 'CREATE_GAME_SUCCESS',
+                payload: [...games.data, result.data]
+            })
+        }catch{
+            dispatchGame({type: 'CREATE_GAME_FAILURE'})
+        }
     }
 
 
+    const handleNameSubmit = async(e) => {
+        e.preventDefault()
+        setNewGameDisabled(false)
+
+        dispatchNewPool({type: 'NEW_POOL_INIT'})
+        
+        const poolName = e.target[0].value
+
+        try{
+            const result = await axios.post(poolUrl, {
+                pool_name: poolName
+            })
+            dispatchNewPool({
+                type: 'NEW_POOL_SUCCESS',
+                payload: result.data
+            })
+        }catch{
+            dispatchNewPool({type: 'NEW_POOL_FAILURE'})
+        }
+    }
+
     const handlesNewGameClick = () => {
-        setGames([...games, new Game(gameId, poolId)])
-        setGameId(gameId +1);
+        // console.log(newPool.data)
+        // setNumGames(numGames + 1)
+        console.log(newPool)
+        createNewGame()
+        console.log(games)
+        // setGames([...games, new Game(gameId, newPool.id)])
+        // setGameId(gameId +1);
     }
 
     const handleGameSubmit = (e) => {
@@ -86,13 +103,26 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
         <div className={formClass}>
             <NameForm handleCallback={handleNameSubmit}/>
             <div>
-                
                 <ul className='no-bullet'>
-                    {games.map(game => {
+                    {Array.apply(0, Array(numGames)).map(x=>{
+                        console.log(x)
+                        return <GameForm 
+                        key={numGames} 
+                        // gameId={id} 
+                        handleCallback={handleGameSubmit}
+                        poolId = {newPool.data.id}
+                        />
+                    })}
+                    {/* {games.map(game => {
                        const id = game.getGameId()
                        // Passes id down as a prop so it can be accessed
-                    return <GameForm key={id} gameId={id} handleCallback={handleGameSubmit}/>
-                    })}
+                    return <GameForm 
+                            key={id} 
+                            gameId={id} 
+                            handleCallback={handleGameSubmit}
+                            poolId = {newPool.data.id}
+                            />
+                    })} */}
                 </ul>
 
                 <Button 
@@ -107,72 +137,6 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
         </div>
     )
 }
-
-const GameForm = ({handleCallback, gameId}) => {
-    const [inputHidden, setInputHidden] = React.useState(false)
-    const [submitValue, setSubmitValue] = React.useState('Done')
-    const [teamOne, setTeamOne] = React.useState("")
-    const [teamTwo, setTeamTwo] = React.useState("")
-
-    const handleSubmit = (e) => {
-        if(submitValue === 'Done'){
-            setSubmitValue('Edit')
-            setInputHidden(true)
-            handleCallback(e)
-        }else{
-            setSubmitValue('Done')
-            setInputHidden(false)
-            e.preventDefault()
-        }
-    }
-
-    const handleTeamOneChange = (e) => {
-        setTeamOne(e.target.value)
-    }
-    const handleTeamTwoChange = (e) => {
-        setTeamTwo(e.target.value)
-    }
-
-    return(
-        <li>
-            <form onSubmit={handleSubmit}>
-                <span className='pool-input'>
-                    {/* Makes the game id accessible for edits */}
-                    <input type="hidden" value ={gameId} ></input> 
-                </span>
-                <span className='pool-input'>
-                    <label className='team-input' hidden={!inputHidden}>{teamOne}</label>
-                    <input 
-                    type="text" 
-                    name='team-one' 
-                    hidden={inputHidden} 
-                    value={teamOne}
-                    onChange={handleTeamOneChange}
-                    ></input> 
-                </span>
-
-                <span>
-                    <label className='input-vs'> vs. </label>
-                </span>
-                <span className='pool-input'>
-                    <label className='team-input' hidden={!inputHidden}>{teamTwo}</label>
-                    <input 
-                    type="text" 
-                    name='team-two' 
-                    hidden={inputHidden} 
-                    value={teamTwo}
-                    onChange={handleTeamTwoChange}
-                    ></input>
-                </span>
-
-                <span className='pool-input'>
-                    <input type="submit" value={submitValue}></input>
-                </span>
-            </form>
-        </li>
-    )
-}
-
 
 const NameForm = ({formClass, handleCallback}) => {
     const [formDisabled, setFormDisabled] = React.useState(false)
@@ -189,8 +153,6 @@ const NameForm = ({formClass, handleCallback}) => {
             setFormDisabled(false)
         }
         // changeAfterSubmit()
-        
-
     }
 
     // const changeAfterSubmit = () => {

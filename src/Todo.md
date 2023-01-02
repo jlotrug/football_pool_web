@@ -1,3 +1,11 @@
+## Games Create
+- Game with blank team names is created with Add Game
+- Done button updates with the names provided
+- Reducer includes options for update, Games are found by id in state and updated there as well 
+
+
+
+
 ## CSS
 Make separate css files for NewPoolForm, App and one for all components
 Label CSS 
