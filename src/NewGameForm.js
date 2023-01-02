@@ -2,7 +2,7 @@ import React from "react"
 import { NewGameReducer } from './NewGameReducer';
 import axios from "axios";
 
-export const GameForm = ({handleCallback, gameId, poolId}) => {
+export const GameForm = ({gameId, poolId}) => {
     const [inputHidden, setInputHidden] = React.useState(false)
     const [submitValue, setSubmitValue] = React.useState('Done')
     const [teamOne, setTeamOne] = React.useState("")
@@ -16,9 +16,10 @@ export const GameForm = ({handleCallback, gameId, poolId}) => {
 
     const handleSubmit = (e) => {
         if(submitValue === 'Done'){
+            editGame(e)
             setSubmitValue('Edit')
             setInputHidden(true)
-            handleCallback(e)
+            // handleCallback(e)
         }else{
             setSubmitValue('Done')
             setInputHidden(false)
@@ -33,14 +34,12 @@ export const GameForm = ({handleCallback, gameId, poolId}) => {
         setTeamTwo(e.target.value)
     }
 
-    const createNewGame = async(e) =>{
+    const editGame = async(e) =>{
         e.preventDefault()
 
-        console.log(e)
         dispatchNewGame({type: 'NEW_GAME_INIT'})
 
         try{
-            // const result = await axios.post(gamesUrl, {
             const result = await axios.put(gamesUrl+gameId+ '/', {
                 team_one: teamOne,
                 team_two: teamTwo,
@@ -58,7 +57,7 @@ export const GameForm = ({handleCallback, gameId, poolId}) => {
 
     return(
         <li>
-            <form onSubmit={createNewGame}>
+            <form onSubmit={handleSubmit}>
                 <span className='pool-input'>
                     {/* Makes the game id accessible for edits */}
                     <input type="hidden" value ={gameId} ></input> 
