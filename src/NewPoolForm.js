@@ -9,18 +9,11 @@ import {Game, Pool} from './MockClasses'
 import { NewGameReducer } from './NewGameReducer';
 
 export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDone}) => {
-    // const [games, setGames] = React.useState([])
     const [numGames, setNumGames] = React.useState(0)
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
     const [games, dispatchGame] = React.useReducer(
         GamesReducer, {data:[], usLoading: false, isError: false}
     )
-    // const [poolId, setPoolId] = React.useState(0) // Eventually this will be set by the Pool name submission
-
-    // const [newGame, dispatchNewGame] = React.useReducer(
-    //     NewGameReducer, {data: null, isLoading: false, isError: true}
-    // )
-
     
     const [newPool, dispatchNewPool] = React.useReducer(
         NewPoolReducer, {data: {}, isLoading: false, isError: false}
@@ -29,12 +22,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     const gamesUrl = "http://localhost:8080/api/games/"
     
 
-
-    // Temp to handle keys 
-    const [gameId, setGameId] = React.useState(0);
-
     const createNewGame = async() =>{
-        // e.preventDefault()
 
         dispatchGame({type: 'CREATE_GAME_INIT'})
 
@@ -75,13 +63,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     }
 
     const handlesNewGameClick = () => {
-        // console.log(newPool.data)
-        // setNumGames(numGames + 1)
-        console.log(newPool)
         createNewGame()
-        console.log(games)
-        // setGames([...games, new Game(gameId, newPool.id)])
-        // setGameId(gameId +1);
     }
 
     const handleGameSubmit = (e) => {
@@ -104,17 +86,8 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
             <NameForm handleCallback={handleNameSubmit}/>
             <div>
                 <ul className='no-bullet'>
-                    {Array.apply(0, Array(numGames)).map(x=>{
-                        console.log(x)
-                        return <GameForm 
-                        key={numGames} 
-                        // gameId={id} 
-                        handleCallback={handleGameSubmit}
-                        poolId = {newPool.data.id}
-                        />
-                    })}
-                    {/* {games.map(game => {
-                       const id = game.getGameId()
+                    {games.data.map(game => {
+                       const id = game.id
                        // Passes id down as a prop so it can be accessed
                     return <GameForm 
                             key={id} 
@@ -122,7 +95,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
                             handleCallback={handleGameSubmit}
                             poolId = {newPool.data.id}
                             />
-                    })} */}
+                    })}
                 </ul>
 
                 <Button 

@@ -36,13 +36,15 @@ export const GameForm = ({handleCallback, gameId, poolId}) => {
     const createNewGame = async(e) =>{
         e.preventDefault()
 
+        console.log(e)
         dispatchNewGame({type: 'NEW_GAME_INIT'})
 
         try{
-            const result = await axios.post(gamesUrl, {
+            // const result = await axios.post(gamesUrl, {
+            const result = await axios.put(gamesUrl+gameId+ '/', {
                 team_one: teamOne,
                 team_two: teamTwo,
-                pool: poolId,
+                pool: poolId
             })
             console.log(result)
             dispatchNewGame({
