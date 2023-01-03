@@ -1,33 +1,62 @@
 import React from "react"
 import axios from "axios"
 
-export const NameForm = ({formClass, handleCallback}) => {
+const poolUrl = "http://localhost:8080/api/pools/"
+
+export const NameForm = ({formClass, handleCallback, poolDispatch, poolId}) => {
     const [formDisabled, setFormDisabled] = React.useState(false)
     const [submitValue, setSubmitValue] = React.useState('Done')
+    const [firstSubmit, setFirstSubmit] = React.useState(true)
+    const [poolName, setPoolName] = React.useState("")
 
     const handleSubmit = (e) => {
+        e.preventDefault()
         if(submitValue === 'Done'){
-            handleCallback(e)
+            if(firstSubmit){
+                handleCallback(poolName)
+                setFirstSubmit(false)
+            }else{
+                editName()
+            }
+            
             setSubmitValue('Edit')
             setFormDisabled(true)
         }else{
-            e.preventDefault()
             setSubmitValue('Done')
             setFormDisabled(false)
         }
-        // changeAfterSubmit()
     }
 
-    // const changeAfterSubmit = () => {
-    //     formDisabled ? setFormDisabled(false) : setFormDisabled(true)
-    //     submitValue === 'Done' ? setSubmitValue("Edit") : setFormDisabled("Done")
-    // }
+    const handleNameChange = (e) => {
+        setPoolName(e.target.value)
+    }
+
+    const editName = async() => {
+        
+        poolDispatch({type: 'NEW_POOL_INIT'})
+
+        try{
+            const result = await axios.put(poolUrl + poolId + '/', {
+                pool_name: poolName,
+            })
+
+            poolDispatch({type: 'EDIT_POOL_SUCCESS', payload: result.data})
+        }catch{
+            poolDispatch({type: 'NEW_POOL_FAILURE'})
+        }
+    }
 
     return(
         <form onSubmit={handleSubmit} className={formClass}>
             <label>Name</label><br />
             <span className='pool-input'>
-                <input disabled={formDisabled} type="text" placeholder='eg... Week 14'></input>
+                <input 
+                disabled={formDisabled} 
+                type="text" 
+                placeholder='eg... Week 14'
+                onChange={handleNameChange}
+                value = {poolName}
+                ></input>
             </span>
             <span className='pool-input'>
                 <input type="submit" value={submitValue}></input>

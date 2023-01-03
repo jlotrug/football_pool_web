@@ -15,6 +15,13 @@ export const NewPoolReducer = (state, action) => {
                 isError: false,
                 data: action.payload,
             }
+        case 'EDIT_POOL_SUCCESS':
+            return{
+                ...state,
+                isLoading: false,
+                isError: false,
+                data: action.payload
+            }
         case 'NEW_POOL_FAILURE':
             return{
                 ...state,

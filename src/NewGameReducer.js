@@ -22,7 +22,5 @@ export const NewGameReducer = (state, action) =>{
         }
     default:
         throw new Error();
-
     }
-    
 }

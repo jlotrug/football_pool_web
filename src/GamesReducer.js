@@ -2,7 +2,6 @@ import React from "react";
 
 
 export const GamesReducer = (state, action) =>{
-    // console.log("hello")
     switch(action.type){
         case 'CREATE_GAME_INIT':
             return {

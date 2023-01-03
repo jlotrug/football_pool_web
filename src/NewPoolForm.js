@@ -20,45 +20,18 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
         NewPoolReducer, {data: {}, isLoading: false, isError: false}
     )
     
-
-    const handleNameSubmit = (e) => {
-        e.preventDefault()
+    const handleNameSubmit = (poolName) => {
+        // e.preventDefault()
 
         if(submitValue === 'Done'){
-            newPoolCreate(e)
-            // setSubmitValue('Edit')
-            // setInputHidden(true)
-        }else{
-            // setSubmitValue('Done')
-            // setInputHidden(false)
-            // e.preventDefault()
+            newPoolCreate(poolName)
         }
-        
-        // setNewGameDisabled(false)
-
-        // dispatchNewPool({type: 'NEW_POOL_INIT'})
-        
-        // const poolName = e.target[0].value
-
-        // try{
-        //     const result = await axios.post(poolUrl, {
-        //         pool_name: poolName
-        //     })
-        //     dispatchNewPool({
-        //         type: 'NEW_POOL_SUCCESS',
-        //         payload: result.data
-        //     })
-        // }catch{
-        //     dispatchNewPool({type: 'NEW_POOL_FAILURE'})
-        // }
     }
 
-    const newPoolCreate = async(e) => {
+    const newPoolCreate = async(poolName) => {
         setNewGameDisabled(false)
 
         dispatchNewPool({type: 'NEW_POOL_INIT'})
-        
-        const poolName = e.target[0].value
 
         try{
             const result = await axios.post(poolUrl, {
@@ -105,7 +78,11 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
 
     return(
         <div className={formClass}>
-            <NameForm handleCallback={handleNameSubmit}/>
+            <NameForm 
+            handleCallback={handleNameSubmit} 
+            poolDispatch={dispatchNewPool}
+            poolId = {newPool.data.id}
+            />
             <div>
                 <ul className='no-bullet'>
                     {games.data.map(game => {
@@ -127,7 +104,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
                 >
                     Add Game
                 </Button><br/>
-                <button className='done-button' onClick={handleDone}>{submitValue}</button>
+                <button className='done-button' onClick={handleDone}>Done</button>
             </div>
         </div>
     )
