@@ -3,6 +3,7 @@ import './MakePicksFormStyle.css'
 import { poolsReducer } from './GamePoolReducers';
 import { createMockPools, createMockGames } from './MockClasses';
 import { FetchPools } from './FetchPools';
+import { PickForm } from './PickForm';
 import axios from 'axios';
 // import { toBePartiallyChecked } from '@testing-library/jest-dom/dist/matchers';
 
@@ -96,14 +97,14 @@ export const MakePicksForm = ({formClass}) => {
         const allGames = createMockGames();
 
         return allGames.filter(game => {
-            return game.getPoolId() === week.getId()
+            return game.getPoolId() === week.id
         })
     }    
 
     const handlePoolSelect = (e) => {
         const selectedPool = pools.data.find(pool => {
         //    return pool.getId() === e
-                console.log(pool.id)
+                console.log(pool)
                 return pool.id === e
         })
         
@@ -139,12 +140,25 @@ export const MakePicksForm = ({formClass}) => {
         setDone(false)
     }
 
+    // const pickUrl = "http://localhost:8080/api/games/"
+    const gamesUrl = "http://localhost:8080/api/games?pool=23"
+    const testClick = async() => {
+        try{
+            const result = await axios.get(gamesUrl)
+
+            console.log(result)
+        }catch{
+            
+        }
+    }
+
     return(
         <div className={formClass}>
             <div className={allPoolsClass}>
                 <h2 className='pools-heading'>Pick a Pool</h2>
                     <ul className='no-bullet'>
                         {pools.isError &&<p>Something went wrong...</p>}
+                        <button onClick={testClick}>TEST CLICK</button>
                         {/* {pools.isLoading ? (<p>Loading...</p>):
                         pools.data.map(pool =>(
                             <li key={pool.getId()}>
@@ -170,7 +184,7 @@ export const MakePicksForm = ({formClass}) => {
                                     {pool.pool_name}
                                 </button>
                             </li>
-                        ))}
+                        )).reverse()}
                     </ul>
             </div>
             <div className={picksForm}>
@@ -191,49 +205,3 @@ export const MakePicksForm = ({formClass}) => {
     )
 }
 
-const PickForm = ({game, triggerDone, currentPool, resetDone}) => {
-    const [selectedPick, setSelectedPick] = React.useState();
-
-    React.useEffect(() => {
-        // console.log(done)
-        if(!triggerDone) return;
-        resetDone();
-        
-        const pick = {gameId: game.getGameId(), pick:selectedPick, poolId: currentPool.getId()}
-        console.log(pick)
-    }, [triggerDone, game, currentPool, selectedPick])
-
-    // Tracks the current selection 
-    const handleSelection = (e) => {
-        console.log(e.target.value)
-        setSelectedPick(e.target.value)
-    }
-
-    return(
-        <li>
-            <form className='pick-form'>
-                <label className='left-pick'>
-                    <input 
-                        type="radio"
-                        value={game.teamOne}
-                        name="game-pick"
-                        className='radio-pick'
-                        onChange={handleSelection}
-                    />
-                    {game.teamOne}
-                </label>
-                <label className='right-pick'>
-                {game.teamTwo}
-                    <input 
-                        type="radio"
-                        value={game.teamTwo}
-                        name="game-pick"
-                        className='radio-pick'
-                        onChange={handleSelection}
-                    />
-                    
-                </label>
-            </form>
-        </li>
-    )
-}

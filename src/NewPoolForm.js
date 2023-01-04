@@ -11,7 +11,7 @@ const poolUrl = "http://localhost:8080/api/pools/"
 const gamesUrl = "http://localhost:8080/api/games/"
 
 export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDone}) => {
-    const [submitValue, setSubmitValue] = React.useState('Done')
+    // const [submitValue, setSubmitValue] = React.useState('Done')
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
     const [games, dispatchGame] = React.useReducer(
         GamesReducer, {data:[], usLoading: false, isError: false}
@@ -21,11 +21,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     )
     
     const handleNameSubmit = (poolName) => {
-        // e.preventDefault()
-
-        if(submitValue === 'Done'){
             newPoolCreate(poolName)
-        }
     }
 
     const newPoolCreate = async(poolName) => {
@@ -67,15 +63,6 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
         }
     }
 
-    // const handleGameSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     const teamOne = e.target[1].value
-    //     const teamTwo = e.target[2].value
-
-
-    // }
-
     return(
         <div className={formClass}>
             <NameForm 
@@ -104,44 +91,14 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
                 >
                     Add Game
                 </Button><br/>
-                <button className='done-button' onClick={handleDone}>Done</button>
+                <button 
+                className='done-button' 
+                onClick={handleDone}
+                >
+                    Done
+                </button>
             </div>
         </div>
     )
 }
-
-// const NameForm = ({formClass, handleCallback}) => {
-//     const [formDisabled, setFormDisabled] = React.useState(false)
-//     const [submitValue, setSubmitValue] = React.useState('Done')
-
-//     const handleSubmit = (e) => {
-//         if(submitValue === 'Done'){
-//             handleCallback(e)
-//             setSubmitValue('Edit')
-//             setFormDisabled(true)
-//         }else{
-//             e.preventDefault()
-//             setSubmitValue('Done')
-//             setFormDisabled(false)
-//         }
-//         // changeAfterSubmit()
-//     }
-
-//     // const changeAfterSubmit = () => {
-//     //     formDisabled ? setFormDisabled(false) : setFormDisabled(true)
-//     //     submitValue === 'Done' ? setSubmitValue("Edit") : setFormDisabled("Done")
-//     // }
-
-//     return(
-//         <form onSubmit={handleSubmit} className={formClass}>
-//             <label>Name</label><br />
-//             <span className='pool-input'>
-//                 <input disabled={formDisabled} type="text" placeholder='eg... Week 14'></input>
-//             </span>
-//             <span className='pool-input'>
-//                 <input type="submit" value={submitValue}></input>
-//             </span>
-//         </form>
-//     )
-// }
 

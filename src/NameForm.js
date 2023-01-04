@@ -59,7 +59,10 @@ export const NameForm = ({formClass, handleCallback, poolDispatch, poolId}) => {
                 ></input>
             </span>
             <span className='pool-input'>
-                <input type="submit" value={submitValue}></input>
+                <input 
+                type="submit" 
+                value={submitValue}
+                ></input>
             </span>
         </form>
     )
