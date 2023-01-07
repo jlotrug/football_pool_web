@@ -6,6 +6,7 @@ import {NewPoolReducer} from './NewPoolReducer'
 import { GameForm } from './NewGameForm';
 import { GamesReducer } from './GamesReducer';
 import { NameForm } from './NameForm';
+import { Link } from 'react-router-dom';
 
 const poolUrl = "http://localhost:8080/api/pools/"
 const gamesUrl = "http://localhost:8080/api/games/"
@@ -64,7 +65,8 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     }
 
     return(
-        <div className={formClass}>
+        // <div className={formClass}>
+        <div className="">
             <NameForm 
             handleCallback={handleNameSubmit} 
             poolDispatch={dispatchNewPool}
@@ -91,12 +93,14 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
                 >
                     Add Game
                 </Button><br/>
-                <button 
-                className='done-button' 
-                onClick={handleDone}
-                >
-                    Done
-                </button>
+                <Link to="/">
+                    <button 
+                    className='done-button' 
+                    onClick={handleDone}
+                    >
+                        Done
+                    </button>
+                </Link>
             </div>
         </div>
     )

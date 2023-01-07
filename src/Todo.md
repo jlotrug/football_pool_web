@@ -1,3 +1,8 @@
+## Accounts
+- Create Account
+- Login
+
+
 ## Games Create
 - Game with blank team names is created with Add Game
 - Done button updates with the names provided

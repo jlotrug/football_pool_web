@@ -14,8 +14,21 @@ div.container{
   font-family: monospace, Monaco;
   font-size: 80px;
   cursor: pointer;
+  /* border: 5px solid black; */
+  display: inline-block;
+  color: black;
    
 } 
+
+#create-account{
+  float: left;
+  /* border: 1px solid black; */
+}
+
+#login{
+  /* border: 1px solid black; */
+  float: right;
+}
 
 .button-container{
   margin-bottom: 10px;

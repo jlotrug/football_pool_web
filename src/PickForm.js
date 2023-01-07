@@ -23,7 +23,7 @@ export const PickForm = ({game, triggerDone, currentPool, resetDone}) => {
                 <label className='left-pick'>
                     <input 
                         type="radio"
-                        value={game.teamOne}
+                        value={game.team_one}
                         name="game-pick"
                         className='radio-pick'
                         onChange={handleSelection}
@@ -34,12 +34,11 @@ export const PickForm = ({game, triggerDone, currentPool, resetDone}) => {
                 {game.team_two}
                     <input 
                         type="radio"
-                        value={game.teamTwo}
+                        value={game.team_two}
                         name="game-pick"
                         className='radio-pick'
                         onChange={handleSelection}
                     />
-                    
                 </label>
             </form>
         </li>
