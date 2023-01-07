@@ -6,6 +6,7 @@ export const CreateAccount = () => {
     const [userName, setUserName] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [confirmPassword, setConfirmPassword] = React.useState("")
+    const [disabledSubmit, setDisabledSubmit] = React.useState(true)
 
     const handleChangeFirstName = (e) => {
         setFirstName(e.target.value)
@@ -27,6 +28,15 @@ export const CreateAccount = () => {
         e.preventDefault()
     }
 
+    React.useEffect(() => {
+        if(password == confirmPassword && password){
+            setDisabledSubmit(false)
+        }else{
+            setDisabledSubmit(true)
+        }
+
+    }, [password, confirmPassword])
+
     return(
         <>
             <h1>Create Account</h1>
@@ -39,10 +49,10 @@ export const CreateAccount = () => {
                 <label>Username</label><br />
                 <input onChange={handleChangeUserName} value={userName} type="text"></input><br />
                 <label>Password</label><br />
-                <input onChange={handleChangePassword} value={password} type="password"></input><br />
+                <input onChange={handleChangePassword} value={password} type="password" autocomplete="new-password"></input><br />
                 <label>Confirm Password</label><br />
                 <input onChange={handleChangeConfirmPassword} value={confirmPassword} type="password"></input><br /><br />
-                <input className="create-submit" type="submit" value="Submit"></input>
+                <input disabled={disabledSubmit} className="create-submit" type="submit" value="Submit"></input>
 
             </form>
             </>
