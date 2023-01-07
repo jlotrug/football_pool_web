@@ -65,7 +65,6 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     }
 
     return(
-        // <div className={formClass}>
         <div className="">
             <NameForm 
             handleCallback={handleNameSubmit} 
