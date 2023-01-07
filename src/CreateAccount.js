@@ -1,4 +1,8 @@
 import React from "react";
+import { UserReducer } from "./UsersReducer";
+import axios from "axios";
+
+const accountsUrl = "http://localhost:8080/account/users/"
 
 export const CreateAccount = () => {
     const [firstName, setFirstName] = React.useState("")
@@ -7,6 +11,36 @@ export const CreateAccount = () => {
     const [password, setPassword] = React.useState("")
     const [confirmPassword, setConfirmPassword] = React.useState("")
     const [disabledSubmit, setDisabledSubmit] = React.useState(true)
+
+    const [newUser, dispatchNewUser] = React.useReducer(
+        UserReducer, {data: [], isLoading: false, isError:false}
+    )
+
+
+    const handleSubmit = async(e) => {
+        e.preventDefault()
+
+        dispatchNewUser({type: 'NEW_USER_INIT'})
+
+        try{
+            const result = await axios.post(accountsUrl, {
+                name: firstName,
+                lname: lastName,
+                username: userName,
+                password: password,
+
+            })
+
+            dispatchNewUser({
+                type: 'NEW_USER_SUCCESS',
+                payload: result.data
+            })
+
+        }catch{
+            dispatchNewUser({type: 'NEW_USER_FAILURE'})
+
+        }
+    }
 
     const handleChangeFirstName = (e) => {
         setFirstName(e.target.value)
@@ -24,9 +58,6 @@ export const CreateAccount = () => {
         setConfirmPassword(e.target.value)
     } 
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-    }
 
     React.useEffect(() => {
         if(password == confirmPassword && password){
@@ -49,7 +80,7 @@ export const CreateAccount = () => {
                 <label>Username</label><br />
                 <input onChange={handleChangeUserName} value={userName} type="text"></input><br />
                 <label>Password</label><br />
-                <input onChange={handleChangePassword} value={password} type="password" autocomplete="new-password"></input><br />
+                <input onChange={handleChangePassword} value={password} type="password" autoComplete="new-password"></input><br />
                 <label>Confirm Password</label><br />
                 <input onChange={handleChangeConfirmPassword} value={confirmPassword} type="password"></input><br /><br />
                 <input disabled={disabledSubmit} className="create-submit" type="submit" value="Submit"></input>

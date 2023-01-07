@@ -15,9 +15,9 @@ const App = () => {
   return(
   <>
   <div className='container'>
-  <Link to="create-account"><span id='create-account'><a>Create Account</a></span></Link>
+  <Link to="create-account"><span id='create-account'>Create Account</span></Link>
     <Link to="/"><h1 className='heading'>Football Pool</h1></Link>
-    <Link><span id='login'><a>Login</a></span></Link>
+    <Link><span id='login'>Login</span></Link>
       <Routes>
         <Route path="/" element={<MainMenu />}/>
         <Route path="/new-pool" element={<NewPoolForm />} />
