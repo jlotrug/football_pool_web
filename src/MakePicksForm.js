@@ -6,7 +6,8 @@ import axios from 'axios';
 
 const gamesUrl = "http://localhost:8080/api/games?poolid="
 // const url = "http://localhost:8080/api/pools"
-const url = "http://localhost:8000/api/v1/pools"
+// const url = "http://localhost:8000/api/v1/pools"
+const url = "http://127.0.0.1:8000/api/v1/pools/"
 
 export const MakePicksForm = ({formClass}) => {
     const [allPoolsClass, setAllPoolsClass] = React.useState("all-pools")
@@ -27,10 +28,14 @@ export const MakePicksForm = ({formClass}) => {
         dispatchPools({type: 'POOLS_FETCH_INIT'})
 
         try{
-            const result = await axios.get(url)
+            console.log("Token: " + localStorage['session'])
+            const result = await axios.get(url,{
+                headers: {'Authorization': 'Token ' + localStorage['session']}
+            })
             dispatchPools({
                 type: 'POOLS_FETCH_SUCCESS',
-                payload: result.data
+                payload: result.data,
+                
             })
         }catch{
             dispatchPools({type: 'POOLS_FETCH_FAILURE'})

@@ -17,13 +17,17 @@ const App = () => {
   const handleCurrentUser = (user) => {
     setCurrentUser(user)
   }
+
+  const HandleLogout = () => {
+    localStorage['session'] = ""
+  }
   
   const loginOrLogout = () => {
     // console.log(localStorage['session'])
     if(!currentUser){
       return <Link to="login"><span id='login'>Login</span></Link>
     }else{
-      return <Link to="logout"><span id='login'>Logout</span></Link>
+      return <Link to="logout"><span onClick={HandleLogout} id='login'>Logout</span></Link>
     }
   }
 

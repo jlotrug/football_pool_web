@@ -34,7 +34,7 @@ export const Login = ({handleCurrentUser}) => {
                 password: password
             })
             dispatchLogin({type: 'NEW_LOGIN_SUCCESS'})
-            // localStorage['session'] = result.data.key
+            localStorage['session'] = result.data.key
             handleCurrentUser(result.data.key)
             
             console.log(result.data)
