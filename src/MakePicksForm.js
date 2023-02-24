@@ -5,7 +5,8 @@ import { PickForm } from './PickForm';
 import axios from 'axios';
 
 const gamesUrl = "http://localhost:8080/api/games?poolid="
-const url = "http://localhost:8080/api/pools"
+// const url = "http://localhost:8080/api/pools"
+const url = "http://localhost:8000/api/v1/pools"
 
 export const MakePicksForm = ({formClass}) => {
     const [allPoolsClass, setAllPoolsClass] = React.useState("all-pools")
