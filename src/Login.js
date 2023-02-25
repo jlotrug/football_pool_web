@@ -37,7 +37,7 @@ export const Login = ({handleCurrentUser}) => {
             localStorage['session'] = result.data.key
             handleCurrentUser(result.data.key)
             
-            console.log(result.data)
+            console.log(result)
             // console.log(localStorage['session'])
             navigate("/")
             
