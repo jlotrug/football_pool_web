@@ -29,7 +29,7 @@ export const MainMenu = ({loggedout}) => {
             </Button>
         </Link>
 
-        <Link to={!!localStorage['sessions'] ? "make-picks" : "/"}>
+        <Link to={!!localStorage['session'] ? "make-picks" : "/"}>
             <Button 
             size="lg" 
             variant="outline-dark" 
