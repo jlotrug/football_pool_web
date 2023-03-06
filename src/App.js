@@ -12,19 +12,27 @@ import {Login} from './Login'
 
 
 const App = () => {
-  const [currentUser, setCurrentUser] = React.useState("")
+  const [currentUser, setCurrentUser] = React.useState(localStorage['user'])
+
+
+  // React.useEffect(() => {
+  //   setCurrentUser(localStorage['user'])
+  // }, [currentUser])
 
   const handleCurrentUser = (user) => {
     setCurrentUser(user)
+    localStorage['user'] = user
+    console.log("Hello")
   }
 
   const HandleLogout = () => {
-    localStorage['session'] = ""
+    localStorage.clear()
+    // console.log(localStorage['session'])
   }
   
   const loginOrLogout = () => {
     // console.log(localStorage['session'])
-    if(!currentUser){
+    if(localStorage['session'] === ""){
       return <Link to="login"><span id='login'>Login</span></Link>
     }else{
       return <Link to="logout"><span onClick={HandleLogout} id='login'>Logout</span></Link>
@@ -35,7 +43,7 @@ const App = () => {
     if(!currentUser){
       return <Link to="create-account"><span id='create-account'>Create Account</span></Link>
     }else{
-      return <span id="create-account">Hello!</span>
+      return <span id="create-account">Hello {currentUser}!</span>
     }
   
   }
@@ -44,6 +52,7 @@ const App = () => {
   <>
   <div className='container'>
     {GreetingOrCreate()}
+    {console.log(currentUser)}
   {/* <Link to="create-account"><span id='create-account'>Create Account</span></Link> */}
     <Link to="/"><h1 className='heading'>Football Pool</h1></Link>
     {loginOrLogout()}

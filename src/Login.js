@@ -35,10 +35,11 @@ export const Login = ({handleCurrentUser}) => {
             })
             dispatchLogin({type: 'NEW_LOGIN_SUCCESS'})
             localStorage['session'] = result.data.key
-            handleCurrentUser(result.data.key)
+            // localStorage['user'] = result.data.user.first_name
+            handleCurrentUser(result.data.user.first_name)
             
             console.log(result)
-            // console.log(localStorage['session'])
+            console.log(localStorage['session'])
             navigate("/")
             
         }catch(e){
