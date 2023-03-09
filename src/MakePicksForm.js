@@ -31,7 +31,6 @@ export const MakePicksForm = ({formClass}) => {
         dispatchPools({type: 'POOLS_FETCH_INIT'})
 
         try{
-            // console.log("Token: " + localStorage['session'])
             const result = await axios.get(url, getTokenHeaders())
             dispatchPools({
                 type: 'POOLS_FETCH_SUCCESS',
@@ -73,11 +72,6 @@ export const MakePicksForm = ({formClass}) => {
         dispatchGames({type: 'GAMES_FETCH_INIT'})
 
         try{
-            // const result = await axios.get(gamesUrl+selectedPool.id, {
-            // const result = await axios.get(gamesUrl, {
-            //     // poolId: 1,
-            // }, getTokenHeaders())
-
             const result = await axios.get(gamesUrl+selectedPool.id, getTokenHeaders())
 
             dispatchGames({
