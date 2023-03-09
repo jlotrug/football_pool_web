@@ -7,9 +7,10 @@ import { GameForm } from './NewGameForm';
 import { GamesReducer } from './GamesReducer';
 import { NameForm } from './NameForm';
 import { Link } from 'react-router-dom';
+import { getTokenHeaders } from './APIFunctions';
 
-const poolUrl = "http://localhost:8080/api/pools/"
-const gamesUrl = "http://localhost:8080/api/games/"
+const poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
+const gamesUrl = "http://localhost:8000/api/v1/games/"
 
 export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDone}) => {
     // const [submitValue, setSubmitValue] = React.useState('Done')
@@ -32,13 +33,15 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
 
         try{
             const result = await axios.post(poolUrl, {
-                pool_name: poolName
-            })
+                pool_name: poolName,
+
+            }, getTokenHeaders())
             dispatchNewPool({
                 type: 'NEW_POOL_SUCCESS',
                 payload: result.data
             })
-        }catch{
+        }catch(e){
+            console.log(e)
             dispatchNewPool({type: 'NEW_POOL_FAILURE'})
         }
     }
@@ -54,7 +57,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
         try{
             const result = await axios.post(gamesUrl, {
                 pool: newPool.data.id,
-            })
+            }, getTokenHeaders())
             dispatchGame({
                 type: 'CREATE_GAME_SUCCESS',
                 payload: [...games.data, result.data]

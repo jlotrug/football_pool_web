@@ -1,7 +1,8 @@
 import React from "react"
 import axios from "axios"
+import { getTokenHeaders } from "./APIFunctions"
 
-const poolUrl = "http://localhost:8080/api/pools/"
+const poolUrl = "http://localhost:8000/api/v1/pools/"
 
 export const NameForm = ({formClass, handleCallback, poolDispatch, poolId}) => {
     const [formDisabled, setFormDisabled] = React.useState(false)
@@ -38,10 +39,10 @@ export const NameForm = ({formClass, handleCallback, poolDispatch, poolId}) => {
         try{
             const result = await axios.put(poolUrl + poolId + '/', {
                 pool_name: poolName,
-            })
+            }, getTokenHeaders())
 
             poolDispatch({type: 'EDIT_POOL_SUCCESS', payload: result.data})
-        }catch{
+        }catch(e){
             poolDispatch({type: 'NEW_POOL_FAILURE'})
         }
     }

@@ -14,24 +14,19 @@ import {Login} from './Login'
 const App = () => {
   const [currentUser, setCurrentUser] = React.useState(localStorage['user'])
 
-
-  // React.useEffect(() => {
-  //   setCurrentUser(localStorage['user'])
-  // }, [currentUser])
-
+  // Sets current user in local storage and state
   const handleCurrentUser = (user) => {
     setCurrentUser(user)
     localStorage['user'] = user
-    console.log("Hello")
   }
 
+  // Clears localStorage when logging out
   const HandleLogout = () => {
     localStorage.clear()
-    // console.log(localStorage['session'])
   }
   
+  // Controls whether login or logout is displayed in top right
   const loginOrLogout = () => {
-    // console.log(localStorage['session'])
     if(localStorage['session'] === ""){
       return <Link to="login"><span id='login'>Login</span></Link>
     }else{
@@ -39,6 +34,7 @@ const App = () => {
     }
   }
 
+  // Controls Whether create account or 'Hello User' is displayed in top left
   const GreetingOrCreate = () =>{
     if(!currentUser){
       return <Link to="create-account"><span id='create-account'>Create Account</span></Link>
@@ -51,12 +47,10 @@ const App = () => {
   return(
   <>
   <div className='container'>
-    {GreetingOrCreate()}
-    {console.log(currentUser)}
-  {/* <Link to="create-account"><span id='create-account'>Create Account</span></Link> */}
+    {GreetingOrCreate()} 
     <Link to="/"><h1 className='heading'>Football Pool</h1></Link>
     {loginOrLogout()}
-    {/* <Link to="login"><span id='login'>Login</span></Link> */}
+
       <Routes>
         <Route path="/" element={<MainMenu />}/>
         <Route path="/new-pool" element={<NewPoolForm />} />
@@ -74,6 +68,7 @@ const App = () => {
 const Logout = ({handleCurrentUser}) => {
 
   const navigate = useNavigate()
+  
   React.useEffect( () => {
     handleCurrentUser("")
     localStorage['session'] = ''

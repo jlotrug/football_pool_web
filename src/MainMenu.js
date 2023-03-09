@@ -11,6 +11,7 @@ const logout = "http://127.0.0.1:8000/api/v1/dj-rest-auth/logout/"
 export const MainMenu = ({loggedout}) => {
   const [warning, setwarning] = React.useState("")
 
+  // If not logged in, displays message to user and does not continue
   const handleLoginWarning = () => {
     if(localStorage['session'] == "") setwarning("Please login or create an account to continue")
   }
@@ -18,6 +19,7 @@ export const MainMenu = ({loggedout}) => {
   return (
     <div className="">
       <div className="button-container">
+        
         <Link to={!!localStorage['session'] ? "new-pool" : "/"}>
             <Button 
             size="lg" 

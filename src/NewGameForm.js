@@ -1,6 +1,7 @@
 import React from "react"
 import { NewGameReducer } from './NewGameReducer';
 import axios from "axios";
+import { getTokenHeaders } from "./APIFunctions";
 
 export const GameForm = ({gameId, poolId}) => {
     const [inputHidden, setInputHidden] = React.useState(false)
@@ -12,7 +13,7 @@ export const GameForm = ({gameId, poolId}) => {
         NewGameReducer, {data: null, isLoading: false, isError: true}
     )
 
-    const gamesUrl = "http://localhost:8080/api/games/"
+    const gamesUrl = "http://localhost:8000/api/v1/games/"
 
     const handleSubmit = (e) => {
         if(submitValue === 'Done'){
@@ -44,7 +45,7 @@ export const GameForm = ({gameId, poolId}) => {
                 team_one: teamOne,
                 team_two: teamTwo,
                 pool: poolId
-            })
+            }, getTokenHeaders())
             console.log(result)
             dispatchNewGame({
                 type: 'NEW_GAME_SUCCESS',
