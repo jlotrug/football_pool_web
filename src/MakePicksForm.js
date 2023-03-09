@@ -3,8 +3,11 @@ import './MakePicksFormStyle.css'
 import { poolsReducer, selectedGamesReducer } from './GamePoolReducers';
 import { PickForm } from './PickForm';
 import axios from 'axios';
+import { getTokenHeaders } from './APIFunctions';
 
-const gamesUrl = "http://localhost:8080/api/games?poolid="
+const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
+// const gamesUrl = "http://localhost:8000/api/v1/games/"
+
 // const url = "http://localhost:8080/api/pools"
 // const url = "http://localhost:8000/api/v1/pools"
 const url = "http://127.0.0.1:8000/api/v1/pools/"
@@ -28,10 +31,8 @@ export const MakePicksForm = ({formClass}) => {
         dispatchPools({type: 'POOLS_FETCH_INIT'})
 
         try{
-            console.log("Token: " + localStorage['session'])
-            const result = await axios.get(url,{
-                headers: {'Authorization': 'Token ' + localStorage['session']}
-            })
+            // console.log("Token: " + localStorage['session'])
+            const result = await axios.get(url, getTokenHeaders())
             dispatchPools({
                 type: 'POOLS_FETCH_SUCCESS',
                 payload: result.data,
@@ -72,9 +73,12 @@ export const MakePicksForm = ({formClass}) => {
         dispatchGames({type: 'GAMES_FETCH_INIT'})
 
         try{
-            const result = await axios.get(gamesUrl+selectedPool.id, {
-                poolId: 1
-            })
+            // const result = await axios.get(gamesUrl+selectedPool.id, {
+            // const result = await axios.get(gamesUrl, {
+            //     // poolId: 1,
+            // }, getTokenHeaders())
+
+            const result = await axios.get(gamesUrl+selectedPool.id, getTokenHeaders())
 
             dispatchGames({
                 type: 'GAMES_FETCH_SUCCESS',
@@ -82,7 +86,8 @@ export const MakePicksForm = ({formClass}) => {
             
             })
             console.log(result)
-        }catch{
+        }catch(e){
+            console.log(e)
             dispatchGames({type: 'GAMES_FETCH_FAILURE'})
         }
     }
