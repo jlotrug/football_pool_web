@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { getTokenHeaders } from "./APIFunctions";
 import axios from "axios";
 import { NewPickReducer } from "./PickReducer";
@@ -13,24 +13,29 @@ export const PickForm = ({game, triggerDone, resetDone}) => {
         NewPickReducer, {data:{}, isLoading: false, isError: false}
     )
     
-
-    React.useEffect(() => {       
+    React.useEffect(() => {   
+          
         if(!triggerDone) return;
+        console.log(triggerDone)
+        newPickCreate() 
         resetDone()
-        newPickCreate()
 
     }, [triggerDone])
 
-
-
-    const newPickCreate = async() => {
-
+    const newPickCreate = useCallback(async() => {
+        // console.log(pick)
         dispatchSelectedPick({type: 'NEW_PICK_INIT'})
 
         const pickData = {choice: pick, game: game.id, user: localStorage['user_id']}
+        // let pickData = {choice: pick, game: game.id, user: localStorage['user_id']}
+        console.log(Object.keys(selectedPick.data))
 
         try{
-            const result = await axios.post(url, pickData, getTokenHeaders())
+            let result
+
+            // On first submit, it creates a new pick, if submitted again the pick is edited
+            if(Object.keys(selectedPick.data).length === 0){ result = await axios.post(url, pickData, getTokenHeaders())}
+            else { result = await axios.put(url + selectedPick.data.id + '/', pickData, getTokenHeaders())}
 
             dispatchSelectedPick({
                 type: 'NEW_PICK_SUCCESS',
@@ -40,12 +45,13 @@ export const PickForm = ({game, triggerDone, resetDone}) => {
             console.log(e)
             dispatchSelectedPick({type: 'NEW_PICK_FAILURE'})
         }
-    }
+    },[triggerDone])
 
     // Tracks the current selection 
     const handleSelection = (e) => {
-        console.log(e.target.value)
         setPick(e.target.value)
+        console.log(e.target.value);
+        console.log(pick)
     }
 
     return(

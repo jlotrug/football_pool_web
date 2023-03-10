@@ -7,13 +7,16 @@ import { getTokenHeaders } from './APIFunctions';
 
 const url = "http://localhost:8000/api/v1/games?poolid="
 
-export const ShowAllGames = ({pool, done}) => {
+export const ShowAllGames = ({pool, triggerDone, resetDone}) => {
     const [games, dispatchGames] = React.useReducer(
         selectedGamesReducer, {data: [], isLoading: false, isError: false}
     )
 
 
     const handleFetchGames = useCallback(async() =>{
+        if(!pool) return
+
+
 
         dispatchGames({type: 'GAMES_FETCH_INIT'})
 
@@ -25,17 +28,16 @@ export const ShowAllGames = ({pool, done}) => {
                 payload: result.data
             
             })
-            console.log(result)
         }catch(e){
             console.log(e)
             dispatchGames({type: 'GAMES_FETCH_FAILURE'})
         }
     
-    }, [])
+    }, [pool])
 
     useEffect(() => {
 
-        if(!pool) return
+        
         handleFetchGames()
 
     }, [handleFetchGames])
@@ -50,9 +52,8 @@ export const ShowAllGames = ({pool, done}) => {
                         return <PickForm 
                             key={game.id} 
                             game={game}  
-                            // triggerDone={done}
- 
-                            // resetDone={resetDone}
+                            triggerDone={triggerDone}
+                            resetDone={resetDone}
                             />
                         })
                 }

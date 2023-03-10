@@ -1,14 +1,8 @@
-import React, { useCallback, useEffect } from 'react'
+import React from 'react'
 import './MakePicksFormStyle.css'
-import { poolsReducer, selectedGamesReducer } from './GamePoolReducers';
-import { PickForm } from './PickForm';
-import axios from 'axios';
-import { getTokenHeaders } from './APIFunctions';
 import { ShowAllPools } from './ShowAllPools';
 import { ShowAllGames } from './ShowAllGames';
 
-const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
-const url = "http://127.0.0.1:8000/api/v1/pools/"
 
 export const MakePicksComponent = ({formClass}) => {
     const [allPoolsClass, setAllPoolsClass] = React.useState("all-pools")
@@ -32,15 +26,14 @@ export const MakePicksComponent = ({formClass}) => {
         setCurrentPool(pool)
     }
 
-    
 
     const handleDone = () => {
         setDone(true)
     }
 
-    // const resetDone = () =>{
-    //     setDone(false)
-    // }
+    const resetDone = () =>{
+        setDone(false)
+    }
 
     return(
         <div className={formClass}>
@@ -51,12 +44,12 @@ export const MakePicksComponent = ({formClass}) => {
             </div>
             <div className={picksForm}>
                 {currentPool ?
-
                     <ShowAllGames
-                    pool={currentPool}
-                    done={done}
-
-                    />: <br/>
+                        pool={currentPool}
+                        triggerDone={done}
+                        resetDone={resetDone}
+                    />:
+                     <></>
                 }
                 <button className='done-button' onClick={handleDone}>Done</button>
             </div>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback} from 'react'
 import './MakePicksFormStyle.css'
 import { poolsReducer} from './GamePoolReducers';
 import axios from 'axios';
@@ -21,7 +21,6 @@ export const ShowAllPools = ({handleSelectPool}) => {
                 payload: result.data,
                 
             })
-            console.log(result)
         }catch(e){
             console.log(e)
             dispatchPools({type: 'POOLS_FETCH_FAILURE'})
