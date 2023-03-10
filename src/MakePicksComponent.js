@@ -9,6 +9,7 @@ export const MakePicksComponent = ({formClass}) => {
     const [picksForm, setPicksForm] = React.useState("hide-element")
     const [currentPool, setCurrentPool] = React.useState(false)
     const [done, setDone] = React.useState(false)
+    const [allPicksMade, setAllPicksMade] = React.useState(false)
     
     React.useEffect(() => {
         setAllPoolsClass("all-pools")
@@ -26,9 +27,19 @@ export const MakePicksComponent = ({formClass}) => {
         setCurrentPool(pool)
     }
 
+    // Callback function for ShowAllGames
+    // ShowAllGames calls this once all picks have been made for that pool
+    // Enables 'Done' button
+    const handleAllPicksMade = () =>{
+        // setAllPicksMade(true)
+        setAllPicksMade(allPicksMade ? false : true)
+
+    }
 
     const handleDone = () => {
-        setDone(true)
+        if(allPicksMade){
+            setDone(true)
+        }
     }
 
     const resetDone = () =>{
@@ -48,6 +59,7 @@ export const MakePicksComponent = ({formClass}) => {
                         pool={currentPool}
                         triggerDone={done}
                         resetDone={resetDone}
+                        handleAllPicksMade = {handleAllPicksMade}
                     />:
                      <></>
                 }

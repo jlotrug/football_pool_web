@@ -7,28 +7,27 @@ import { NewPickReducer } from "./PickReducer";
 const url = "http://127.0.0.1:8000/api/v1/picks/"
 
 // Removing currentPool
-export const PickForm = ({game, triggerDone, resetDone}) => {
+export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
     const [pick, setPick] = React.useState();
     const [selectedPick, dispatchSelectedPick] = React.useReducer(
         NewPickReducer, {data:{}, isLoading: false, isError: false}
     )
     
+    // MakePicksComponent toggles triggerDone to true once user clicks 'Done'
+    // When triggerDone == true, Pick is created
     React.useEffect(() => {   
-          
         if(!triggerDone) return;
-        console.log(triggerDone)
         newPickCreate() 
         resetDone()
 
     }, [triggerDone])
 
+    // Creates/Edits users Pick
     const newPickCreate = useCallback(async() => {
-        // console.log(pick)
         dispatchSelectedPick({type: 'NEW_PICK_INIT'})
 
+        // Creates formatted Pick data with users selection
         const pickData = {choice: pick, game: game.id, user: localStorage['user_id']}
-        // let pickData = {choice: pick, game: game.id, user: localStorage['user_id']}
-        console.log(Object.keys(selectedPick.data))
 
         try{
             let result
@@ -47,11 +46,12 @@ export const PickForm = ({game, triggerDone, resetDone}) => {
         }
     },[triggerDone])
 
-    // Tracks the current selection 
+    // Updates pick with user selection
+    // If pick is undefined, then this is the first selection for this game and parent is notified a pick has been made
+        // If user changes pick, the parent is not notified again
     const handleSelection = (e) => {
+        if(!pick){ confirmPick() }
         setPick(e.target.value)
-        console.log(e.target.value);
-        console.log(pick)
     }
 
     return(
