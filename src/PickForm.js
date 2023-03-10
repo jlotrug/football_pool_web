@@ -6,63 +6,28 @@ import { NewPickReducer } from "./PickReducer";
 
 const url = "http://127.0.0.1:8000/api/v1/picks/"
 
-export const PickForm = ({game, triggerDone, currentPool, resetDone}) => {
+// Removing currentPool
+export const PickForm = ({game, triggerDone, resetDone}) => {
     const [pick, setPick] = React.useState();
     const [selectedPick, dispatchSelectedPick] = React.useReducer(
         NewPickReducer, {data:{}, isLoading: false, isError: false}
     )
     
 
-    React.useEffect(() => {
-
-       
+    React.useEffect(() => {       
         if(!triggerDone) return;
-        resetDone();
-        const pick = {choice: selectedPick, game: game.id}
-
+        resetDone()
         newPickCreate()
 
-        // dispatchSelectedPick({type: 'NEW_PICK_INIT'})
-
-        // try{
-        //     const result = await axios.post(url, selectedPick, getTokenHeaders())
-
-        //     dispatchSelectedPick({
-        //         type: 'NEW_PICK_SUCCESS',
-        //         payload: result.data
-        //     })
-        // }catch(e){
-        //     console.log(e)
-        //     dispatchSelectedPick({type: 'NEW_PICK_FAILURE'})
-        // }
-
-
-        // try{
-        //     const result = await axios.get(url,
-        //         pick
-        //      ,getTokenHeaders())
-            
-        // }catch(e){
-        //     console.log("hey")
-        //     console.log(e)
-
-        // }
-        
-        // const pick = {gameId: game.id, pick:selectedPick, poolId: currentPool.id}
-        console.log(pick)
-
-
     }, [triggerDone])
-    // }, [triggerDone, game, currentPool, selectedPick])
+
 
 
     const newPickCreate = async() => {
-        
-        console.log(localStorage['user_id'])
 
         dispatchSelectedPick({type: 'NEW_PICK_INIT'})
 
-        const pickData = {choice: pick, game: game.id, user: 2}
+        const pickData = {choice: pick, game: game.id, user: localStorage['user_id']}
 
         try{
             const result = await axios.post(url, pickData, getTokenHeaders())

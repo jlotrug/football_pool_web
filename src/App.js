@@ -6,7 +6,7 @@ import React from 'react'
 import { Routes, Router, Route, Link, useNavigate } from 'react-router-dom';
 import { MainMenu } from './MainMenu';
 import { NewPoolForm } from './NewPoolForm';
-import { MakePicksForm } from './MakePicksForm';
+import { MakePicksComponent } from './MakePicksComponent';
 import { CreateAccount } from './CreateAccount';
 import {Login} from './Login'
 
@@ -54,7 +54,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<MainMenu />}/>
         <Route path="/new-pool" element={<NewPoolForm />} />
-        <Route path="/make-picks" element={<MakePicksForm />} />
+        <Route path="/make-picks" element={<MakePicksComponent />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/login" element={<Login handleCurrentUser={handleCurrentUser}/>} />
         <Route path='/logout' element={<Logout handleCurrentUser={handleCurrentUser}/>} />
