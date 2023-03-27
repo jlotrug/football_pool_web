@@ -5,6 +5,8 @@ import { NewPickReducer } from "./PickReducer";
 
 
 const url = "http://127.0.0.1:8000/api/v1/picks/"
+// const pickCheckUrl = "http://127.0.0.1:8000/api/v1/pick-check?game="
+const pickCheckUrl = "http://127.0.0.1:8000/api/v1/picks?game="
 
 // Removing currentPool
 export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
@@ -12,6 +14,30 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
     const [selectedPick, dispatchSelectedPick] = React.useReducer(
         NewPickReducer, {data:{}, isLoading: false, isError: false}
     )
+
+    const checkForPick = async() =>{
+        let result
+
+        try{
+            result = await axios.get(pickCheckUrl+game.id, getTokenHeaders())
+            console.log(result.data)
+
+            if(result.data[0]){
+                console.log(result.data[0])
+                dispatchSelectedPick({
+                    type: 'NEW_PICK_SUCCESS',
+                    payload: result.data[0]
+                })
+            }
+
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    React.useEffect(() => {
+        checkForPick()
+    }, [])
     
     // MakePicksComponent toggles triggerDone to true once user clicks 'Done'
     // When triggerDone == true, Pick is created
@@ -28,8 +54,9 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
 
         // Creates formatted Pick data with users selection
         const pickData = {choice: pick, game: game.id, user: localStorage['user_id']}
-
+        console.log(selectedPick)
         try{
+            // console.log(localStorage['user_id']);
             let result
 
             // On first submit, it creates a new pick, if submitted again the pick is edited
