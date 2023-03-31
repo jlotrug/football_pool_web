@@ -1,5 +1,5 @@
 import React from "react";
-import { UserReducer } from "./UsersReducer";
+import { UserReducer } from "../Reducers/UsersReducer";
 import axios from "axios";
 
 // const accountsUrl = "http://localhost:8080/account/users/"

@@ -1,4 +1,4 @@
-import './App.css';
+import './static/style/App.css';
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react'

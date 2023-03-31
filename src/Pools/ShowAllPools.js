@@ -1,8 +1,8 @@
 import React, { useCallback} from 'react'
-import './MakePicksFormStyle.css'
-import { poolsReducer} from './GamePoolReducers';
+import '../static/style/MakePicksFormStyle.css'
+import { poolsReducer} from '../Reducers/GamePoolReducers';
 import axios from 'axios';
-import { getTokenHeaders } from './APIFunctions';
+import { GetTokenHeaders } from "../API/GetTokenHeaders"
 
 const url = "http://127.0.0.1:8000/api/v1/pools/"
 
@@ -15,7 +15,7 @@ export const ShowAllPools = ({handleSelectPool}) => {
         dispatchPools({type: 'POOLS_FETCH_INIT'})
 
         try{
-            const result = await axios.get(url, getTokenHeaders())
+            const result = await axios.get(url, GetTokenHeaders())
             dispatchPools({
                 type: 'POOLS_FETCH_SUCCESS',
                 payload: result.data,

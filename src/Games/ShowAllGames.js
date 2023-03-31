@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from 'react'
-import './MakePicksFormStyle.css'
-import {selectedGamesReducer} from './GamePoolReducers';
-import { PickForm } from './PickForm';
+import '../static/style/MakePicksFormStyle.css'
+import {selectedGamesReducer} from '../Reducers/GamePoolReducers';
+import { PickForm } from '../Picks/PickForm';
 import axios from 'axios';
-import { getTokenHeaders } from './APIFunctions';
+import { GetTokenHeaders } from "../API/GetTokenHeaders"
 
 const url = "http://localhost:8000/api/v1/games?poolid="
 
@@ -45,7 +45,7 @@ export const ShowAllGames = ({pool, triggerDone, resetDone, handleAllPicksMade})
         dispatchGames({type: 'GAMES_FETCH_INIT'})
 
         try{
-            const result = await axios.get(url+pool, getTokenHeaders())
+            const result = await axios.get(url+pool, GetTokenHeaders())
 
             dispatchGames({
                 type: 'GAMES_FETCH_SUCCESS',

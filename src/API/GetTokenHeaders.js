@@ -1,5 +1,5 @@
 // Create header with user token
-export const getTokenHeaders = () => {
+export const GetTokenHeaders = () => {
 
     const tokenHeaders = {
         headers:{

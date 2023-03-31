@@ -1,7 +1,7 @@
 import React from "react"
-import { NewGameReducer } from './NewGameReducer';
+import { NewGameReducer } from '../Reducers/NewGameReducer';
 import axios from "axios";
-import { getTokenHeaders } from "./APIFunctions";
+import { GetTokenHeaders } from "../API/GetTokenHeaders"
 
 export const GameForm = ({gameId, poolId}) => {
     const [inputHidden, setInputHidden] = React.useState(false)
@@ -45,7 +45,7 @@ export const GameForm = ({gameId, poolId}) => {
                 team_one: teamOne,
                 team_two: teamTwo,
                 pool: poolId
-            }, getTokenHeaders())
+            }, GetTokenHeaders())
             console.log(result)
             dispatchNewGame({
                 type: 'NEW_GAME_SUCCESS',

@@ -1,5 +1,5 @@
 import React from "react";
-import { LoginReducer } from "./LoginReducer";
+import { LoginReducer } from "../Reducers/LoginReducer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 

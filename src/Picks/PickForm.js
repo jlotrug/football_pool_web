@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
-import { getTokenHeaders } from "./APIFunctions";
+import { GetTokenHeaders } from "../API/GetTokenHeaders"
 import axios from "axios";
-import { NewPickReducer } from "./PickReducer";
+import { NewPickReducer } from "../Reducers/PickReducer";
 
 
 const url = "http://127.0.0.1:8000/api/v1/picks/"
@@ -19,7 +19,7 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
         let result
 
         try{
-            result = await axios.get(pickCheckUrl+game.id, getTokenHeaders())
+            result = await axios.get(pickCheckUrl+game.id, GetTokenHeaders())
             console.log(result.data)
 
             if(result.data[0]){
@@ -60,8 +60,8 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
             let result
 
             // On first submit, it creates a new pick, if submitted again the pick is edited
-            if(Object.keys(selectedPick.data).length === 0){ result = await axios.post(url, pickData, getTokenHeaders())}
-            else { result = await axios.put(url + selectedPick.data.id + '/', pickData, getTokenHeaders())}
+            if(Object.keys(selectedPick.data).length === 0){ result = await axios.post(url, pickData, GetTokenHeaders())}
+            else { result = await axios.put(url + selectedPick.data.id + '/', pickData, GetTokenHeaders())}
 
             dispatchSelectedPick({
                 type: 'NEW_PICK_SUCCESS',

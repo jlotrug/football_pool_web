@@ -1,14 +1,14 @@
-import './App.css';
+import './static/style/App.css';
 // import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react'
 // import { ShowAllPools } from './ShowAllPools';
 import { Routes, Router, Route, Link, useNavigate } from 'react-router-dom';
 import { MainMenu } from './MainMenu';
-import { NewPoolForm } from './NewPoolForm';
-import { MakePicksComponent } from './MakePicksComponent';
-import { CreateAccount } from './CreateAccount';
-import {Login} from './Login'
+import { NewPoolForm } from './Pools/NewPoolForm';
+import { MakePicksComponent } from './Picks/MakePicksComponent';
+import { CreateAccount } from './Account/CreateAccount';
+import {Login} from './Account/Login'
 
 
 const App = () => {

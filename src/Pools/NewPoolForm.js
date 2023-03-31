@@ -1,13 +1,13 @@
-import './App.css';
+import '../static/style/App.css';
 import React from 'react';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
-import {NewPoolReducer} from './NewPoolReducer'
-import { GameForm } from './NewGameForm';
-import { GamesReducer } from './GamesReducer';
+import {NewPoolReducer} from '../Reducers/NewPoolReducer'
+import { GameForm } from '../Games/NewGameForm';
+import { GamesReducer } from '../Reducers/GamesReducer';
 import { NameForm } from './NameForm';
 import { Link } from 'react-router-dom';
-import { getTokenHeaders } from './APIFunctions';
+import { GetTokenHeaders } from "../API/GetTokenHeaders"
 
 const poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
 const gamesUrl = "http://localhost:8000/api/v1/games/"
@@ -35,7 +35,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
             const result = await axios.post(poolUrl, {
                 pool_name: poolName,
 
-            }, getTokenHeaders())
+            }, GetTokenHeaders())
             dispatchNewPool({
                 type: 'NEW_POOL_SUCCESS',
                 payload: result.data
@@ -57,7 +57,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
         try{
             const result = await axios.post(gamesUrl, {
                 pool: newPool.data.id,
-            }, getTokenHeaders())
+            }, GetTokenHeaders())
             dispatchGame({
                 type: 'CREATE_GAME_SUCCESS',
                 payload: [...games.data, result.data]

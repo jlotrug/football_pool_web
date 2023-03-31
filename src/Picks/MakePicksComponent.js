@@ -1,7 +1,7 @@
 import React from 'react'
-import './MakePicksFormStyle.css'
-import { ShowAllPools } from './ShowAllPools';
-import { ShowAllGames } from './ShowAllGames';
+import '../static/style/MakePicksFormStyle.css'
+import { ShowAllPools } from '../Pools/ShowAllPools';
+import { ShowAllGames } from '../Games/ShowAllGames';
 
 
 export const MakePicksComponent = ({formClass}) => {

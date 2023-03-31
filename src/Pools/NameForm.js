@@ -1,6 +1,6 @@
 import React from "react"
 import axios from "axios"
-import { getTokenHeaders } from "./APIFunctions"
+import { GetTokenHeaders } from "../API/GetTokenHeaders"
 
 const poolUrl = "http://localhost:8000/api/v1/pools/"
 
@@ -39,7 +39,7 @@ export const NameForm = ({formClass, handleCallback, poolDispatch, poolId}) => {
         try{
             const result = await axios.put(poolUrl + poolId + '/', {
                 pool_name: poolName,
-            }, getTokenHeaders())
+            }, GetTokenHeaders())
 
             poolDispatch({type: 'EDIT_POOL_SUCCESS', payload: result.data})
         }catch(e){
