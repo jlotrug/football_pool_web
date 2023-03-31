@@ -1,8 +1,7 @@
 import React, { useCallback} from 'react'
 import '../static/style/MakePicksFormStyle.css'
 import { poolsReducer} from '../Reducers/GamePoolReducers';
-import axios from 'axios';
-import { GetTokenHeaders } from "../API/GetTokenHeaders"
+import { FetchData } from '../API/FetchData';
 
 const url = "http://127.0.0.1:8000/api/v1/pools/"
 
@@ -11,21 +10,8 @@ export const ShowAllPools = ({handleSelectPool}) => {
         poolsReducer, {data: [], isLoading: false, isError: false}
     )
 
-    const handleFetchPools = useCallback(async() =>{
-        dispatchPools({type: 'POOLS_FETCH_INIT'})
-
-        try{
-            const result = await axios.get(url, GetTokenHeaders())
-            dispatchPools({
-                type: 'POOLS_FETCH_SUCCESS',
-                payload: result.data,
-                
-            })
-        }catch(e){
-            console.log(e)
-            dispatchPools({type: 'POOLS_FETCH_FAILURE'})
-        }
-
+    const handleFetchPools = useCallback(() =>{
+        FetchData(url, dispatchPools, 'POOLS')
     }, [])
 
     React.useEffect(() => {

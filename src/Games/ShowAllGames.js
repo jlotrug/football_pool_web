@@ -2,8 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import '../static/style/MakePicksFormStyle.css'
 import {selectedGamesReducer} from '../Reducers/GamePoolReducers';
 import { PickForm } from '../Picks/PickForm';
-import axios from 'axios';
-import { GetTokenHeaders } from "../API/GetTokenHeaders"
+import { FetchData } from '../API/FetchData';
 
 const url = "http://localhost:8000/api/v1/games?poolid="
 
@@ -37,27 +36,12 @@ export const ShowAllGames = ({pool, triggerDone, resetDone, handleAllPicksMade})
 
     }, [numPicks])
 
-    
-
-    const handleFetchGames = useCallback(async() =>{
+    const handleFetchGames = useCallback(() => {
         if(!pool) return
 
-        dispatchGames({type: 'GAMES_FETCH_INIT'})
-
-        try{
-            const result = await axios.get(url+pool, GetTokenHeaders())
-
-            dispatchGames({
-                type: 'GAMES_FETCH_SUCCESS',
-                payload: result.data
-            
-            })
-        }catch(e){
-            console.log(e)
-            dispatchGames({type: 'GAMES_FETCH_FAILURE'})
-        }
-    
+        FetchData(url+pool, dispatchGames, 'GAMES')
     }, [pool])
+
 
     useEffect(() => {
         handleFetchGames()
