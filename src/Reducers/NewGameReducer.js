@@ -1,5 +1,6 @@
 export const NewGameReducer = (state, action) =>{
 
+    
     switch(action.type){
         case 'NEW_GAME_INIT':
         return{

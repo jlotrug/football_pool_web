@@ -1,10 +1,10 @@
 import React from "react"
-import axios from "axios"
-import { GetTokenHeaders } from "../API/GetTokenHeaders"
+import { NewPoolReducer } from "../Reducers/NewPoolReducer"
+import { PutPostData } from "../API/PutPostData"
 
-const poolUrl = "http://localhost:8000/api/v1/pools/"
+let poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
 
-export const NameForm = ({formClass, handleCallback, poolDispatch, poolId}) => {
+export const NameForm = ({poolDispatch, setNewGameDisabled, newPool}) => {
     const [formDisabled, setFormDisabled] = React.useState(false)
     const [submitValue, setSubmitValue] = React.useState('Done')
     const [firstSubmit, setFirstSubmit] = React.useState(true)
@@ -14,12 +14,12 @@ export const NameForm = ({formClass, handleCallback, poolDispatch, poolId}) => {
         e.preventDefault()
         if(submitValue === 'Done'){
             if(firstSubmit){
-                handleCallback(poolName)
+                createEditPool(true, poolUrl, 'POOL')
                 setFirstSubmit(false)
             }else{
-                editName()
+                const editUrl = poolUrl + newPool.data[0].id + '/'
+                createEditPool(false, editUrl, 'POOL_EDIT')
             }
-            
             setSubmitValue('Edit')
             setFormDisabled(true)
         }else{
@@ -32,23 +32,18 @@ export const NameForm = ({formClass, handleCallback, poolDispatch, poolId}) => {
         setPoolName(e.target.value)
     }
 
-    const editName = async() => {
-        
-        poolDispatch({type: 'NEW_POOL_INIT'})
+    // const newPoolCreate = (isPost, url, type) => {
+    //     setNewGameDisabled(false)
+    //     PutPostData(url, dispatchNewPool, type, isPost, {pool_name: poolName, league: 1}, newPool.data)
+    // }
 
-        try{
-            const result = await axios.put(poolUrl + poolId + '/', {
-                pool_name: poolName,
-            }, GetTokenHeaders())
-
-            poolDispatch({type: 'EDIT_POOL_SUCCESS', payload: result.data})
-        }catch(e){
-            poolDispatch({type: 'NEW_POOL_FAILURE'})
-        }
+    const createEditPool = (isPost, url, type) => {
+        setNewGameDisabled(false)
+        PutPostData(url, poolDispatch, type, isPost, {pool_name: poolName, league: 1}, newPool.data)
     }
 
     return(
-        <form onSubmit={handleSubmit} className={formClass}>
+        <form onSubmit={handleSubmit}>
             <label>Name</label><br />
             <span className='pool-input'>
                 <input 
