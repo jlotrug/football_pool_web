@@ -1,8 +1,8 @@
 import React from "react"
 import { NewGameReducer } from '../Reducers/NewGameReducer';
-import axios from "axios";
-import { GetTokenHeaders } from "../API/GetTokenHeaders"
 import { PutPostData } from '../API/PutPostData';
+
+const gamesUrl = "http://localhost:8000/api/v1/games/"
 
 export const GameForm = ({gameId, poolId}) => {
     const [inputHidden, setInputHidden] = React.useState(false)
@@ -11,10 +11,10 @@ export const GameForm = ({gameId, poolId}) => {
     const [teamTwo, setTeamTwo] = React.useState("")
 
     const [newGame, dispatchNewGame] = React.useReducer(
-        NewGameReducer, {data: null, isLoading: false, isError: true}
+        NewGameReducer, {data: [], isLoading: false, isError: true}
     )
 
-    const gamesUrl = "http://localhost:8000/api/v1/games/"
+    
 
     const handleSubmit = (e) => {
         if(submitValue === 'Done'){
@@ -38,29 +38,8 @@ export const GameForm = ({gameId, poolId}) => {
 
     const editGame = (e) => {
         e.preventDefault()
-        PutPostData(gamesUrl + gameId+'/', dispatchNewGame, 'GAME', false, {team_one: teamOne, team_two: teamTwo, pool: poolId})
+        PutPostData(gamesUrl + gameId+'/', dispatchNewGame, 'GAME', false, {team_one: teamOne, team_two: teamTwo, pool: poolId}, newGame.data)
     }
-
-    // const editGame = async(e) =>{
-    //     e.preventDefault()
-
-    //     dispatchNewGame({type: 'NEW_GAME_INIT'})
-
-    //     try{
-    //         const result = await axios.put(gamesUrl+gameId+ '/', {
-    //             team_one: teamOne,
-    //             team_two: teamTwo,
-    //             pool: poolId
-    //         }, GetTokenHeaders())
-    //         console.log(result)
-    //         dispatchNewGame({
-    //             type: 'NEW_GAME_SUCCESS',
-    //             payload: result.data
-    //         })
-    //     }catch{
-    //         dispatchNewGame({type: 'NEW_GAME_FAILURE'})
-    //     }
-    // }
 
     return(
         <li>

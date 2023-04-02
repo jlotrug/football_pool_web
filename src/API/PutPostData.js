@@ -9,12 +9,12 @@ export const PutPostData = async(url, dispatchFunction, type, isPost, postPutDat
         let result
        if(isPost){  result = await axios.post(url, postPutData, GetTokenHeaders())}
        else {  result = await axios.put(url, postPutData, GetTokenHeaders())}
-       console.log(type)
+    //    console.log(currentData)
         dispatchFunction({
             type: 'NEW_' + type + '_SUCCESS',
             payload: [...currentData, result.data]
         })
-        console.log(result)
+        // console.log(result)
     }catch(e){
         console.log(e)
         dispatchFunction({type: 'NEW_' + type + '_FAILURE'})
