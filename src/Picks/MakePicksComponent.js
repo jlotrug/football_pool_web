@@ -2,7 +2,7 @@ import React from 'react'
 import '../static/style/MakePicksFormStyle.css'
 import { ShowAllPools } from '../Pools/ShowAllPools';
 import { ShowAllGames } from '../Games/ShowAllGames';
-
+import { useNavigate } from 'react-router-dom';
 
 export const MakePicksComponent = ({formClass}) => {
     const [allPoolsClass, setAllPoolsClass] = React.useState("all-pools")
@@ -10,6 +10,7 @@ export const MakePicksComponent = ({formClass}) => {
     const [currentPool, setCurrentPool] = React.useState(false)
     const [done, setDone] = React.useState(false)
     const [allPicksMade, setAllPicksMade] = React.useState(false)
+    const navigate = useNavigate();
     
     React.useEffect(() => {
         setAllPoolsClass("all-pools")
@@ -38,7 +39,9 @@ export const MakePicksComponent = ({formClass}) => {
 
     const handleDone = () => {
         if(allPicksMade){
+            
             setDone(true)
+            navigate("/")
         }
     }
 

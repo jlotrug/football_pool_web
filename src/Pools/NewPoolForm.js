@@ -3,21 +3,16 @@ import React from 'react';
 import Button from 'react-bootstrap/Button'
 import {NewPoolReducer} from '../Reducers/NewPoolReducer'
 import { GameForm } from '../Games/NewGameForm';
-import { GamesReducer } from '../Reducers/GamesReducer';
 import { NewGameReducer } from '../Reducers/NewGameReducer';
 import { NameForm } from './NameForm';
 import { Link } from 'react-router-dom';
 import { PutPostData } from '../API/PutPostData';
 
-const poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
 const gamesUrl = "http://localhost:8000/api/v1/games/"
 
 export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDone}) => {
     // const [submitValue, setSubmitValue] = React.useState('Done')
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
-    // const [games, dispatchGame] = React.useReducer(
-    //     GamesReducer, {data:[], usLoading: false, isError: false}
-    // )
     const [games, dispatchGame] = React.useReducer(
         NewGameReducer, {data:[], usLoading: false, isError: false}
     )
