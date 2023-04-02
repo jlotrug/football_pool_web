@@ -2,6 +2,7 @@ import React from "react"
 import { NewGameReducer } from '../Reducers/NewGameReducer';
 import axios from "axios";
 import { GetTokenHeaders } from "../API/GetTokenHeaders"
+import { PutPostData } from '../API/PutPostData';
 
 export const GameForm = ({gameId, poolId}) => {
     const [inputHidden, setInputHidden] = React.useState(false)
@@ -35,26 +36,31 @@ export const GameForm = ({gameId, poolId}) => {
         setTeamTwo(e.target.value)
     }
 
-    const editGame = async(e) =>{
+    const editGame = (e) => {
         e.preventDefault()
-
-        dispatchNewGame({type: 'NEW_GAME_INIT'})
-
-        try{
-            const result = await axios.put(gamesUrl+gameId+ '/', {
-                team_one: teamOne,
-                team_two: teamTwo,
-                pool: poolId
-            }, GetTokenHeaders())
-            console.log(result)
-            dispatchNewGame({
-                type: 'NEW_GAME_SUCCESS',
-                payload: result.data
-            })
-        }catch{
-            dispatchNewGame({type: 'NEW_GAME_FAILURE'})
-        }
+        PutPostData(gamesUrl + gameId+'/', dispatchNewGame, 'GAME', false, {team_one: teamOne, team_two: teamTwo, pool: poolId})
     }
+
+    // const editGame = async(e) =>{
+    //     e.preventDefault()
+
+    //     dispatchNewGame({type: 'NEW_GAME_INIT'})
+
+    //     try{
+    //         const result = await axios.put(gamesUrl+gameId+ '/', {
+    //             team_one: teamOne,
+    //             team_two: teamTwo,
+    //             pool: poolId
+    //         }, GetTokenHeaders())
+    //         console.log(result)
+    //         dispatchNewGame({
+    //             type: 'NEW_GAME_SUCCESS',
+    //             payload: result.data
+    //         })
+    //     }catch{
+    //         dispatchNewGame({type: 'NEW_GAME_FAILURE'})
+    //     }
+    // }
 
     return(
         <li>

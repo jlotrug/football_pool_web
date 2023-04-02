@@ -1,5 +1,4 @@
 import React from "react"
-import { NewPoolReducer } from "../Reducers/NewPoolReducer"
 import { PutPostData } from "../API/PutPostData"
 
 let poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
@@ -10,6 +9,7 @@ export const NameForm = ({poolDispatch, setNewGameDisabled, newPool}) => {
     const [firstSubmit, setFirstSubmit] = React.useState(true)
     const [poolName, setPoolName] = React.useState("")
 
+    // Checks if it's an edit or initial pool. Send correct data to API function
     const handleSubmit = (e) => {
         e.preventDefault()
         if(submitValue === 'Done'){
@@ -28,15 +28,12 @@ export const NameForm = ({poolDispatch, setNewGameDisabled, newPool}) => {
         }
     }
 
+    // Updates poolName with users input
     const handleNameChange = (e) => {
         setPoolName(e.target.value)
     }
 
-    // const newPoolCreate = (isPost, url, type) => {
-    //     setNewGameDisabled(false)
-    //     PutPostData(url, dispatchNewPool, type, isPost, {pool_name: poolName, league: 1}, newPool.data)
-    // }
-
+    // Sends data for pool to be created or edited
     const createEditPool = (isPost, url, type) => {
         setNewGameDisabled(false)
         PutPostData(url, poolDispatch, type, isPost, {pool_name: poolName, league: 1}, newPool.data)

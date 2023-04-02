@@ -1,13 +1,12 @@
 import '../static/style/App.css';
 import React from 'react';
 import Button from 'react-bootstrap/Button'
-import axios from 'axios';
 import {NewPoolReducer} from '../Reducers/NewPoolReducer'
 import { GameForm } from '../Games/NewGameForm';
 import { GamesReducer } from '../Reducers/GamesReducer';
+import { NewGameReducer } from '../Reducers/NewGameReducer';
 import { NameForm } from './NameForm';
 import { Link } from 'react-router-dom';
-import { GetTokenHeaders } from "../API/GetTokenHeaders"
 import { PutPostData } from '../API/PutPostData';
 
 const poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
@@ -16,8 +15,11 @@ const gamesUrl = "http://localhost:8000/api/v1/games/"
 export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDone}) => {
     // const [submitValue, setSubmitValue] = React.useState('Done')
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
+    // const [games, dispatchGame] = React.useReducer(
+    //     GamesReducer, {data:[], usLoading: false, isError: false}
+    // )
     const [games, dispatchGame] = React.useReducer(
-        GamesReducer, {data:[], usLoading: false, isError: false}
+        NewGameReducer, {data:[], usLoading: false, isError: false}
     )
     const [newPool, dispatchNewPool] = React.useReducer(
         NewPoolReducer, {data: [], isLoading: false, isError: false}
@@ -29,18 +31,15 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
 
     const createNewGame = () => {
         PutPostData(gamesUrl, dispatchGame,'GAME', true, {pool: newPool.data[0].id,}, games.data)
-   
     }
 
     return(
         <div className="">
             {console.log(newPool)}
             <NameForm 
-            // handleCallback={handleNameSubmit} 
             poolDispatch={dispatchNewPool}
             setNewGameDisabled={setNewGameDisabled}
             newPool = {newPool}
-            // poolId = {newPool.data[0].id}
             />
             <div>
                 <ul className='no-bullet'>
