@@ -3,9 +3,7 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react'
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
-// const logoutUrl = "http://localhost:8080/api/dj-rest-auth/logout/"
 const logout = "http://127.0.0.1:8000/api/v1/dj-rest-auth/logout/"
 
 export const MainMenu = ({loggedout}) => {
@@ -40,6 +38,17 @@ export const MainMenu = ({loggedout}) => {
             >
             Make Picks
             </Button>
+        </Link>
+        <Link to={!!localStorage['session'] ? 'pick-winners' : '/'}>
+          <Button
+           size="lg" 
+           variant="outline-dark" 
+           className="button-style"
+           onClick={handleLoginWarning}
+          >
+            Pick Winners
+          </Button>
+
         </Link>
         
         </div>

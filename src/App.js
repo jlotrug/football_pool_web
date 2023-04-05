@@ -9,6 +9,7 @@ import { NewPoolForm } from './Pools/NewPoolForm';
 import { MakePicksComponent } from './Picks/MakePicksComponent';
 import { CreateAccount } from './Account/CreateAccount';
 import {Login} from './Account/Login'
+import { PickWinners } from './Winners/PickWinners';
 
 
 const App = () => {
@@ -58,6 +59,7 @@ const App = () => {
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/login" element={<Login handleCurrentUser={handleCurrentUser}/>} />
         <Route path='/logout' element={<Logout handleCurrentUser={handleCurrentUser}/>} />
+        <Route path='/pick-winners' element={<PickWinners/>}/>
 
       </Routes>
     </div>
