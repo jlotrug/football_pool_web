@@ -2,10 +2,12 @@ import React from "react";
 import { LoginReducer } from "../Reducers/LoginReducer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 // const loginUrl = "http://localhost:8080/api/dj-rest-auth/login/"
 // const loginUrl = "http://localhost:8080/account/login/"
 const loginUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/login/"
+// const loginUrl = "http://127.0.0.1:8000/api/v1/token/"
 
 export const Login = ({handleCurrentUser}) => {
     const [username, setUsername] = React.useState("")
@@ -33,14 +35,19 @@ export const Login = ({handleCurrentUser}) => {
                 username: username,
                 password: password
             })
+            console.log(result)
             dispatchLogin({type: 'NEW_LOGIN_SUCCESS'})
-            localStorage['session'] = result.data.key
+            localStorage['session'] = result.data.access
+            localStorage['refresh'] = result.data.refresh
             localStorage['user_id'] = result.data.user.id
-            // localStorage['user'] = result.data.user.first_name
+            localStorage['user'] = result.data.user.first_name
             handleCurrentUser(result.data.user.first_name)
             
-            console.log(result)
-            console.log(localStorage['session'])
+            console.log(result.data.user.first_name)
+            const decodedData = jwt_decode(result.data.access)
+            // console.log(localStorage['session'])
+            console.log(decodedData)
+            console.log(result.data.access)
             navigate("/")
             
         }catch(e){

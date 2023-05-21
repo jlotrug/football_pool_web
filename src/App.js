@@ -1,7 +1,7 @@
 import './static/style/App.css';
 // import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import React from 'react'
+import React, {useContext} from 'react'
 // import { ShowAllPools } from './ShowAllPools';
 import { Routes, Router, Route, Link, useNavigate } from 'react-router-dom';
 import { MainMenu } from './MainMenu';
@@ -10,6 +10,7 @@ import { MakePicksComponent } from './Picks/MakePicksComponent';
 import { CreateAccount } from './Account/CreateAccount';
 import {Login} from './Account/Login'
 import { PickWinners } from './Winners/PickWinners';
+
 
 
 const App = () => {
@@ -51,16 +52,17 @@ const App = () => {
     {GreetingOrCreate()} 
     <Link to="/"><h1 className='heading'>Football Pool</h1></Link>
     {loginOrLogout()}
-
+    
       <Routes>
-        <Route path="/" element={<MainMenu />}/>
-        <Route path="/new-pool" element={<NewPoolForm />} />
-        <Route path="/make-picks" element={<MakePicksComponent />} />
-        <Route path="/create-account" element={<CreateAccount />} />
-        <Route path="/login" element={<Login handleCurrentUser={handleCurrentUser}/>} />
-        <Route path='/logout' element={<Logout handleCurrentUser={handleCurrentUser}/>} />
-        <Route path='/pick-winners' element={<PickWinners/>}/>
-
+        
+          <Route path="/" element={<MainMenu />}/>
+          <Route path="/new-pool" element={<NewPoolForm />} />
+          <Route path="/make-picks" element={<MakePicksComponent />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/login" element={<Login handleCurrentUser={handleCurrentUser}/>} />
+          <Route path='/logout' element={<Logout handleCurrentUser={handleCurrentUser}/>} />
+          <Route path='/pick-winners' element={<PickWinners/>}/>
+        
       </Routes>
     </div>
   </>
