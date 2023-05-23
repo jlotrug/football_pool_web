@@ -10,6 +10,8 @@ import { MakePicksComponent } from './Picks/MakePicksComponent';
 import { CreateAccount } from './Account/CreateAccount';
 import {Login} from './Account/Login'
 import { PickWinners } from './Winners/PickWinners';
+import { ShowLeagues } from './League/ShowLeagues';
+import { NewLeagueForm } from './League/NewLeagueForm';
 
 
 
@@ -62,6 +64,8 @@ const App = () => {
           <Route path="/login" element={<Login handleCurrentUser={handleCurrentUser}/>} />
           <Route path='/logout' element={<Logout handleCurrentUser={handleCurrentUser}/>} />
           <Route path='/pick-winners' element={<PickWinners/>}/>
+          <Route path='/leagues' element={<ShowLeagues/>}/>
+          <Route path='/leagues/new-league' element={<NewLeagueForm/>}/>
         
       </Routes>
     </div>
