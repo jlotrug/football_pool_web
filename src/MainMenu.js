@@ -3,15 +3,18 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import AuthenticationContext from './Context/AuthenticationContext';
 
 const logout = "http://127.0.0.1:8000/api/v1/dj-rest-auth/logout/"
 
 export const MainMenu = ({loggedout}) => {
   const [warning, setwarning] = React.useState("")
+  let {user} = useContext(AuthenticationContext)
 
   // If not logged in, displays message to user and does not continue
   const handleLoginWarning = () => {
-    if(localStorage['session'] == "") setwarning("Please login or create an account to continue")
+    if(!user) setwarning("Please login or create an account to continue")
   }
 
   return (
@@ -28,7 +31,7 @@ export const MainMenu = ({loggedout}) => {
             Start New Pool
             </Button>
         </Link> */}
-        <Link to={!!localStorage['session'] ? "leagues" : "/"}>
+        <Link to={!!user ? "leagues" : "/"}>
             <Button 
             size="lg" 
             variant="outline-dark" 
@@ -39,7 +42,7 @@ export const MainMenu = ({loggedout}) => {
             </Button>
         </Link>
 
-        <Link to={!!localStorage['session'] ? "make-picks" : "/"}>
+        <Link to={!!user ? "make-picks" : "/"}>
             <Button 
             size="lg" 
             variant="outline-dark" 
@@ -49,7 +52,7 @@ export const MainMenu = ({loggedout}) => {
             Make Picks
             </Button>
         </Link>
-        <Link to={!!localStorage['session'] ? 'pick-winners' : '/'}>
+        <Link to={!!user ? 'pick-winners' : '/'}>
           <Button
            size="lg" 
            variant="outline-dark" 

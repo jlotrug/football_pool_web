@@ -12,39 +12,29 @@ import {Login} from './Account/Login'
 import { PickWinners } from './Winners/PickWinners';
 import { ShowLeagues } from './League/ShowLeagues';
 import { NewLeagueForm } from './League/NewLeagueForm';
+import AuthenticationContext from './Context/AuthenticationContext';
 
 
 
 const App = () => {
-  const [currentUser, setCurrentUser] = React.useState(localStorage['user'])
-
-  // Sets current user in local storage and state
-  const handleCurrentUser = (user) => {
-    setCurrentUser(user)
-    // localStorage['user'] = user
-  }
-
-  // Clears localStorage when logging out
-  const HandleLogout = () => {
-    localStorage.clear()
-  }
+  const {user, authToken, logoutUser} = useContext(AuthenticationContext)
+ 
   
   // Controls whether login or logout is displayed in top right
   const loginOrLogout = () => {
-    // if(localStorage['session'] === ""){
-    if(!currentUser){
+    if(!user){
       return <Link to="login"><span id='login'>Login</span></Link>
     }else{
-      return <Link to="logout"><span onClick={HandleLogout} id='login'>Logout</span></Link>
+      return <Link to=""><span onClick={logoutUser} id='login'>Logout</span></Link>
     }
   }
 
   // Controls Whether create account or 'Hello User' is displayed in top left
   const GreetingOrCreate = () =>{
-    if(!currentUser){
+    if(!user){
       return <Link to="create-account"><span id='create-account'>Create Account</span></Link>
     }else{
-      return <span id="create-account">Hello {currentUser}!</span>
+      return <span id="create-account">Hello {user.first_name}!</span>
     }
   }
 
@@ -55,34 +45,19 @@ const App = () => {
     <Link to="/"><h1 className='heading'>Football Pool</h1></Link>
     {loginOrLogout()}
     
-      <Routes>
-        
+      <Routes>        
           <Route path="/" element={<MainMenu />}/>
           <Route path="/new-pool" element={<NewPoolForm />} />
           <Route path="/make-picks" element={<MakePicksComponent />} />
           <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/login" element={<Login handleCurrentUser={handleCurrentUser}/>} />
-          <Route path='/logout' element={<Logout handleCurrentUser={handleCurrentUser}/>} />
+          <Route path="/login" element={<Login/>} />
           <Route path='/pick-winners' element={<PickWinners/>}/>
           <Route path='/leagues' element={<ShowLeagues/>}/>
-          <Route path='/leagues/new-league' element={<NewLeagueForm/>}/>
-        
+          <Route path='/leagues/new-league' element={<NewLeagueForm/>}/>        
       </Routes>
     </div>
   </>
   )
-}
-
-const Logout = ({handleCurrentUser}) => {
-
-  const navigate = useNavigate()
-  
-  React.useEffect( () => {
-    handleCurrentUser("")
-    localStorage['session'] = ''
-    navigate('/')
-
-  }, [])
 }
 
 export default App;

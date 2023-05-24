@@ -1,7 +1,10 @@
 import axios from 'axios';
+import { useContext } from "react"
+import AuthenticationContext from "../Context/AuthenticationContext"
 import { GetTokenHeaders } from "../API/GetTokenHeaders"
 
 export const FetchData = async(url, dispatchFunction, type) => {
+    // const {authTokens} = useContext(AuthenticationContext)
     dispatchFunction({type: type + '_FETCH_INIT'})
     // console.log("Local Storage" + localStorage['session'])
         try{
