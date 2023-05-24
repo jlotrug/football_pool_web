@@ -10,6 +10,7 @@ export const RefreshAccessToken = async() => {
             }, {withCredentials: true})
             
             console.log(result.data.acess)
+            console.log(result)
             localStorage['session'] = result.data.access
             localStorage['refresh'] = result.data.refresh
             console.log(result.data.access)
