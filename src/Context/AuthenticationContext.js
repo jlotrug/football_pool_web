@@ -80,13 +80,13 @@ export const AuthenticationProvider = ({children}) => {
             localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
             // localStorage.setItem('user', JSON.stringify(result.data.user))
             // console.log(localStorage.getItem('authTokens'))
-            if(loading) setLoading(false)
+            
             
         }catch(e){
             console.log(e)
             logoutUser()
         }
-        
+        if(loading) setLoading(false)
     }
      
 
@@ -118,7 +118,7 @@ export const AuthenticationProvider = ({children}) => {
 
     return(
         <AuthenticationContext.Provider value={contextData}>
-            {children}
+            {loading ? null : children}
             
         </AuthenticationContext.Provider>
     )
