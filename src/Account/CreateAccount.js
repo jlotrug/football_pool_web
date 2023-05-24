@@ -37,7 +37,8 @@ export const CreateAccount = () => {
                 email: email
 
             })
-
+            localStorage['session'] = result.data.access
+            localStorage['refresh'] = result.data.refresh
             console.log(result)
             dispatchNewUser({
                 type: 'NEW_USER_SUCCESS',

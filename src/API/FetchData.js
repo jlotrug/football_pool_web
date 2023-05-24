@@ -3,7 +3,7 @@ import { GetTokenHeaders } from "../API/GetTokenHeaders"
 
 export const FetchData = async(url, dispatchFunction, type) => {
     dispatchFunction({type: type + '_FETCH_INIT'})
-
+    // console.log("Local Storage" + localStorage['session'])
         try{
             const result = await axios.get(url, GetTokenHeaders())
             dispatchFunction({

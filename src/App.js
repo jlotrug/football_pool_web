@@ -21,7 +21,7 @@ const App = () => {
   // Sets current user in local storage and state
   const handleCurrentUser = (user) => {
     setCurrentUser(user)
-    localStorage['user'] = user
+    // localStorage['user'] = user
   }
 
   // Clears localStorage when logging out
@@ -31,7 +31,8 @@ const App = () => {
   
   // Controls whether login or logout is displayed in top right
   const loginOrLogout = () => {
-    if(localStorage['session'] === ""){
+    // if(localStorage['session'] === ""){
+    if(!currentUser){
       return <Link to="login"><span id='login'>Login</span></Link>
     }else{
       return <Link to="logout"><span onClick={HandleLogout} id='login'>Logout</span></Link>
@@ -45,7 +46,6 @@ const App = () => {
     }else{
       return <span id="create-account">Hello {currentUser}!</span>
     }
-  
   }
 
   return(
