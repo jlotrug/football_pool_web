@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
 import { UserReducer } from "../Reducers/UsersReducer";
 import axios from "axios";
+import AuthenticationContext from "../Context/AuthenticationContext";
+
+    
 
 // const accountsUrl = "http://localhost:8080/account/users/"
 // const accountsUrl = "localhost:8080/api/dj-rest-auth/registration/"
@@ -16,6 +19,7 @@ export const CreateAccount = () => {
     const [confirmPassword, setConfirmPassword] = React.useState("")
     const [allErrors, setAllErrors] = React.useState([])
     const [disabledSubmit, setDisabledSubmit] = React.useState(true)
+    const {storeCredentials} = useContext(AuthenticationContext)
 
     const [newUser, dispatchNewUser] = React.useReducer(
         UserReducer, {data: [], isLoading: false, isError:false}
@@ -37,9 +41,10 @@ export const CreateAccount = () => {
                 email: email
 
             })
-            localStorage['session'] = result.data.access
-            localStorage['refresh'] = result.data.refresh
-            console.log(result)
+            // localStorage['session'] = result.data.access
+            // localStorage['refresh'] = result.data.refresh
+            // console.log(result)
+            storeCredentials(result)
             dispatchNewUser({
                 type: 'NEW_USER_SUCCESS',
                 payload: result.data

@@ -12,6 +12,7 @@ import {Login} from './Account/Login'
 import { PickWinners } from './Winners/PickWinners';
 import { ShowLeagues } from './League/ShowLeagues';
 import { NewLeagueForm } from './League/NewLeagueForm';
+import {LeagueDetails} from './League/LeagueDetails'
 import AuthenticationContext from './Context/AuthenticationContext';
 
 
@@ -53,7 +54,8 @@ const App = () => {
           <Route path="/login" element={<Login/>} />
           <Route path='/pick-winners' element={<PickWinners/>}/>
           <Route path='/leagues' element={<ShowLeagues/>}/>
-          <Route path='/leagues/new-league' element={<NewLeagueForm/>}/>        
+          <Route path='/leagues/new-league' element={<NewLeagueForm/>}/>
+          <Route path='/leagues/detail' element={<LeagueDetails/>}/>  
       </Routes>
     </div>
   </>

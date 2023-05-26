@@ -1,8 +1,9 @@
-import React from "react"
+import React, {useContext} from "react"
 import { useNavigate } from "react-router-dom";
 import { NewLeagueReducer } from '../Reducers/NewLeagueReducer';
 import { PutPostData } from "../API/PutPostData"
 import { GenerateRandomCode } from "./LeagueCodeGenerator";
+import AuthenticationContext from "../Context/AuthenticationContext";
 import '../static/style/League.css';
 
 
@@ -10,6 +11,7 @@ let url = "http://127.0.0.1:8000/api/v1/leagues/"
 
 export const NewLeagueForm = () => {
     const [leagueName, setLeagueName] = React.useState("")
+    const {user, authTokens} = useContext(AuthenticationContext)
     const [newLeague, dispatchNewLeague] = React.useReducer(
         NewLeagueReducer, {data: [], isLoading: false, isError: false}
     )
@@ -18,7 +20,7 @@ export const NewLeagueForm = () => {
     const handleSubmit = () => {
         let code = GenerateRandomCode()
         console.log(code)
-        PutPostData(url, dispatchNewLeague, 'League', true, {league_name: leagueName, user: localStorage['user_id'], code: code})
+        PutPostData(url, dispatchNewLeague, 'League', true, {league_name: leagueName, user: user.id, code: code}, authTokens.access)
         navigate("/leagues")
     }
 

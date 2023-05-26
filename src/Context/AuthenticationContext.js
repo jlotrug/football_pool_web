@@ -32,7 +32,6 @@ export const AuthenticationProvider = ({children}) => {
 
     let loginUser = async(e) => {
         e.preventDefault()
-
         dispatchLogin({type: 'NEW_LOGIN_INIT'})
         
         try{
@@ -48,13 +47,22 @@ export const AuthenticationProvider = ({children}) => {
             setUser(result.data.user)
             localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
             localStorage.setItem('user', JSON.stringify(result.data.user))
-            // console.log(localStorage.getItem('authTokens'))
             navigate("/")
             
         }catch(e){
             console.log(e)
             dispatchLogin({type: 'NEW_LOGIN_FAILURE'})
         }
+    }
+
+    // Currently just used on create account
+
+    const storeCredentials = (result) => {
+        setUser(result.data.user)
+        localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
+        localStorage.setItem('user', JSON.stringify(result.data.user))
+        console.log(result)
+        navigate("/")
     }
 
     const logoutUser = () => {
@@ -75,13 +83,7 @@ export const AuthenticationProvider = ({children}) => {
                 access: result.data.access,
                 refresh: result.data.refresh
             })
-            // console.log(result)
-            // setUser(result.data.user)
-            localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
-            // localStorage.setItem('user', JSON.stringify(result.data.user))
-            // console.log(localStorage.getItem('authTokens'))
-            
-            
+            localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))            
         }catch(e){
             console.log(e)
             logoutUser()
@@ -97,6 +99,7 @@ export const AuthenticationProvider = ({children}) => {
         logoutUser: logoutUser,
         handleGetUsername: handleGetUsername,
         handleGetPassword: handleGetPassword,
+        storeCredentials: storeCredentials,
 
     }
 
