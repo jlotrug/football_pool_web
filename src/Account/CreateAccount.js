@@ -8,7 +8,8 @@ import AuthenticationContext from "../Context/AuthenticationContext";
 // const accountsUrl = "http://localhost:8080/account/users/"
 // const accountsUrl = "localhost:8080/api/dj-rest-auth/registration/"
 // const accountsUrl = "localhost:8080/api/rest-auth/registration/"
-const accountsUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/registration/"
+// const accountsUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/registration/"
+const createAccountUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/registration/"
 
 export const CreateAccount = () => {
     const [firstName, setFirstName] = React.useState("")
@@ -26,37 +27,37 @@ export const CreateAccount = () => {
     )
 
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
+    // const handleSubmit = async(e) => {
+    //     e.preventDefault()
 
-        dispatchNewUser({type: 'NEW_USER_INIT'})
+    //     dispatchNewUser({type: 'NEW_USER_INIT'})
 
-        try{
-            const result = await axios.post(accountsUrl, {
-                first_name: firstName,
-                last_name: lastName,
-                username: userName,
-                password1: password,
-                password2: confirmPassword,
-                email: email
+    //     try{
+    //         const result = await axios.post(accountsUrl, {
+    //             first_name: firstName,
+    //             last_name: lastName,
+    //             username: userName,
+    //             password1: password,
+    //             password2: confirmPassword,
+    //             email: email
 
-            })
-            // localStorage['session'] = result.data.access
-            // localStorage['refresh'] = result.data.refresh
-            // console.log(result)
-            storeCredentials(result)
-            dispatchNewUser({
-                type: 'NEW_USER_SUCCESS',
-                payload: result.data
-            })
+    //         })
+    //         // localStorage['session'] = result.data.access
+    //         // localStorage['refresh'] = result.data.refresh
+    //         // console.log(result)
+    //         storeCredentials(result)
+    //         dispatchNewUser({
+    //             type: 'NEW_USER_SUCCESS',
+    //             payload: result.data
+    //         })
 
-        }catch(e){
-            console.log(e.response.data)
-            setAllErrors(e.response.data)
-            dispatchNewUser({type: 'NEW_USER_FAILURE'})
+    //     }catch(e){
+    //         console.log(e.response.data)
+    //         setAllErrors(e.response.data)
+    //         dispatchNewUser({type: 'NEW_USER_FAILURE'})
 
-        }
-    }
+    //     }
+    // }
 
     const handleChangeFirstName = (e) => {
         setFirstName(e.target.value)
@@ -76,6 +77,21 @@ export const CreateAccount = () => {
 
     const handleChangeEmail = (e) =>{
         setEmail(e.target.value)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const userData = {
+            first_name: firstName,
+            last_name: lastName,
+            username: userName,
+            password1: password,
+            password2: confirmPassword,
+            email: email
+
+        }
+        storeCredentials(userData, createAccountUrl)
+
     }
 
 

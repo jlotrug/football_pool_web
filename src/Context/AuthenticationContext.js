@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useReducer } from "react";
 import { LoginReducer } from "../Reducers/LoginReducer";
+import { UserAPICall } from "../API/UserAPICall";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -57,10 +58,28 @@ export const AuthenticationProvider = ({children}) => {
 
     // Currently just used on create account
 
-    const storeCredentials = (result) => {
+    // const storeCredentials = (result) => {
+    //     setUser(result.data.user)
+    //     localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
+    //     localStorage.setItem('user', JSON.stringify(result.data.user))
+    //     setAuthTokens({
+    //         access: result.data.access,
+    //         refresh: result.data.refresh
+    //     })
+    //     console.log(result)
+    //     navigate("/")
+    // }
+
+    const storeCredentials = async(userData, url) => {
+        const result = await UserAPICall(userData, url)
+
         setUser(result.data.user)
         localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
         localStorage.setItem('user', JSON.stringify(result.data.user))
+        setAuthTokens({
+            access: result.data.access,
+            refresh: result.data.refresh
+        })
         console.log(result)
         navigate("/")
     }
