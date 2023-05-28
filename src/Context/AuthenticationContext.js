@@ -14,26 +14,12 @@ export const AuthenticationProvider = ({children}) => {
     const [user, setUser] = useState(() => localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): null)
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')): null)
     const [loading, setLoading] = useState(true)
-    const [errors, setErrors] = useState("Hello")
     const navigate = useNavigate()
 
-    // const storeCredentials = (result) => {
-    //     // console.log(result)
-    //     setUser(result.data.user)
-    //         localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
-    //         localStorage.setItem('user', JSON.stringify(result.data.user))
-    //         setAuthTokens({
-    //         access: result.data.access,
-    //         refresh: result.data.refresh
-    //         })
-    //         navigate("/")
-    // }
-
-
-    const storeCredentials = async(userData, url, setAllErrors) => {
+    const storeCredentials = (userData, url, setAllErrors) => {
         let result
 
-        result = await axios.post(url, userData).then(result => {
+        axios.post(url, userData).then(result => {
             setUser(result.data.user)
             localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
             localStorage.setItem('user', JSON.stringify(result.data.user))
@@ -41,55 +27,11 @@ export const AuthenticationProvider = ({children}) => {
             access: result.data.access,
             refresh: result.data.refresh
             })
+            navigate('/')
 
-        }).catch(async e => {
+        }).catch(e => {
             setAllErrors(e.response.data)
-            // await new Promise.all(e => setErrors(e));
-            // console.log(e)
-            // return e
-            // const r = await Promise.all(e);
-            // console.log(r)
-            // throw e
-            // return r;
-            // console.log(result)
-            setErrors("GGGGG")
-            // return errors.response.data
         })
-        console.log(result)
-        setErrors("GGGGG")
-        return result
-        // .then(p => {
-        //     console.log(p)
-        //     // setErrors(p)
-        //     return p
-        // })
-
-        /*
-        try{
-            result = await UserAPICall(userData, url)
-            setUser(result.data.user)
-            localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
-            localStorage.setItem('user', JSON.stringify(result.data.user))
-            setAuthTokens({
-            access: result.data.access,
-            refresh: result.data.refresh
-        })
-        // console.log(result)
-        // if(!result)
-        navigate("/")
-        }catch(e){
-            console.log(result)
-            while(e === null){
-                console.log("Hello world")
-            }
-            
-            // throw e
-            // console.log(e.response.data)
-            // const errors = await e.response.data
-            // return errors
-
-        }*/
-        
     }
 
     const logoutUser = () => {
@@ -122,8 +64,8 @@ export const AuthenticationProvider = ({children}) => {
     let contextData = {
         user: user,
         authTokens: authTokens,
-        errors: errors,
-        setErrors: setErrors,
+        // errors: errors,
+        // setErrors: setErrors,
         logoutUser: logoutUser,
         storeCredentials: storeCredentials,
     }

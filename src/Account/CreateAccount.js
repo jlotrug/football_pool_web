@@ -1,6 +1,5 @@
 import React, {useContext} from "react";
 import AuthenticationContext from "../Context/AuthenticationContext";
-import axios from "axios";
 
 const createAccountUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/registration/"
 
@@ -13,7 +12,7 @@ export const CreateAccount = () => {
     const [confirmPassword, setConfirmPassword] = React.useState("")
     const [allErrors, setAllErrors] = React.useState([])
     const [disabledSubmit, setDisabledSubmit] = React.useState(true)
-    const {storeCredentials, errors} = useContext(AuthenticationContext)
+    const {storeCredentials} = useContext(AuthenticationContext)
 
     const handleChangeFirstName = (e) => {
         setFirstName(e.target.value)
@@ -43,34 +42,8 @@ export const CreateAccount = () => {
             password1: password,
             password2: confirmPassword,
             email: email
-
         }
         storeCredentials(userData, createAccountUrl, setAllErrors)
-        // try{
-            // const eee = storeCredentials(userData, createAccountUrl)
-
-
-
-            // await axios.post(createAccountUrl, userData).then(result => {
-            //     storeCredentials(result)
-            // }).catch(e => {
-            //     setAllErrors(e.response.data)
-            //     console.log(e)
-            // })
-
-
-
-        // }catch(e){
-        //     console("Returned to submit")
-        //     // console.log(errors)
-        // }
-        // const result = storeCredentials(userData, createAccountUrl)
-
-        // if(result){
-        //     console.log(result)
-        // }
-        
-
     }
 
 
