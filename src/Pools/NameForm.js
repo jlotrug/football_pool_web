@@ -9,7 +9,7 @@ export const NameForm = ({poolDispatch, setNewGameDisabled, newPool, league_id})
     const [submitValue, setSubmitValue] = React.useState('Done')
     const [firstSubmit, setFirstSubmit] = React.useState(true)
     const [poolName, setPoolName] = React.useState("")
-    const {user, authTokens} = useContext(AuthenticationContext)
+    const {authTokens} = useContext(AuthenticationContext)
 
     // Checks if it's an edit or initial pool. Send correct data to API function
     const handleSubmit = (e) => {

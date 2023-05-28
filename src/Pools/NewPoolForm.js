@@ -1,5 +1,5 @@
 import '../static/style/App.css';
-import React from 'react';
+import React, {useContext} from 'react';
 import Button from 'react-bootstrap/Button'
 import {NewPoolReducer} from '../Reducers/NewPoolReducer'
 import { GameForm } from '../Games/NewGameForm';
@@ -8,6 +8,7 @@ import { NameForm } from './NameForm';
 import { Link } from 'react-router-dom';
 import { PutPostData } from '../API/PutPostData';
 import { useLocation } from "react-router-dom"
+import AuthenticationContext from "../Context/AuthenticationContext";
 
 const gamesUrl = "http://localhost:8000/api/v1/games/"
 
@@ -15,6 +16,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     // const [submitValue, setSubmitValue] = React.useState('Done')
     const location = useLocation();
     const league_id = location.state.league_id
+    const {authTokens} = useContext(AuthenticationContext)
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
     const [games, dispatchGame] = React.useReducer(
         NewGameReducer, {data:[], usLoading: false, isError: false}
@@ -28,7 +30,8 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     }
 
     const createNewGame = () => {
-        PutPostData(gamesUrl, dispatchGame,'GAME', true, {pool: newPool.data[0].id,}, games.data)
+        // PutPostData(gamesUrl, dispatchGame,'GAME', true, {pool: newPool.data[0].id,}, games.data)
+        PutPostData(gamesUrl, dispatchGame,'GAME', true, {pool: newPool.data[0].id,}, authTokens.access, games.data)
     }
 
     return(

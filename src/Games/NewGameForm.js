@@ -1,6 +1,7 @@
-import React from "react"
+import React, {useContext} from "react"
 import { NewGameReducer } from '../Reducers/NewGameReducer';
 import { PutPostData } from '../API/PutPostData';
+import AuthenticationContext from "../Context/AuthenticationContext";
 
 const gamesUrl = "http://localhost:8000/api/v1/games/"
 
@@ -9,6 +10,7 @@ export const GameForm = ({gameId, poolId}) => {
     const [submitValue, setSubmitValue] = React.useState('Done')
     const [teamOne, setTeamOne] = React.useState("")
     const [teamTwo, setTeamTwo] = React.useState("")
+    const {authTokens} = useContext(AuthenticationContext)
 
     const [newGame, dispatchNewGame] = React.useReducer(
         NewGameReducer, {data: [], isLoading: false, isError: true}
@@ -38,7 +40,8 @@ export const GameForm = ({gameId, poolId}) => {
 
     const editGame = (e) => {
         e.preventDefault()
-        PutPostData(gamesUrl + gameId+'/', dispatchNewGame, 'GAME', false, {team_one: teamOne, team_two: teamTwo, pool: poolId}, newGame.data)
+        // PutPostData(gamesUrl + gameId+'/', dispatchNewGame, 'GAME', false, {team_one: teamOne, team_two: teamTwo, pool: poolId}, newGame.data)
+        PutPostData(gamesUrl + gameId+'/', dispatchNewGame, 'GAME', false, {team_one: teamOne, team_two: teamTwo, pool: poolId}, authTokens.access, newGame.data)
     }
 
     return(
