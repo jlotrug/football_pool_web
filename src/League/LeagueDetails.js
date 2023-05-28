@@ -12,7 +12,7 @@ export const LeagueDetails = () => {
         <div className="league-details">
             <h1>{league.league_name}</h1>
             <h1>{league.code}</h1>
-            <ShowAllPools league_id={league.id}/>
+            <ShowAllPools league_id={league.id} edit={true}/>
 
         </div>
     )

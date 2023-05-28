@@ -1,10 +1,10 @@
-import React, {useContext} from "react"
+import React, {useContext, useEffect} from "react"
 import { PutPostData } from "../API/PutPostData"
 import AuthenticationContext from "../Context/AuthenticationContext";
 
 let poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
 
-export const NameForm = ({poolDispatch, setNewGameDisabled, newPool, league_id}) => {
+export const NameForm = ({poolDispatch, setNewGameDisabled, newPool, league_id, newEdit, poolForEdit}) => {
     const [formDisabled, setFormDisabled] = React.useState(false)
     const [submitValue, setSubmitValue] = React.useState('Done')
     const [firstSubmit, setFirstSubmit] = React.useState(true)
@@ -29,6 +29,18 @@ export const NameForm = ({poolDispatch, setNewGameDisabled, newPool, league_id})
             setFormDisabled(false)
         }
     }
+
+    useEffect(() => {
+        console.log(newPool)
+        if(newEdit){
+            console.log("Hello world")
+            setPoolName(poolForEdit.pool_name)
+            setFirstSubmit(false)
+            setSubmitValue('Edit')
+            setFormDisabled(true)
+            newEdit = false
+        }
+    }, [])
 
     // Updates poolName with users input
     const handleNameChange = (e) => {

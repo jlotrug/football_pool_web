@@ -1,5 +1,5 @@
 import '../static/style/App.css';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Button from 'react-bootstrap/Button'
 import {NewPoolReducer} from '../Reducers/NewPoolReducer'
 import { GameForm } from '../Games/NewGameForm';
@@ -16,6 +16,8 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     // const [submitValue, setSubmitValue] = React.useState('Done')
     const location = useLocation();
     const league_id = location.state.league_id
+    const pool = location.state.pool
+    let newEdit = false
     const {authTokens} = useContext(AuthenticationContext)
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
     const [games, dispatchGame] = React.useReducer(
@@ -24,6 +26,18 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     const [newPool, dispatchNewPool] = React.useReducer(
         NewPoolReducer, {data: [], isLoading: false, isError: false}
     )
+
+    useEffect(() => {
+        if(pool){
+            console.log("He We")
+            dispatchNewPool({
+                type: 'NEW_POOL_SUCCESS',
+                payload: [pool]
+            })
+            newEdit = true
+            console.log(newEdit)
+        }
+    }, [])
 
     const handlesNewGameClick = () => {
         createNewGame()
@@ -41,7 +55,9 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
             poolDispatch={dispatchNewPool}
             setNewGameDisabled={setNewGameDisabled}
             newPool = {newPool}
+            poolForEdit = {pool}            
             league_id = {league_id}
+            newEdit = {!!pool ? true : false}
             />
             <div>
                 <ul className='no-bullet'>

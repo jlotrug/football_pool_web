@@ -5,10 +5,12 @@ import { FetchData } from '../API/FetchData';
 import AuthenticationContext from "../Context/AuthenticationContext";
 import Button from 'react-bootstrap/Button'
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const url = "http://127.0.0.1:8000/api/v1/pools?leagueid="
 
-export const ShowAllPools = ({handleSelectPool, league_id}) => {
+export const ShowAllPools = ({handleSelectPool, league_id, edit}) => {
+    const navigate = useNavigate();
     const [pools, dispatchPools] = React.useReducer(
         poolsReducer, {data: [], isLoading: false, isError: false}
     )
@@ -22,6 +24,12 @@ export const ShowAllPools = ({handleSelectPool, league_id}) => {
         handleFetchPools()
     }, [handleFetchPools])
     
+    const handlePoolSelect = (pool) => {
+        if(edit){
+            navigate('/new-pool', {replace: true, state: {league_id:league_id, pool: pool, newEdit: true}})
+        }
+
+    }
 
     return (
         <div>
@@ -31,19 +39,21 @@ export const ShowAllPools = ({handleSelectPool, league_id}) => {
             
                 {pools.isLoading ? (<p>Loading...</p>):
                 pools.data.map(pool =>(
+                    
                     <li key={pool.id}>
                         <button 
                         className='pool-button'
 
                         // This is how you pass data into 
-                        onClick={() => handleSelectPool(pool.id)}
+                        // onClick={() => handleSelectPool(pool.id)}
+                        onClick={() => handlePoolSelect(pool)}
                         >
                             {pool.pool_name}
                         </button>
                     </li>
                 )).reverse()}
             </ul>
-            <Link to={!!user ? "/new-pool" : "/"} state={{league_id:league_id}}>
+            <Link to={!!user ? "/new-pool" : "/"} state={{league_id:league_id, pool: false}}>
             <Button 
             size="lg" 
             variant="outline-dark" 
