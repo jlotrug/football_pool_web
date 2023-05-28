@@ -1,13 +1,15 @@
-import React from "react"
+import React, {useContext} from "react"
 import { PutPostData } from "../API/PutPostData"
+import AuthenticationContext from "../Context/AuthenticationContext";
 
 let poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
 
-export const NameForm = ({poolDispatch, setNewGameDisabled, newPool}) => {
+export const NameForm = ({poolDispatch, setNewGameDisabled, newPool, league_id}) => {
     const [formDisabled, setFormDisabled] = React.useState(false)
     const [submitValue, setSubmitValue] = React.useState('Done')
     const [firstSubmit, setFirstSubmit] = React.useState(true)
     const [poolName, setPoolName] = React.useState("")
+    const {user, authTokens} = useContext(AuthenticationContext)
 
     // Checks if it's an edit or initial pool. Send correct data to API function
     const handleSubmit = (e) => {
@@ -36,7 +38,7 @@ export const NameForm = ({poolDispatch, setNewGameDisabled, newPool}) => {
     // Sends data for pool to be created or edited
     const createEditPool = (isPost, url, type) => {
         setNewGameDisabled(false)
-        PutPostData(url, poolDispatch, type, isPost, {pool_name: poolName, league: 1}, newPool.data)
+        PutPostData(url, poolDispatch, type, isPost, {pool_name: poolName, league: league_id}, authTokens.access)
     }
 
     return(

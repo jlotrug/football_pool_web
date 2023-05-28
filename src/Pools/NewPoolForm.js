@@ -7,11 +7,14 @@ import { NewGameReducer } from '../Reducers/NewGameReducer';
 import { NameForm } from './NameForm';
 import { Link } from 'react-router-dom';
 import { PutPostData } from '../API/PutPostData';
+import { useLocation } from "react-router-dom"
 
 const gamesUrl = "http://localhost:8000/api/v1/games/"
 
 export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDone}) => {
     // const [submitValue, setSubmitValue] = React.useState('Done')
+    const location = useLocation();
+    const league_id = location.state.league_id
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
     const [games, dispatchGame] = React.useReducer(
         NewGameReducer, {data:[], usLoading: false, isError: false}
@@ -35,6 +38,7 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
             poolDispatch={dispatchNewPool}
             setNewGameDisabled={setNewGameDisabled}
             newPool = {newPool}
+            league_id = {league_id}
             />
             <div>
                 <ul className='no-bullet'>

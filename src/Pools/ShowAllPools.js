@@ -3,6 +3,8 @@ import '../static/style/MakePicksFormStyle.css'
 import { poolsReducer} from '../Reducers/GamePoolReducers';
 import { FetchData } from '../API/FetchData';
 import AuthenticationContext from "../Context/AuthenticationContext";
+import Button from 'react-bootstrap/Button'
+import { Link } from 'react-router-dom';
 
 const url = "http://127.0.0.1:8000/api/v1/pools?leagueid="
 
@@ -41,6 +43,16 @@ export const ShowAllPools = ({handleSelectPool, league_id}) => {
                     </li>
                 )).reverse()}
             </ul>
+            <Link to={!!user ? "/new-pool" : "/"} state={{league_id:league_id}}>
+            <Button 
+            size="lg" 
+            variant="outline-dark" 
+            className= "button-style"
+            // onClick={handleLoginWarning}
+            >
+            Add New Pool
+            </Button>
+        </Link>
         </div>
     )
 } 
