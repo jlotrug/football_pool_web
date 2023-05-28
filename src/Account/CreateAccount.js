@@ -38,7 +38,7 @@ export const CreateAccount = () => {
         const userData = {
             first_name: firstName,
             last_name: lastName,
-            username: userName,
+            username: userName.toLowerCase(),
             password1: password,
             password2: confirmPassword,
             email: email
@@ -60,7 +60,6 @@ export const CreateAccount = () => {
         <>
             <h1>Create Account</h1>
             
-
             <form onSubmit={handleSubmit}>
                 <label>First Name</label><br />
                 <input onChange={handleChangeFirstName} value={firstName} type="text"></input><br />
@@ -76,7 +75,6 @@ export const CreateAccount = () => {
                 <input onChange={handleChangeConfirmPassword} value={confirmPassword} type="password"></input><br /><br />
                 <ErrorList errors = {allErrors}/>
                 <input disabled={disabledSubmit} className="create-submit" type="submit" value="Submit"></input>
-
             </form>
             </>
     )
@@ -84,7 +82,6 @@ export const CreateAccount = () => {
 
 const ErrorList = ({errors}) => {
     
-
     return(
         <div className="error-list">
             <ul className="no-bullet error-list">

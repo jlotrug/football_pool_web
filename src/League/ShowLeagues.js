@@ -37,7 +37,7 @@ export const ShowLeagues = () => {
             
                 {leagues.isLoading ? (<p>Loading...</p>):
                 leagues.data.map(league =>(
-                    <Link to={!!authTokens ? {pathname:"league-details", league: "league"} : "/"}>
+                    <Link key={league.id} to={!!authTokens ? {pathname:"league-details"} : "/"} state={{league:league}}>
                         <li key={league.id}>
                             
                             <button 

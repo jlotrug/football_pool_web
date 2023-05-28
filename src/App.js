@@ -55,7 +55,7 @@ const App = () => {
           <Route path='/pick-winners' element={<PickWinners/>}/>
           <Route path='/leagues' element={<ShowLeagues/>}/>
           <Route path='/leagues/new-league' element={<NewLeagueForm/>}/>
-          <Route path='/leagues/detail' element={<LeagueDetails/>}/>  
+          <Route path='/leagues/league-details' element={<LeagueDetails/>}/>  
       </Routes>
     </div>
   </>

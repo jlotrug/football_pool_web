@@ -20,7 +20,7 @@ export const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         const userData = {
-            username: username,
+            username: username.toLowerCase(),
             password: password
         }
         storeCredentials(userData, loginUrl, setAllErrors)
@@ -36,15 +36,12 @@ export const Login = () => {
                 <input onChange={handleChangePassword} value={password} type="password"></input><br /><br />
                 <ErrorList errors = {allErrors}/>
                 <input className="create-submit" type="submit" value="Login"></input>
-
             </form>
         </>
     )
 }
 
 const ErrorList = ({errors}) => {
-    
-
     return(
         <div className="error-list">
             <ul className="no-bullet error-list">

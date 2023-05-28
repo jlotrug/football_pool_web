@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect, useReducer } from "react";
-import { UserAPICall } from "../API/UserAPICall";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -17,7 +16,6 @@ export const AuthenticationProvider = ({children}) => {
     const navigate = useNavigate()
 
     const storeCredentials = (userData, url, setAllErrors) => {
-        let result
 
         axios.post(url, userData).then(result => {
             setUser(result.data.user)
@@ -58,14 +56,11 @@ export const AuthenticationProvider = ({children}) => {
             logoutUser()
         }
         if(loading) setLoading(false)
-    }
-     
+    }     
 
     let contextData = {
         user: user,
         authTokens: authTokens,
-        // errors: errors,
-        // setErrors: setErrors,
         logoutUser: logoutUser,
         storeCredentials: storeCredentials,
     }
@@ -88,8 +83,7 @@ export const AuthenticationProvider = ({children}) => {
 
     return(
         <AuthenticationContext.Provider value={contextData}>
-            {loading ? null : children}
-            
+            {loading ? null : children}            
         </AuthenticationContext.Provider>
     )
 }
