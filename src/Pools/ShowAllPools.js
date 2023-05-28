@@ -1,17 +1,19 @@
-import React, { useCallback} from 'react'
+import React, { useCallback, useContext} from 'react'
 import '../static/style/MakePicksFormStyle.css'
 import { poolsReducer} from '../Reducers/GamePoolReducers';
 import { FetchData } from '../API/FetchData';
+import AuthenticationContext from "../Context/AuthenticationContext";
 
-const url = "http://127.0.0.1:8000/api/v1/pools/"
+const url = "http://127.0.0.1:8000/api/v1/pools?leagueid="
 
-export const ShowAllPools = ({handleSelectPool}) => {
+export const ShowAllPools = ({handleSelectPool, league_id}) => {
     const [pools, dispatchPools] = React.useReducer(
         poolsReducer, {data: [], isLoading: false, isError: false}
     )
+    const {user, authTokens} = useContext(AuthenticationContext)
 
     const handleFetchPools = useCallback(() =>{
-        FetchData(url, dispatchPools, 'POOLS')
+        FetchData(url+league_id, dispatchPools, 'POOLS', authTokens.access)
     }, [])
 
     React.useEffect(() => {
