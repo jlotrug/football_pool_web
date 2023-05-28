@@ -1,14 +1,7 @@
 import React, {useContext} from "react";
-import { UserReducer } from "../Reducers/UsersReducer";
-import axios from "axios";
 import AuthenticationContext from "../Context/AuthenticationContext";
+import axios from "axios";
 
-    
-
-// const accountsUrl = "http://localhost:8080/account/users/"
-// const accountsUrl = "localhost:8080/api/dj-rest-auth/registration/"
-// const accountsUrl = "localhost:8080/api/rest-auth/registration/"
-// const accountsUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/registration/"
 const createAccountUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/registration/"
 
 export const CreateAccount = () => {
@@ -20,44 +13,7 @@ export const CreateAccount = () => {
     const [confirmPassword, setConfirmPassword] = React.useState("")
     const [allErrors, setAllErrors] = React.useState([])
     const [disabledSubmit, setDisabledSubmit] = React.useState(true)
-    const {storeCredentials} = useContext(AuthenticationContext)
-
-    const [newUser, dispatchNewUser] = React.useReducer(
-        UserReducer, {data: [], isLoading: false, isError:false}
-    )
-
-
-    // const handleSubmit = async(e) => {
-    //     e.preventDefault()
-
-    //     dispatchNewUser({type: 'NEW_USER_INIT'})
-
-    //     try{
-    //         const result = await axios.post(accountsUrl, {
-    //             first_name: firstName,
-    //             last_name: lastName,
-    //             username: userName,
-    //             password1: password,
-    //             password2: confirmPassword,
-    //             email: email
-
-    //         })
-    //         // localStorage['session'] = result.data.access
-    //         // localStorage['refresh'] = result.data.refresh
-    //         // console.log(result)
-    //         storeCredentials(result)
-    //         dispatchNewUser({
-    //             type: 'NEW_USER_SUCCESS',
-    //             payload: result.data
-    //         })
-
-    //     }catch(e){
-    //         console.log(e.response.data)
-    //         setAllErrors(e.response.data)
-    //         dispatchNewUser({type: 'NEW_USER_FAILURE'})
-
-    //     }
-    // }
+    const {storeCredentials, errors} = useContext(AuthenticationContext)
 
     const handleChangeFirstName = (e) => {
         setFirstName(e.target.value)
@@ -74,12 +30,11 @@ export const CreateAccount = () => {
     const handleChangeConfirmPassword = (e) => {
         setConfirmPassword(e.target.value)
     } 
-
     const handleChangeEmail = (e) =>{
         setEmail(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
         const userData = {
             first_name: firstName,
@@ -90,7 +45,31 @@ export const CreateAccount = () => {
             email: email
 
         }
-        storeCredentials(userData, createAccountUrl)
+        storeCredentials(userData, createAccountUrl, setAllErrors)
+        // try{
+            // const eee = storeCredentials(userData, createAccountUrl)
+
+
+
+            // await axios.post(createAccountUrl, userData).then(result => {
+            //     storeCredentials(result)
+            // }).catch(e => {
+            //     setAllErrors(e.response.data)
+            //     console.log(e)
+            // })
+
+
+
+        // }catch(e){
+        //     console("Returned to submit")
+        //     // console.log(errors)
+        // }
+        // const result = storeCredentials(userData, createAccountUrl)
+
+        // if(result){
+        //     console.log(result)
+        // }
+        
 
     }
 

@@ -6,15 +6,13 @@ const loginUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/login/"
 export const Login = () => {
     const [username, setUsername] = React.useState("")
     const [password, setPassword]  = React.useState("")
-    const {loginUser, handleGetUsername, handleGetPassword, storeCredentials} = useContext(AuthenticationContext)
+    const {storeCredentials} = useContext(AuthenticationContext)
 
 
     const handleChangeUsername = (e) => {
-        // handleGetUsername(e)
         setUsername(e.target.value)
     }
     const handleChangePassword = (e) => {
-        // handleGetPassword(e)
         setPassword(e.target.value)
     }
 
@@ -25,7 +23,6 @@ export const Login = () => {
             password: password
         }
         storeCredentials(userData, loginUrl)
-
     }
 
     return(
