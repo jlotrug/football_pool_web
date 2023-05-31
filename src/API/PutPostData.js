@@ -4,7 +4,7 @@ import { GetTokenHeaders } from "../API/GetTokenHeaders"
 // export const PutPostData = async(url, dispatchFunction, type, isPost, postPutData, currentData, token) =>{
 export const PutPostData = async(url, dispatchFunction, type, isPost, postPutData, token, currentData) =>{
     if(!currentData) currentData = []
-
+    console.log("Hello")
     dispatchFunction({type:'NEW_' + type + '_INIT'})
 
     try{

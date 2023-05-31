@@ -26,7 +26,7 @@ export const ShowAllPools = ({handleSelectPool, league_id, edit}) => {
     
     const handlePoolSelect = (pool) => {
         if(edit){
-            navigate('/new-pool', {replace: true, state: {league_id:league_id, pool: pool, newEdit: true}})
+            navigate('/pool-form', {replace: true, state: {league_id:league_id, pool: pool, newEdit: true}})
         }
 
     }
@@ -53,7 +53,8 @@ export const ShowAllPools = ({handleSelectPool, league_id, edit}) => {
                     </li>
                 )).reverse()}
             </ul>
-            <Link to={!!user ? "/new-pool" : "/"} state={{league_id:league_id, pool: false}}>
+            {/* <Link to={!!user ? "/new-pool" : "/"} state={{league_id:league_id, pool: false}}> */}
+            <Link to={!!user ? "/pool-form" : "/"} state={{league_id:league_id}}>
             <Button 
             size="lg" 
             variant="outline-dark" 

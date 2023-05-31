@@ -4,7 +4,8 @@ import AuthenticationContext from "../Context/AuthenticationContext";
 
 let poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
 
-export const NameForm = ({poolDispatch, setNewGameDisabled, newPool, league_id, newEdit, poolForEdit}) => {
+
+export const NameForm = ({poolDispatch, setNewGameDisabled, newPool, league_id, pool}) => {
     const [formDisabled, setFormDisabled] = React.useState(false)
     const [submitValue, setSubmitValue] = React.useState('Done')
     const [firstSubmit, setFirstSubmit] = React.useState(true)
@@ -19,7 +20,7 @@ export const NameForm = ({poolDispatch, setNewGameDisabled, newPool, league_id, 
                 createEditPool(true, poolUrl, 'POOL')
                 setFirstSubmit(false)
             }else{
-                const editUrl = poolUrl + newPool.data[0].id + '/'
+                const editUrl = poolUrl + pool.id + '/'
                 createEditPool(false, editUrl, 'POOL_EDIT')
             }
             setSubmitValue('Edit')
@@ -31,14 +32,12 @@ export const NameForm = ({poolDispatch, setNewGameDisabled, newPool, league_id, 
     }
 
     useEffect(() => {
-        console.log(newPool)
-        if(newEdit){
-            console.log("Hello world")
-            setPoolName(poolForEdit.pool_name)
+        if(pool){
+            setPoolName(pool.pool_name)
             setFirstSubmit(false)
             setSubmitValue('Edit')
             setFormDisabled(true)
-            newEdit = false
+            
         }
     }, [])
 

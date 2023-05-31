@@ -1,22 +1,31 @@
-import React, {useContext} from "react"
+import React, {useContext, useEffect} from "react"
 import { NewGameReducer } from '../Reducers/NewGameReducer';
 import { PutPostData } from '../API/PutPostData';
 import AuthenticationContext from "../Context/AuthenticationContext";
 
 const gamesUrl = "http://localhost:8000/api/v1/games/"
 
-export const GameForm = ({gameId, poolId}) => {
+export const GameForm = ({gameId, poolId, game}) => {
     const [inputHidden, setInputHidden] = React.useState(false)
-    const [submitValue, setSubmitValue] = React.useState('Done')
-    const [teamOne, setTeamOne] = React.useState("")
-    const [teamTwo, setTeamTwo] = React.useState("")
+    const [submitValue, setSubmitValue] = React.useState(game.team_one || game.team_two ? 'Edit' : 'Done')
+    const [teamOne, setTeamOne] = React.useState(game.team_one)
+    const [teamTwo, setTeamTwo] = React.useState(game.team_two)
     const {authTokens} = useContext(AuthenticationContext)
 
     const [newGame, dispatchNewGame] = React.useReducer(
         NewGameReducer, {data: [], isLoading: false, isError: true}
     )
 
-    
+    useEffect(() => {
+        if(submitValue === 'Done'){
+            // setSubmitValue('Edit')
+            setInputHidden(false)
+            // handleCallback(e)
+        }else{
+            // setSubmitValue('Done')
+            setInputHidden(true)
+        }
+    }, [])
 
     const handleSubmit = (e) => {
         if(submitValue === 'Done'){
@@ -57,7 +66,7 @@ export const GameForm = ({gameId, poolId}) => {
                     type="text" 
                     name='team-one' 
                     hidden={inputHidden} 
-                    value={teamOne}
+                    value={teamOne ? teamOne : ""}
                     onChange={handleTeamOneChange}
                     ></input> 
                 </span>
@@ -71,7 +80,7 @@ export const GameForm = ({gameId, poolId}) => {
                     type="text" 
                     name='team-two' 
                     hidden={inputHidden} 
-                    value={teamTwo}
+                    value={teamTwo ? teamTwo : ""}
                     onChange={handleTeamTwoChange}
                     ></input>
                 </span>

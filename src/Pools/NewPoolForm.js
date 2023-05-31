@@ -4,13 +4,16 @@ import Button from 'react-bootstrap/Button'
 import {NewPoolReducer} from '../Reducers/NewPoolReducer'
 import { GameForm } from '../Games/NewGameForm';
 import { NewGameReducer } from '../Reducers/NewGameReducer';
+import {selectedGamesReducer} from '../Reducers/GamePoolReducers';
 import { NameForm } from './NameForm';
 import { Link } from 'react-router-dom';
 import { PutPostData } from '../API/PutPostData';
 import { useLocation } from "react-router-dom"
 import AuthenticationContext from "../Context/AuthenticationContext";
+import { FetchData } from "../API/FetchData";
 
 const gamesUrl = "http://localhost:8000/api/v1/games/"
+const fetchGamesUrl = "http://localhost:8000/api/v1/games?poolid="
 
 export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDone}) => {
     // const [submitValue, setSubmitValue] = React.useState('Done')
@@ -21,21 +24,29 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
     const {authTokens} = useContext(AuthenticationContext)
     const [newGameDisabled, setNewGameDisabled] = React.useState(true)
     const [games, dispatchGame] = React.useReducer(
-        NewGameReducer, {data:[], usLoading: false, isError: false}
+        NewGameReducer, {data:[], isLoading: false, isError: false}
     )
     const [newPool, dispatchNewPool] = React.useReducer(
         NewPoolReducer, {data: [], isLoading: false, isError: false}
     )
+    const [fetchedGames, dispatchFetchedGames] = React.useReducer(
+        selectedGamesReducer, {data: [], isLoading: false, isError: false}
+    )
 
     useEffect(() => {
         if(pool){
-            console.log("He We")
             dispatchNewPool({
                 type: 'NEW_POOL_SUCCESS',
                 payload: [pool]
             })
             newEdit = true
-            console.log(newEdit)
+            FetchData(fetchGamesUrl+pool.id, dispatchFetchedGames, 'GAMES', authTokens.access)
+            // games.data
+            dispatchGame({
+                type: 'NEW_GAME_SUCCESS',
+                payload: [fetchedGames.data]
+            })
+            console.log(fetchedGames)
         }
     }, [])
 
@@ -50,12 +61,12 @@ export const NewPoolForm = ({formClass, handleAllPools, handleAllGames, handleDo
 
     return(
         <div className="">
-            {console.log(newPool)}
+            {/* {console.log(newPool)} */}
             <NameForm 
             poolDispatch={dispatchNewPool}
             setNewGameDisabled={setNewGameDisabled}
             newPool = {newPool}
-            poolForEdit = {pool}            
+            pool = {pool}            
             league_id = {league_id}
             newEdit = {!!pool ? true : false}
             />

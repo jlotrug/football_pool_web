@@ -45,6 +45,8 @@ export const selectedGamesReducer = (state, action) => {
                 isError: true,
             }
         default:
+            console.log(state)
+            console.log(action)
             throw new Error();
     }
 }
