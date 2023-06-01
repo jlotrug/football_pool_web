@@ -19,18 +19,7 @@ export const MainMenu = ({loggedout}) => {
 
   return (
     <div className="">
-      <div className="button-container">
-        
-        {/* <Link to={!!localStorage['session'] ? "new-pool" : "/"}>
-            <Button 
-            size="lg" 
-            variant="outline-dark" 
-            className= "button-style"
-            onClick={handleLoginWarning}
-            >
-            Start New Pool
-            </Button>
-        </Link> */}
+      <div className="button-container">        
         <Link to={!!user ? "leagues" : "/"}>
             <Button 
             size="lg" 
@@ -52,7 +41,7 @@ export const MainMenu = ({loggedout}) => {
             Make Picks
             </Button>
         </Link>
-        <Link to={!!user ? 'pick-winners' : '/'}>
+        {/* <Link to={!!user ? 'pick-winners' : '/'}>
           <Button
            size="lg" 
            variant="outline-dark" 
@@ -62,7 +51,7 @@ export const MainMenu = ({loggedout}) => {
             Pick Winners
           </Button>
 
-        </Link>
+        </Link> */}
         
         </div>
         <span className='please-login'>{warning}</span>

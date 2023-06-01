@@ -1,5 +1,4 @@
 export const poolFormReducer = (state, action) => {
-    console.log(action.payload)
     if(action.payload) action.payload = action.payload.filter(element => element != undefined)
     
     switch(action.type){

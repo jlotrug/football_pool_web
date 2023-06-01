@@ -14,6 +14,7 @@ import { PickWinners } from './Winners/PickWinners';
 import { ShowLeagues } from './League/ShowLeagues';
 import { NewLeagueForm } from './League/NewLeagueForm';
 import {LeagueDetails} from './League/LeagueDetails'
+import { MakePicks } from './Picks/MakePicks';
 import AuthenticationContext from './Context/AuthenticationContext';
 
 
@@ -51,7 +52,8 @@ const App = () => {
           <Route path="/" element={<MainMenu />}/>
           <Route path="/new-pool" element={<NewPoolForm />} />
           <Route path="/pool-form" element={<PoolForm />} />
-          <Route path="/make-picks" element={<MakePicksComponent />} />
+          {/* <Route path="/make-picks" element={<MakePicksComponent />} /> */}
+          <Route path="/make-picks" element={<MakePicks/>} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/login" element={<Login/>} />
           <Route path='/pick-winners' element={<PickWinners/>}/>
