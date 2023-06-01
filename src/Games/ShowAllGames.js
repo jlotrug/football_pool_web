@@ -6,20 +6,20 @@ import { FetchData } from '../API/FetchData';
 
 const url = "http://localhost:8000/api/v1/games?poolid="
 
-export const ShowAllGames = ({pool, triggerDone, resetDone, handleAllPicksMade}) => {
+export const ShowAllGames = ({pool, games, triggerDone, resetDone, handleAllPicksMade}) => {
     const [numPicks, setNumPicks] = React.useState(1)
-    const [games, dispatchGames] = React.useReducer(
-        selectedGamesReducer, {data: [], isLoading: false, isError: false}
-    )
+    // const [games, dispatchGames] = React.useReducer(
+    //     selectedGamesReducer, {data: [], isLoading: false, isError: false}
+    // )
 
     // Once games[] is set with all fetched games, sets numPicks to number of picks for that pool
     React.useEffect(() => {
-        if(games.data.length === 0) return
+        if(games.length === 0) return
 
-        setNumPicks(games.data.length)
+        setNumPicks(games.length)
 
         // Tells parent to disable Done until all picks are made
-        handleAllPicksMade()
+        // handleAllPicksMade()
     }, [games])
 
 
@@ -36,16 +36,16 @@ export const ShowAllGames = ({pool, triggerDone, resetDone, handleAllPicksMade})
 
     }, [numPicks])
 
-    const handleFetchGames = useCallback(() => {
-        if(!pool) return
+    // const handleFetchGames = useCallback(() => {
+    //     if(!pool) return
 
-        FetchData(url+pool, dispatchGames, 'GAMES')
-    }, [pool])
+    //     FetchData(url+pool, dispatchGames, 'GAMES')
+    // }, [pool])
 
 
-    useEffect(() => {
-        handleFetchGames()
-    }, [handleFetchGames])
+    // useEffect(() => {
+    //     handleFetchGames()
+    // }, [handleFetchGames])
 
     return (
         <div>
@@ -53,7 +53,7 @@ export const ShowAllGames = ({pool, triggerDone, resetDone, handleAllPicksMade})
                 {games.isError &&<p>Something went wrong...</p>}
 
                 {games.isLoading ? (<p>Loading...</p>):
-                    games.data.map(game => {
+                    games.map(game => {
                         return <PickForm 
                             key={game.id} 
                             game={game}  

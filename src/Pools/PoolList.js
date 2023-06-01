@@ -1,6 +1,6 @@
 
 
-export const PoolList = ({poolsState}) => {
+export const PoolList = ({poolsState, handleSelectedPool}) => {
 
     return (
         <div>
@@ -14,7 +14,7 @@ export const PoolList = ({poolsState}) => {
                     <li key={pool.id}>
                         <button 
                         className='pool-button'
-                        // onClick={() => handlePoolSelect(pool)}
+                        onClick={() => handleSelectedPool(pool)}
                         >
                             {pool.pool_name}
                         </button>
