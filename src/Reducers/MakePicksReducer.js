@@ -1,5 +1,5 @@
 export const makePicksReducer = (state, action) => {
-    if(action.payload) action.payload = action.payload.filter(element => element != undefined)
+    // if(action.payload) action.payload = action.payload.filter(element => element != undefined)
     
     switch(action.type){
         case 'POOLS_FETCH_INIT':

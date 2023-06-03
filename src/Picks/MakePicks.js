@@ -20,6 +20,7 @@ export const MakePicks = () => {
     const [leagueCode, setLeagueCode] = useState()
     const [allPicksMade, setAllPicksMade] = React.useState(false)
     const [selectedPool, setSelectedPool] = useState(false)
+    const [picks, setPicks] = useState([])
     const [makePicksState, dispatchMakePicksState] = useReducer(
         // makePicksReducer, {league: null, pool: null, pools: [], games: [], isLoading: false, isError: false}
         makePicksReducer, {pools: [], games: [], picks: [], isLoading: false, isError: false}
@@ -42,6 +43,7 @@ export const MakePicks = () => {
         setSelectedPool(pool)
         setPicksForm("picks-form-div")
         setPoolList("hide-element")
+        setPicks([])
         FetchData(gamesUrl+pool.id, dispatchMakePicksState, 'GAMES', authTokens.access)
 
     }
@@ -108,6 +110,7 @@ export const MakePicks = () => {
                     <ShowAllGames
                         pool={selectedPool}
                         games={makePicksState.games}
+                        picks = {picks}
                         // triggerDone={done}
                         // resetDone={resetDone}
                         handleAllPicksMade = {handleAllPicksMade}
