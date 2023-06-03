@@ -17,6 +17,7 @@ export const MakePicks = () => {
     const [picksForm, setPicksForm] = useState("hide-element")
     const [poolList, setPoolList] = useState("hide-element")
     const [leagueForm, setleagueForm] = useState("")
+    const [done, setDone] = React.useState(false)
     const [leagueCode, setLeagueCode] = useState()
     const [allPicksMade, setAllPicksMade] = React.useState(false)
     const [selectedPool, setSelectedPool] = useState(false)
@@ -49,7 +50,15 @@ export const MakePicks = () => {
     }
 
     const handleDone = () => {
-
+        console.log(allPicksMade)
+        if(allPicksMade){
+            
+            setDone(true)
+            // navigate("/")
+        }
+    }
+    const resetDone = () =>{
+        setDone(false)
     }
 
     // Callback function for ShowAllGames
@@ -111,8 +120,8 @@ export const MakePicks = () => {
                         pool={selectedPool}
                         games={makePicksState.games}
                         picks = {picks}
-                        // triggerDone={done}
-                        // resetDone={resetDone}
+                        triggerDone={done}
+                        resetDone={resetDone}
                         handleAllPicksMade = {handleAllPicksMade}
                     />:
                      {/* <></> */}

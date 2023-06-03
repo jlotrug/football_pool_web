@@ -26,13 +26,18 @@ export const ShowAllGames = ({pool, games, triggerDone, resetDone, handleAllPick
     // Callback function to decrement numPicks for PickForm components
     // After first selection is made for each game pick, the number decrements
     const decrementNumPicks = () =>{
+        console.log(numPicks)
         const newNumPicks = numPicks - 1
         setNumPicks(newNumPicks)
     }
 
     // Checks if all choices have been made, numPicks equals 0. Informs parent when they have.
     React.useEffect(() => {
-        if(numPicks === 0) handleAllPicksMade()
+        // if(numPicks === 0) handleAllPicksMade()
+        if(numPicks <= 0){
+            console.log("handle all picks made")
+            handleAllPicksMade()
+        } 
 
     }, [numPicks])
 

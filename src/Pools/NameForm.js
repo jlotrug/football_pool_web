@@ -48,6 +48,7 @@ export const NameForm = ({poolDispatch, league_id, pool}) => {
 
     // Sends data for pool to be created or edited
     const createEditPool = (isPost, url, type) => {
+        console.log(isPost)
         PutPostData(url, poolDispatch, type, isPost, {pool_name: poolName, league: league_id}, authTokens.access)
     }
 

@@ -7,27 +7,19 @@ import { FetchData } from '../API/FetchData';
 import AuthenticationContext from "../Context/AuthenticationContext";
 
 
-const url = "http://127.0.0.1:8000/api/v1/picks/"
+const pickSubmitUrl = "http://127.0.0.1:8000/api/v1/picks/"
 const pickCheckUrl = "http://127.0.0.1:8000/api/v1/pick-check?game="
-// const pickCheckUrl = "http://127.0.0.1:8000/api/v1/picks?game="
 
 // Removing currentPool
 export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
-    const {authTokens} = useContext(AuthenticationContext)
+    const {user, authTokens} = useContext(AuthenticationContext)
     const [pick, setPick] = React.useState(false);
     const [selectedPick, dispatchSelectedPick] = React.useReducer(
         NewPickReducer, {pick:false, isLoading: false, isError: false}
     )
 
-    const checkForPick = () => {
-        FetchData(pickCheckUrl+game.id, dispatchSelectedPick, 'PICK', authTokens.access)
-        // if(!selectedPick.data)
-    }
-
-
     React.useEffect(() => {
-        checkForPick()
-        // console.log(selectedPick.data)
+        FetchData(pickCheckUrl+game.id, dispatchSelectedPick, 'PICK', authTokens.access)
     }, [])
     
     // MakePicksComponent toggles triggerDone to true once user clicks 'Done'
@@ -40,27 +32,25 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
     }, [triggerDone])
 
     // Creates/Edits users Pick
-    const newPickCreate = useCallback(async() => {
-        dispatchSelectedPick({type: 'NEW_PICK_INIT'})
-
+    const newPickCreate = useCallback(() => {
         // Creates formatted Pick data with users selection
-        const pickData = {choice: pick, game: game.id, user: localStorage['user_id']}
-        console.log(selectedPick)
+        const pickData = {choice: pick, game: game.id, user: user.id}
+
         try{
-            // console.log(localStorage['user_id']);
-            let result
-
-            // On first submit, it creates a new pick, if submitted again the pick is edited
-            if(Object.keys(selectedPick.data).length === 0){ result = await axios.post(url, pickData, GetTokenHeaders())}
-            else { result = await axios.put(url + selectedPick.data.id + '/', pickData, GetTokenHeaders())}
-
-            dispatchSelectedPick({
-                type: 'NEW_PICK_SUCCESS',
-                payload: result.data
-            })
+            let url = pickSubmitUrl
+            let isPost = true
+            if(selectedPick.pick){
+                isPost = false
+                url += selectedPick.pick.id + '/'
+            }
+            // const isPost = selectedPick.pick ? false : true
+            // console.log("Reached NewPickCreate to send request")
+            // const isPost = true
+            console.log("ABout to push")
+            PutPostData(url, dispatchSelectedPick, 'PICK', isPost, pickData, authTokens.access)
+            // PutPostData(url, poolDispatch, type, isPost, {pool_name: poolName, league: league_id}, authTokens.access)
         }catch(e){
             console.log(e)
-            dispatchSelectedPick({type: 'NEW_PICK_FAILURE'})
         }
     },[triggerDone])
 
@@ -68,10 +58,20 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
     // If pick is undefined, then this is the first selection for this game and parent is notified a pick has been made
         // If user changes pick, the parent is not notified again
     const handleSelection = (e) => {
-        // console.log(selectedPick.data)
+        console.log(e.target.value)
+        
         if(!pick){ confirmPick() }
         setPick(e.target.value)
+        
     }
+    // If pick was already made, sets pick state with choice
+    useEffect(() => {
+        // console.log
+        if(selectedPick.pick){
+            setPick(selectedPick.pick.choice)
+            confirmPick()
+        } 
+    }, [selectedPick.pick])
 
 
     return(
@@ -84,7 +84,7 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
                         name="game-pick"
                         className='radio-pick'
                         onChange={handleSelection}
-                        checked={selectedPick.pick && (selectedPick.pick.choice == game.team_two)}
+                        checked={pick && (pick == game.team_one)}
                     />
                     {game.team_one}
                 </label>
@@ -96,7 +96,7 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
                         name="game-pick"
                         className='radio-pick'
                         onChange={handleSelection}
-                        checked={selectedPick.pick && (selectedPick.pick.choice == game.team_two)}
+                        checked={pick && (pick == game.team_two)}
                     />
                 </label>
             </form>
