@@ -1,6 +1,4 @@
 export const poolFormReducer = (state, action) => {
-    if(action.payload) action.payload = action.payload.filter(element => element != undefined)
-    
     switch(action.type){
         case 'NEW_POOL_INIT':
             return{
@@ -19,14 +17,14 @@ export const poolFormReducer = (state, action) => {
                 ...state,
                 isLoading: false,
                 isError: false,
-                pool: action.payload[0],
+                pool: action.payload,
             }
         case 'NEW_POOL_EDIT_SUCCESS':
             return{
                 ...state,
                 isLoading: false,
                 isError: false,
-                pool: action.payload.slice(-1)
+                pool: action.payload
             }
         case 'NEW_POOL_FAILURE':
             return{
@@ -70,7 +68,7 @@ export const poolFormReducer = (state, action) => {
                 ...state,
                 isLoading: false,
                 isError: false,
-                games: [...action.payload].flat(),
+                games: [...state.games, action.payload]
             }
         case 'NEW_GAME_FAILURE':
             return{

@@ -31,7 +31,7 @@ export const PoolForm = () => {
 
     const createNewGame = () => {
         if(poolFormState.pool){
-            PutPostData(gamesUrl, dispatchPoolFormState,'GAME', true, {pool: poolFormState.pool.id,}, authTokens.access, poolFormState.games)
+            PutPostData(gamesUrl, dispatchPoolFormState,'GAME', true, {pool: poolFormState.pool.id,}, authTokens.access)
         }        
     }    
 

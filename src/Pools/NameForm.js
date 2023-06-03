@@ -14,6 +14,7 @@ export const NameForm = ({poolDispatch, league_id, pool}) => {
 
     // Checks if it's an edit or initial pool. Send correct data to API function
     const handleSubmit = (e) => {
+        console.log(pool)
         e.preventDefault()
         if(submitValue === 'Done'){
             if(firstSubmit){

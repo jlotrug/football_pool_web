@@ -22,7 +22,7 @@ export const MakePicks = () => {
     const [selectedPool, setSelectedPool] = useState(false)
     const [makePicksState, dispatchMakePicksState] = useReducer(
         // makePicksReducer, {league: null, pool: null, pools: [], games: [], isLoading: false, isError: false}
-        makePicksReducer, {pools: [], games: [], isLoading: false, isError: false}
+        makePicksReducer, {pools: [], games: [], picks: [], isLoading: false, isError: false}
     )
 
     const handleFetchPools = (e) => {

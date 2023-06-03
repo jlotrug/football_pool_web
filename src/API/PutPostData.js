@@ -2,8 +2,9 @@ import axios from 'axios';
 import { GetTokenHeaders } from "../API/GetTokenHeaders"
 
 // export const PutPostData = async(url, dispatchFunction, type, isPost, postPutData, currentData, token) =>{
-export const PutPostData = async(url, dispatchFunction, type, isPost, postPutData, token, currentData) =>{
-    if(!currentData) currentData = []
+export const PutPostData = async(url, dispatchFunction, type, isPost, postPutData, token) =>{
+    console.log(postPutData)
+    // if(!currentData) currentData = []
     dispatchFunction({type:'NEW_' + type + '_INIT'})
 
     try{
@@ -13,8 +14,8 @@ export const PutPostData = async(url, dispatchFunction, type, isPost, postPutDat
     //    console.log(currentData)
         dispatchFunction({
             type: 'NEW_' + type + '_SUCCESS',
-            payload: [...currentData, result.data]
-            // payload: [result.data]
+            // payload: [...currentData, result.data]
+            payload: result.data
         })
         // console.log(result)
     }catch(e){
