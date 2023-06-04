@@ -1,20 +1,19 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState, useReducer} from 'react'
 import Button from 'react-bootstrap/Button'
 import { Link } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
 
 import AuthenticationContext from "../Context/AuthenticationContext";
+import { FetchData } from "../API/FetchData";
+import { PoolDetailsReducer } from '../Reducers/PoolDetailsReducer';
 
-
-
+const playersUrl = "http://localhost:8000/api/v1/players/"
 
 export const PoolDetails = ({league_id, pool}) => {
     const {user, authTokens} = useContext(AuthenticationContext)
-    // const navigate = useNavigate();
+    const [poolDetailsState, dispatchPoolDetailsState] = useReducer(
+        PoolDetailsReducer, {players: [], isLoading: false, isError: false}
+    )
 
-    const handleEditPool = () => {
-        // navigate('/pool-form', {replace: true, state: {league_id:league_id, pool: pool}})
-    }
 
 
     return(
@@ -37,7 +36,16 @@ export const PoolDetails = ({league_id, pool}) => {
                     >
                     Pick Winners
                     </Button>
-                </Link>                
+                </Link>    
+                <Link to={!!user ? "/pool-form" : "/"} state={{league_id: league_id, pool: pool}}>
+                    <Button 
+                        size="lg" 
+                        variant="outline-dark" 
+                        className= "button-style"
+                    >
+                    See All Players
+                    </Button> 
+                </Link>           
             </div>  
         </div>
     )

@@ -59,6 +59,25 @@ export const makePicksReducer = (state, action) => {
                 isLoading: false,
                 isError: true,
             }
+        case 'NEW_POOLUSER_INIT':
+            return{
+                ...state,
+                isLoading: true,
+                isError: false,
+            }
+        case 'NEW_POOLUSER_SUCCESS':
+            return{
+                ...state,
+                isLoading: false,
+                isError: false,
+                data: action.payload,
+            }
+        case 'NEW_POOLUSER_FAILURE':
+            return{
+                ...state,
+                isLoading: false,
+                isError: true,
+            }            
         default:
             throw new Error();
     }

@@ -6,13 +6,15 @@ import { FetchData } from '../API/FetchData';
 import AuthenticationContext from "../Context/AuthenticationContext";
 import { PoolList } from '../Pools/PoolList';
 import { ShowAllGames } from '../Games/ShowAllGames';
+import { PutPostData } from '../API/PutPostData';
 
 const poolsUrl = "http://127.0.0.1:8000/api/v1/pools?leaguecode="
 const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
 const userLeaguesUrl = "http://127.0.0.1:8000/api/v1/userleagues/"
+const poolUserUrl = "http://127.0.0.1:8000/api/v1/pooluser/"
 
 export const MakePicks = () => {
-    const {authTokens} = useContext(AuthenticationContext)
+    const {user, authTokens} = useContext(AuthenticationContext)
     const [picksForm, setPicksForm] = useState("hide-element")
     const [poolList, setPoolList] = useState("hide-element")
     const [picksSubmited, setPicksSubmited] = useState("hide-element")
@@ -52,6 +54,7 @@ export const MakePicks = () => {
         setSelectedPool(pool)
         setPicksForm("picks-form-div")
         setPoolList("hide-element")
+        PutPostData(poolUserUrl, dispatchMakePicksState, 'POOLUSER', true, {user: user.id, pool: pool.id}, authTokens.access)
         FetchData(gamesUrl+pool.id, dispatchMakePicksState, 'GAMES', authTokens.access)
     }
 
