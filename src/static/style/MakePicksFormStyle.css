@@ -15,6 +15,10 @@
     font-family: monospace, Monaco;
   }
 
+  .add-pool-button{
+    margin-bottom: 25px;
+  }
+
   .league-button-code{
     color: black;
     font-weight: bold;

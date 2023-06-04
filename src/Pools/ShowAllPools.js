@@ -33,7 +33,17 @@ export const ShowAllPools = ({handleSelectPool, league_id, edit}) => {
 
     return (
         <div>
-            <h2 className='pools-heading'>Pick a Pool</h2>
+             <Link to={!!user ? "/pool-form" : "/"} state={{league_id:league_id}}>
+                <Button 
+                size="lg" 
+                variant="outline-dark" 
+                className= "button-style add-pool-button"
+                // onClick={handleLoginWarning}
+                >
+                Add New Pool
+                </Button>
+            </Link>
+           <h2 className='pools-heading'>Pick a Pool</h2>
             <ul className='no-bullet'>
                 {pools.isError &&<p>Something went wrong...</p>}
             
@@ -54,7 +64,7 @@ export const ShowAllPools = ({handleSelectPool, league_id, edit}) => {
                 )).reverse()}
             </ul>
             {/* <Link to={!!user ? "/new-pool" : "/"} state={{league_id:league_id, pool: false}}> */}
-            <Link to={!!user ? "/pool-form" : "/"} state={{league_id:league_id}}>
+            {/* <Link to={!!user ? "/pool-form" : "/"} state={{league_id:league_id}}>
             <Button 
             size="lg" 
             variant="outline-dark" 
@@ -63,7 +73,7 @@ export const ShowAllPools = ({handleSelectPool, league_id, edit}) => {
             >
             Add New Pool
             </Button>
-        </Link>
+        </Link> */}
         </div>
     )
 } 
