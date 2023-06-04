@@ -15,6 +15,7 @@ export const MakePicks = () => {
     const {authTokens} = useContext(AuthenticationContext)
     const [picksForm, setPicksForm] = useState("hide-element")
     const [poolList, setPoolList] = useState("hide-element")
+    const [picksSubmited, setPicksSubmited] = useState("hide-element")
     const [leagueForm, setleagueForm] = useState("")
     const [done, setDone] = React.useState(false)
     const [leagueCode, setLeagueCode] = useState(null)
@@ -59,7 +60,9 @@ export const MakePicks = () => {
         if(allPicksMade){
             
             setDone(true)
-            navigate("/")
+            setPicksSubmited("")
+            setPicksForm("hide-element")
+            // navigate("/")
         }
     }
     const resetDone = () =>{
@@ -147,6 +150,7 @@ export const MakePicks = () => {
             />
         </div>
         <div className={picksForm}>
+
                     <ShowAllGames
                         pool={selectedPool}
                         games={makePicksState.games}
@@ -156,6 +160,7 @@ export const MakePicks = () => {
                     />
                 <button className='done-button' onClick={handleDone}>Done</button>
             </div>
+            <h2 className={picksSubmited}>Picks Submited!</h2>
 
         </div>
     )

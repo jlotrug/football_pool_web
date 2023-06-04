@@ -31,6 +31,7 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
     const newPickCreate = useCallback(() => {
         // Creates formatted Pick data with users selection
         const pickData = {choice: pick, game: game.id, user: user.id}
+        console.log("reached new pick create")
 
         try{
             let url = pickSubmitUrl
