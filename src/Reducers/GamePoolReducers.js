@@ -11,7 +11,7 @@ export const poolsReducer = (state, action) => {
                 ...state,
                 isLoading: false,
                 isError: false,
-                data: action.payload,
+                pools: action.payload,
             }
         case 'POOLS_FETCH_FAILURE':
             return{

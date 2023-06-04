@@ -7,7 +7,6 @@ import { Routes, Router, Route, Link, useNavigate } from 'react-router-dom';
 import { MainMenu } from './MainMenu';
 import { NewPoolForm } from './Pools/NewPoolForm';
 import { PoolForm } from './Pools/PoolForm';
-import { MakePicksComponent } from './Picks/MakePicksComponent';
 import { CreateAccount } from './Account/CreateAccount';
 import {Login} from './Account/Login'
 import { PickWinners } from './Winners/PickWinners';
@@ -52,7 +51,6 @@ const App = () => {
           <Route path="/" element={<MainMenu />}/>
           <Route path="/new-pool" element={<NewPoolForm />} />
           <Route path="/pool-form" element={<PoolForm />} />
-          {/* <Route path="/make-picks" element={<MakePicksComponent />} /> */}
           <Route path="/make-picks" element={<MakePicks/>} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/login" element={<Login/>} />

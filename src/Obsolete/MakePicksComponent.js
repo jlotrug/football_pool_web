@@ -1,6 +1,6 @@
 import React from 'react'
 import '../static/style/MakePicksFormStyle.css'
-import { ShowAllPools } from '../Pools/ShowAllPools';
+// import { ShowAllPools } from '../Pools/ShowAllPools';
 import { ShowAllGames } from '../Games/ShowAllGames';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,9 +52,9 @@ export const MakePicksComponent = ({formClass}) => {
     return(
         <div className={formClass}>
             <div className={allPoolsClass}>
-                <ShowAllPools
+                {/* <ShowAllPools
                     handleSelectPool={handleSelectPool}
-                />
+                /> */}
             </div>
             <div className={picksForm}>
                 {currentPool ?

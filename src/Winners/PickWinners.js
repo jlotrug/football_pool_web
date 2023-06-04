@@ -1,4 +1,4 @@
-import { ShowAllPools } from '../Pools/ShowAllPools';
+// import { ShowAllPools } from '../Pools/ShowAllPools';
 import React, { useState } from 'react';
 import { ShowAllGames } from '../Games/ShowAllGames';
 import { useNavigate } from 'react-router-dom';
@@ -45,11 +45,11 @@ export const PickWinners = () =>{
 
     return(
         <div className="">
-            <div className={allPoolsClass}>
+            {/* <div className={allPoolsClass}>
                 <ShowAllPools
                     handleSelectPool={handleSelectPool}
                 />
-            </div>
+            </div> */}
             <div className={picksForm}>
                 {currentPool ?
                     <ShowAllGames
