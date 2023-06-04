@@ -6,3 +6,22 @@
     padding: 5px;
 
   }
+
+  .player-button{
+    border: none;
+    width: 600px;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  .player-button:hover{
+    background-color: transparent;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    /* border: 1px solid black; */
+  }
+
+  .active-players{
+    margin-top: 20px;
+  }

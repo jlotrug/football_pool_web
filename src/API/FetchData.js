@@ -6,6 +6,7 @@ export const FetchData = async(url, dispatchFunction, type, token) => {
 
     try{
         const result = await axios.get(url, GetTokenHeaders(token))
+        console.log(result)
         dispatchFunction({
             type: type + '_FETCH_SUCCESS',
             payload: result.data,            
