@@ -1,11 +1,8 @@
 import React, { useCallback, useContext, useEffect } from "react";
-import { GetTokenHeaders } from "../API/GetTokenHeaders"
-import axios from "axios";
 import { NewPickReducer } from "../Reducers/PickReducer";
 import { PutPostData } from "../API/PutPostData";
 import { FetchData } from '../API/FetchData';
 import AuthenticationContext from "../Context/AuthenticationContext";
-
 
 const pickSubmitUrl = "http://127.0.0.1:8000/api/v1/picks/"
 const pickCheckUrl = "http://127.0.0.1:8000/api/v1/pick-check?game="
@@ -17,7 +14,6 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
     const [selectedPick, dispatchSelectedPick] = React.useReducer(
         NewPickReducer, {pick:false, isLoading: false, isError: false}
     )
-
     React.useEffect(() => {
         FetchData(pickCheckUrl+game.id, dispatchSelectedPick, 'PICK', authTokens.access)
     }, [])
@@ -43,12 +39,7 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
                 isPost = false
                 url += selectedPick.pick.id + '/'
             }
-            // const isPost = selectedPick.pick ? false : true
-            // console.log("Reached NewPickCreate to send request")
-            // const isPost = true
-            console.log("ABout to push")
             PutPostData(url, dispatchSelectedPick, 'PICK', isPost, pickData, authTokens.access)
-            // PutPostData(url, poolDispatch, type, isPost, {pool_name: poolName, league: league_id}, authTokens.access)
         }catch(e){
             console.log(e)
         }
@@ -58,21 +49,16 @@ export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {
     // If pick is undefined, then this is the first selection for this game and parent is notified a pick has been made
         // If user changes pick, the parent is not notified again
     const handleSelection = (e) => {
-        console.log(e.target.value)
-        
         if(!pick){ confirmPick() }
-        setPick(e.target.value)
-        
+        setPick(e.target.value)        
     }
     // If pick was already made, sets pick state with choice
     useEffect(() => {
-        // console.log
         if(selectedPick.pick){
             setPick(selectedPick.pick.choice)
             confirmPick()
         } 
     }, [selectedPick.pick])
-
 
     return(
         <li>

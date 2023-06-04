@@ -40,6 +40,25 @@ export const makePicksReducer = (state, action) => {
                 isLoading: false,
                 isError: true,
             }
+        case 'LEAGUES_FETCH_INIT':
+            return{
+                ...state,
+                isLoading: true,
+                isError: false,
+            }
+        case 'LEAGUES_FETCH_SUCCESS':
+            return{
+                ...state,
+                isLoading: false,
+                isError: false,
+                leagues: action.payload,
+            }
+        case 'LEAGUES_FETCH_FAILURE':
+            return{
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
         default:
             throw new Error();
     }

@@ -2,7 +2,6 @@ import axios from 'axios';
 import { GetTokenHeaders } from "../API/GetTokenHeaders"
 
 export const FetchData = async(url, dispatchFunction, type, token) => {
-    // console.log(token)
     dispatchFunction({type: type + '_FETCH_INIT'})
 
     try{
