@@ -19,6 +19,25 @@ export const PoolDetailsReducer = (state, action) =>{
                 isLoading: false,
                 isError: true,
             }
+        case 'GAMES_FETCH_INIT':
+            return{
+                ...state,
+                isLoading: true,
+                isError: false,
+            }
+        case 'GAMES_FETCH_SUCCESS':
+            return{
+                ...state,
+                isLoading: false,
+                isError: false,
+                games: action.payload,
+            }
+        case 'GAMES_FETCH_FAILURE':
+            return{
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
         default:
             throw new Error();
     }
