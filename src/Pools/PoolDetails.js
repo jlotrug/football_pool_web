@@ -7,6 +7,7 @@ import { FetchData } from "../API/FetchData";
 import { PoolDetailsReducer } from '../Reducers/PoolDetailsReducer';
 import { ViewPicks } from '../Picks/ViewPicks';
 import { PoolForm } from './PoolForm';
+import {PickWinners} from '../Winners/PickWinners'
 
 const playersUrl = "http://localhost:8000/api/v1/players?poolid="
 const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
@@ -19,18 +20,19 @@ export const PoolDetails = ({league_id, pool}) => {
     const [pickWinnersClass, setPickWinnersClass] = useState('hide-element')
     const [selectedPlayer, setSelectedPlayer] = useState(null)
     const [poolDetailsState, dispatchPoolDetailsState] = useReducer(
-        PoolDetailsReducer, {players: [], games: [], isLoading: false, isError: false}
+        PoolDetailsReducer, {players: [], games: [], picks: [], isLoading: false, isError: false}
     )
 
     useEffect(() => {
         FetchData(playersUrl+pool.id, dispatchPoolDetailsState, 'PLAYERS', authTokens.access)
+        FetchData(gamesUrl+pool.id, dispatchPoolDetailsState, 'GAMES', authTokens.access)
     }, [])
 
     const handleSelectedPlayer = (player) => {
         setSelectedPlayer(player)
         setActivePlayersClass('hide-element')
         setviewPicksClass("picks-form-div")
-        FetchData(gamesUrl+pool.id, dispatchPoolDetailsState, 'GAMES', authTokens.access)
+        // FetchData(gamesUrl+pool.id, dispatchPoolDetailsState, 'GAMES', authTokens.access)
     }
 
     const handleShowActivePlayers = () => {
@@ -43,6 +45,7 @@ export const PoolDetails = ({league_id, pool}) => {
     const handlePickWinners = () => {
         setActivePlayersClass('hide-element')
         setEditPoolClass('hide-element')
+        setPickWinnersClass('picks-form-div')
         setSelectedPlayer(null)        
     }
 
@@ -57,7 +60,6 @@ export const PoolDetails = ({league_id, pool}) => {
     return(
         <div className='pool-details'>
             <div className="button-container">        
-                {/* <Link to={!!user ? "/pool-form" : "/"} state={{league_id: league_id, pool: pool}}> */}
                     <Button 
                         size="lg" 
                         variant="outline-dark" 
@@ -66,16 +68,14 @@ export const PoolDetails = ({league_id, pool}) => {
                     >
                     Edit Pool
                     </Button>
-                {/* </Link> */}
-                <Link to={!!user ? "/pool-form" : "/"} state={{league_id: league_id, pool: pool}}>
                     <Button 
                         size="lg" 
                         variant="outline-dark" 
                         className= "button-style"
+                        onClick={handlePickWinners}
                     >
                     Pick Winners
                     </Button>
-                </Link>  
                     <Button 
                         size="lg" 
                         variant="outline-dark" 
@@ -113,9 +113,11 @@ export const PoolDetails = ({league_id, pool}) => {
                 }
             </div> 
             <div className={editPoolClass}>
-                {
                     <PoolForm selectedLeagueID={league_id} selectedPool={pool}/>
-                }
+            </div>
+            <div className={pickWinnersClass}>
+                
+                <PickWinners games={poolDetailsState.games} dispatchFunction={dispatchPoolDetailsState}/>
             </div>
         </div>
     )

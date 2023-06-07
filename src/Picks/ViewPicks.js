@@ -6,9 +6,6 @@ import AuthenticationContext from "../Context/AuthenticationContext";
 const pickCheckUrl = "http://127.0.0.1:8000/api/v1/pick-check?game="
 
 export const ViewPicks = ({games, player}) => {
-
-
-
     return (
         <div>
             <h1>{player.first_name}'s Picks</h1>
@@ -16,10 +13,10 @@ export const ViewPicks = ({games, player}) => {
                 {
                     games.map(game => {
                         return <Pick 
-                            key={game.id} 
-                            game={game}  
-                            player={player}
-                            />
+                                    key={game.id} 
+                                    game={game}  
+                                    player={player}
+                                />
                         })
                 }
             </ul>
