@@ -14,10 +14,10 @@ import { NameForm } from './NameForm';
 const gamesUrl = "http://localhost:8000/api/v1/games/"
 const fetchGamesUrl = "http://localhost:8000/api/v1/games?poolid="
 
-export const PoolForm = () => {
+export const PoolForm = ({selectedLeagueID, selectedPool}) => {
     const location = useLocation();
-    const league_id = location.state.league_id
-    const pool = location.state.pool
+    const league_id = location.state.league_id || selectedLeagueID
+    const pool = location.state.pool || selectedPool
     const {authTokens} = useContext(AuthenticationContext)
     const [poolFormState, dispatchPoolFormState] = useReducer(
         poolFormReducer, {league_id: league_id, pool: pool ? pool : null, games: [], isLoading: false, isError: false}
@@ -38,9 +38,9 @@ export const PoolForm = () => {
     return(
         <div className="">
             <NameForm 
-            poolDispatch={dispatchPoolFormState}
-            pool = {poolFormState.pool}            
-            league_id = {poolFormState.league_id}
+                poolDispatch={dispatchPoolFormState}
+                pool = {poolFormState.pool}            
+                league_id = {poolFormState.league_id}
             />
             <div>
                 <ul className='no-bullet'>
@@ -48,10 +48,10 @@ export const PoolForm = () => {
                        const id = game.id
                        // Passes id down as a prop so it can be accessed
                     return <GameForm 
-                            key={id} 
-                            gameId={id} 
-                            game={game}
-                            poolId = {poolFormState.pool.id}
+                                key={id} 
+                                gameId={id} 
+                                game={game}
+                                poolId = {poolFormState.pool.id}
                             />
                     })}
                 </ul>
