@@ -14,13 +14,13 @@ import { NameForm } from './NameForm';
 const gamesUrl = "http://localhost:8000/api/v1/games/"
 const fetchGamesUrl = "http://localhost:8000/api/v1/games?poolid="
 
-export const PoolForm = ({selectedLeagueID, selectedPool}) => {
+export const PoolForm = ({selectedLeague, selectedPool}) => {
     const location = useLocation();
-    const league_id = location.state.league_id || selectedLeagueID
+    const league = location.state.league || selectedLeague
     const pool = location.state.pool || selectedPool
     const {authTokens} = useContext(AuthenticationContext)
     const [poolFormState, dispatchPoolFormState] = useReducer(
-        poolFormReducer, {league_id: league_id, pool: pool ? pool : null, games: [], isLoading: false, isError: false}
+        poolFormReducer, {league_id: league.id, pool: pool ? pool : null, games: [], isLoading: false, isError: false}
     )
  
     useEffect(() => {
@@ -62,7 +62,8 @@ export const PoolForm = ({selectedLeagueID, selectedPool}) => {
                 >
                     Add Game
                 </Button><br/>
-                <Link to="/">
+                {/* <Link to="/"> */}
+                <Link key={league.id} to={!!authTokens ? {pathname:"/leagues/league-details"} : "/"} state={{league:league}}>
                     <button 
                     className='done-button' 
                     >

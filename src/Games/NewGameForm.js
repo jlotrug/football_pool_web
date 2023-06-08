@@ -18,11 +18,8 @@ export const GameForm = ({gameId, poolId, game}) => {
 
     useEffect(() => {
         if(submitValue === 'Done'){
-            // setSubmitValue('Edit')
             setInputHidden(false)
-            // handleCallback(e)
         }else{
-            // setSubmitValue('Done')
             setInputHidden(true)
         }
     }, [])
@@ -32,7 +29,6 @@ export const GameForm = ({gameId, poolId, game}) => {
             editGame(e)
             setSubmitValue('Edit')
             setInputHidden(true)
-            // handleCallback(e)
         }else{
             setSubmitValue('Done')
             setInputHidden(false)
@@ -49,7 +45,6 @@ export const GameForm = ({gameId, poolId, game}) => {
 
     const editGame = (e) => {
         e.preventDefault()
-        // PutPostData(gamesUrl + gameId+'/', dispatchNewGame, 'GAME', false, {team_one: teamOne, team_two: teamTwo, pool: poolId}, newGame.data)
         PutPostData(gamesUrl + gameId+'/', dispatchNewGame, 'GAME', false, {team_one: teamOne, team_two: teamTwo, pool: poolId}, authTokens.access, newGame.data)
     }
 
@@ -84,7 +79,6 @@ export const GameForm = ({gameId, poolId, game}) => {
                     onChange={handleTeamTwoChange}
                     ></input>
                 </span>
-
                 <span className='pool-input'>
                     <input type="submit" value={submitValue}></input>
                 </span>

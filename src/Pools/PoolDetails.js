@@ -15,7 +15,7 @@ const playersUrl = "http://localhost:8000/api/v1/players?poolid="
 const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
 const gamecardsUrl = "http://localhost:8000/api/v1/gamecards?poolid="
 
-export const PoolDetails = ({league_id, pool}) => {
+export const PoolDetails = ({league, pool}) => {
     const {authTokens} = useContext(AuthenticationContext)
     const [activePlayersClass, setActivePlayersClass] = useState('active-players')
     const [viewPicksClass, setViewPicksClass] = useState('hide-element')
@@ -98,7 +98,7 @@ export const PoolDetails = ({league_id, pool}) => {
             </div>
 
             <div className={editPoolClass}>
-                    <PoolForm selectedLeagueID={league_id} selectedPool={pool}/>
+                    <PoolForm selectedLeague={league} selectedPool={pool}/>
             </div>
 
             <div className={pickWinnersClass}>    

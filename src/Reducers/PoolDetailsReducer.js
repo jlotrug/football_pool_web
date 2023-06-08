@@ -1,5 +1,4 @@
 export const PoolDetailsReducer = (state, action) =>{
-    console.log(action.payload)
     switch(action.type){
         case 'PLAYERS_FETCH_INIT':
             return{
