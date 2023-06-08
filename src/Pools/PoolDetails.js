@@ -8,6 +8,7 @@ import { PoolDetailsReducer } from '../Reducers/PoolDetailsReducer';
 import { ViewPicks } from '../Picks/ViewPicks';
 import { PoolForm } from './PoolForm';
 import {PickWinners} from '../Winners/PickWinners'
+import {DisplayScores} from '../Winners/DisplayScores'
 
 const playersUrl = "http://localhost:8000/api/v1/players?poolid="
 const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
@@ -19,9 +20,11 @@ export const PoolDetails = ({league_id, pool}) => {
     const [viewPicksClass, setviewPicksClass] = useState('hide-element')
     const [editPoolClass, setEditPoolClass] = useState('hide-element')
     const [pickWinnersClass, setPickWinnersClass] = useState('hide-element')
+    const [displayScoresClass, setdisplayScoresClass] = useState('hide-element')
+    
     const [selectedPlayer, setSelectedPlayer] = useState(null)
     const [poolDetailsState, dispatchPoolDetailsState] = useReducer(
-        PoolDetailsReducer, {players: [], games: [], gamecards: [], isLoading: false, isError: false}
+        PoolDetailsReducer, {players: [], games: [], gamecards: false, isLoading: false, isError: false}
     )
 
     useEffect(() => {
@@ -39,6 +42,7 @@ export const PoolDetails = ({league_id, pool}) => {
         setActivePlayersClass('active-players')
         setEditPoolClass('hide-element')
         setPickWinnersClass('hide-element')
+        setdisplayScoresClass('hide-element')
         setSelectedPlayer(null)
     }
 
@@ -46,6 +50,7 @@ export const PoolDetails = ({league_id, pool}) => {
         setActivePlayersClass('hide-element')
         setEditPoolClass('hide-element')
         setPickWinnersClass('picks-form-div')
+        setdisplayScoresClass('hide-element')
         setSelectedPlayer(null)        
     }
 
@@ -53,11 +58,14 @@ export const PoolDetails = ({league_id, pool}) => {
         setActivePlayersClass('hide-element')
         setEditPoolClass('edit-pool')
         setPickWinnersClass('hide-element')
+        setdisplayScoresClass('hide-element')
         setSelectedPlayer(null)
     }
 
     const calculatePlayerScores = () => {
         FetchData(gamecardsUrl+pool.id, dispatchPoolDetailsState, 'GAMECARD', authTokens.access)
+        setPickWinnersClass('hide-element')
+        setdisplayScoresClass('display-scores')
     }
 
 
@@ -123,6 +131,12 @@ export const PoolDetails = ({league_id, pool}) => {
             <div className={pickWinnersClass}>
                 
                 <PickWinners games={poolDetailsState.games} calculatePlayerScores={calculatePlayerScores}/>
+            </div>
+
+            <div className={displayScoresClass}>
+                {
+                    poolDetailsState.gamecards && <DisplayScores gamecards={poolDetailsState.gamecards}/>
+                }
             </div>
         </div>
     )
