@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState, useReducer} from 'react'
 import Button from 'react-bootstrap/Button'
-import { Link } from 'react-router-dom';
 
 import AuthenticationContext from "../Context/AuthenticationContext";
 import { FetchData } from "../API/FetchData";
@@ -9,18 +8,20 @@ import { ViewPicks } from '../Picks/ViewPicks';
 import { PoolForm } from './PoolForm';
 import {PickWinners} from '../Winners/PickWinners'
 import {DisplayScores} from '../Winners/DisplayScores'
+import { DisplayActivePlayers } from './DisplayActivePlayers';
+import { manageVisibility } from '../HelperMethods';
 
 const playersUrl = "http://localhost:8000/api/v1/players?poolid="
 const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
 const gamecardsUrl = "http://localhost:8000/api/v1/gamecards?poolid="
 
 export const PoolDetails = ({league_id, pool}) => {
-    const {user, authTokens} = useContext(AuthenticationContext)
+    const {authTokens} = useContext(AuthenticationContext)
     const [activePlayersClass, setActivePlayersClass] = useState('active-players')
-    const [viewPicksClass, setviewPicksClass] = useState('hide-element')
+    const [viewPicksClass, setViewPicksClass] = useState('hide-element')
     const [editPoolClass, setEditPoolClass] = useState('hide-element')
     const [pickWinnersClass, setPickWinnersClass] = useState('hide-element')
-    const [displayScoresClass, setdisplayScoresClass] = useState('hide-element')
+    const [displayScoresClass, setDisplayScoresClass] = useState('hide-element')
     
     const [selectedPlayer, setSelectedPlayer] = useState(null)
     const [poolDetailsState, dispatchPoolDetailsState] = useReducer(
@@ -34,40 +35,28 @@ export const PoolDetails = ({league_id, pool}) => {
 
     const handleSelectedPlayer = (player) => {
         setSelectedPlayer(player)
-        setActivePlayersClass('hide-element')
-        setviewPicksClass("picks-form-div")
+        manageVisibility(setViewPicksClass, "picks-form-div", [setActivePlayersClass])
     }
 
     const handleShowActivePlayers = () => {
-        setActivePlayersClass('active-players')
-        setEditPoolClass('hide-element')
-        setPickWinnersClass('hide-element')
-        setdisplayScoresClass('hide-element')
+        manageVisibility(setActivePlayersClass, 'active-players', [setEditPoolClass, setPickWinnersClass, setDisplayScoresClass])
         setSelectedPlayer(null)
     }
 
     const handlePickWinners = () => {
-        setActivePlayersClass('hide-element')
-        setEditPoolClass('hide-element')
-        setPickWinnersClass('picks-form-div')
-        setdisplayScoresClass('hide-element')
+        manageVisibility(setPickWinnersClass, 'picks-form-div', [setActivePlayersClass, setEditPoolClass, setDisplayScoresClass])
         setSelectedPlayer(null)        
     }
 
     const handleEditPool = () => {
-        setActivePlayersClass('hide-element')
-        setEditPoolClass('edit-pool')
-        setPickWinnersClass('hide-element')
-        setdisplayScoresClass('hide-element')
+        manageVisibility(setEditPoolClass,'edit-pool', [setActivePlayersClass, setPickWinnersClass, setDisplayScoresClass])
         setSelectedPlayer(null)
     }
 
     const calculatePlayerScores = () => {
         FetchData(gamecardsUrl+pool.id, dispatchPoolDetailsState, 'GAMECARD', authTokens.access)
-        setPickWinnersClass('hide-element')
-        setdisplayScoresClass('display-scores')
+        manageVisibility(setDisplayScoresClass, 'display-scores', [setPickWinnersClass])
     }
-
 
     return(
         <div className='pool-details'>
@@ -96,40 +85,23 @@ export const PoolDetails = ({league_id, pool}) => {
                     >
                     Active Players
                     </Button>
-          
             </div>
+
             <div className={activePlayersClass}>
-                <h1>Active Players</h1>
+                <DisplayActivePlayers poolDetailsState={poolDetailsState} handleSelectedPlayer={handleSelectedPlayer} />
+            </div>
 
-                <ul className='no-bullet'>
-                    {poolDetailsState.isError &&<p>Something went wrong...</p>}
-                
-                    {poolDetailsState.isLoading ? (<p>Loading...</p>):
-                    poolDetailsState.players.map(player =>(
-
-                        <li key={player.id}>
-                            <Button 
-                                className='button-style player-button'
-                                size='lg'
-                                variant='outline-dark'
-                                onClick={() => handleSelectedPlayer(player)}
-                            >
-                                {player.first_name} {player.last_name}
-                            </Button>
-                        </li>
-                    ))}
-                </ul>                    
-            </div> 
             <div className={viewPicksClass}>
                 {
                     selectedPlayer && <ViewPicks games={poolDetailsState.games} player={selectedPlayer}/>
                 }
-            </div> 
+            </div>
+
             <div className={editPoolClass}>
                     <PoolForm selectedLeagueID={league_id} selectedPool={pool}/>
             </div>
-            <div className={pickWinnersClass}>
-                
+
+            <div className={pickWinnersClass}>    
                 <PickWinners games={poolDetailsState.games} calculatePlayerScores={calculatePlayerScores}/>
             </div>
 
@@ -139,6 +111,5 @@ export const PoolDetails = ({league_id, pool}) => {
                 }
             </div>
         </div>
-    )
-                
+    )                
 }

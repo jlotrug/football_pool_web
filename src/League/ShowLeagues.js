@@ -31,6 +31,15 @@ export const ShowLeagues = () => {
 
     return (
         <div>
+            <Link to={!!authTokens ? "new-league" : "/"}>
+                <Button 
+                    size="lg" 
+                    variant="outline-dark" 
+                    className= "button-style league-button"
+                    >
+                    Start New League
+                </Button>
+            </Link>            
               <h2 className='pools-heading'>Your Leagues</h2>
             <ul className='no-bullet'>
                 {leagues.isError &&<p>Something went wrong...</p>}
@@ -52,15 +61,7 @@ export const ShowLeagues = () => {
                     </Link>
                 )).reverse()}
             </ul>
-            <Link to={!!authTokens ? "new-league" : "/"}>
-            <Button 
-            size="lg" 
-            variant="outline-dark" 
-            className= "button-style league-button"
-            >
-            Start New League
-            </Button>
-        </Link>
+
         </div>
     )
 }

@@ -1,9 +1,5 @@
 
-
-
 export const DisplayScores = ({gamecards}) => {
-
-
     return(
         <div>
             <ul className='no-bullet'>
