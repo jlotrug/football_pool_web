@@ -11,6 +11,7 @@ import {PickWinners} from '../Winners/PickWinners'
 
 const playersUrl = "http://localhost:8000/api/v1/players?poolid="
 const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
+const gamecardsUrl = "http://localhost:8000/api/v1/gamecards?poolid="
 
 export const PoolDetails = ({league_id, pool}) => {
     const {user, authTokens} = useContext(AuthenticationContext)
@@ -20,7 +21,7 @@ export const PoolDetails = ({league_id, pool}) => {
     const [pickWinnersClass, setPickWinnersClass] = useState('hide-element')
     const [selectedPlayer, setSelectedPlayer] = useState(null)
     const [poolDetailsState, dispatchPoolDetailsState] = useReducer(
-        PoolDetailsReducer, {players: [], games: [], picks: [], isLoading: false, isError: false}
+        PoolDetailsReducer, {players: [], games: [], gamecards: [], isLoading: false, isError: false}
     )
 
     useEffect(() => {
@@ -32,7 +33,6 @@ export const PoolDetails = ({league_id, pool}) => {
         setSelectedPlayer(player)
         setActivePlayersClass('hide-element')
         setviewPicksClass("picks-form-div")
-        // FetchData(gamesUrl+pool.id, dispatchPoolDetailsState, 'GAMES', authTokens.access)
     }
 
     const handleShowActivePlayers = () => {
@@ -54,6 +54,10 @@ export const PoolDetails = ({league_id, pool}) => {
         setEditPoolClass('edit-pool')
         setPickWinnersClass('hide-element')
         setSelectedPlayer(null)
+    }
+
+    const calculatePlayerScores = () => {
+        FetchData(gamecardsUrl+pool.id, dispatchPoolDetailsState, 'GAMECARD', authTokens.access)
     }
 
 
@@ -88,6 +92,7 @@ export const PoolDetails = ({league_id, pool}) => {
             </div>
             <div className={activePlayersClass}>
                 <h1>Active Players</h1>
+
                 <ul className='no-bullet'>
                     {poolDetailsState.isError &&<p>Something went wrong...</p>}
                 
@@ -117,7 +122,7 @@ export const PoolDetails = ({league_id, pool}) => {
             </div>
             <div className={pickWinnersClass}>
                 
-                <PickWinners games={poolDetailsState.games} dispatchFunction={dispatchPoolDetailsState}/>
+                <PickWinners games={poolDetailsState.games} calculatePlayerScores={calculatePlayerScores}/>
             </div>
         </div>
     )

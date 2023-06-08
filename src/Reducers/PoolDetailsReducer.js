@@ -1,4 +1,5 @@
 export const PoolDetailsReducer = (state, action) =>{
+    console.log(action.payload)
     switch(action.type){
         case 'PLAYERS_FETCH_INIT':
             return{
@@ -57,6 +58,25 @@ export const PoolDetailsReducer = (state, action) =>{
                 isLoading: false,
                 isError: true,
             }
+        case 'GAMECARD_FETCH_INIT':
+            return{
+                ...state,
+                isLoading: true,
+                isError: false,
+            }
+        case 'GAMECARD_FETCH_SUCCESS':
+            return{
+                ...state,
+                isLoading: false,
+                isError: false,
+                gamecards: action.payload,
+            }
+        case 'GAMECARD_FETCH_FAILURE':
+            return{
+                ...state,
+                isLoading: false,
+                isError: true,
+            }            
         default:
             throw new Error();
     }

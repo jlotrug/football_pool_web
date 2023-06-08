@@ -1,12 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import Button from 'react-bootstrap/Button'
 import { PutPostData } from "../API/PutPostData"
 import AuthenticationContext from "../Context/AuthenticationContext";
 import { PickWinnersReducer } from "../Reducers/PickWinnersReducer";
 
-const pickCheckUrl = "http://127.0.0.1:8000/api/v1/pick-check?game="
 const gamesUrl = "http://127.0.0.1:8000/api/v1/games/"
 
-export const PickWinners = ({games, dispatchFunction}) => {
+export const PickWinners = ({games, calculatePlayerScores}) => {
     const [triggerDone, setTriggerDone] = useState(false)
     const [makePicksFormClass, setMakePicksFormClass] = useState('make-picks-form')
     const [winnersSubmittedClass, setwinnersSubmittedClass] = useState('hide-element')
@@ -28,8 +28,7 @@ export const PickWinners = ({games, dispatchFunction}) => {
                             return <Pick 
                                         key={game.id} 
                                         game={game}
-                                        triggerDone={triggerDone}
-                                        dispatchFunction={dispatchFunction}  
+                                        triggerDone={triggerDone} 
                                     />
                             })
                     }
@@ -38,13 +37,21 @@ export const PickWinners = ({games, dispatchFunction}) => {
             </div>
             <div className={winnersSubmittedClass}>
                 <h2>Winners Submited!</h2>
+                <Button 
+                        size="lg" 
+                        variant="outline-dark" 
+                        className= "button-style"
+                        onClick={calculatePlayerScores}
+                    >
+                    Calculate Player Scores
+                </Button>
             </div>
         </div>
     )
 }
 
 
-const Pick = ({game, triggerDone, dispatchFunction}) => {
+const Pick = ({game, triggerDone}) => {
     const {user, authTokens} = useContext(AuthenticationContext)
     const [winner, setWinner] = React.useState(false);
 
