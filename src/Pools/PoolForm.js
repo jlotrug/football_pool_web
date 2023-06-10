@@ -62,7 +62,6 @@ export const PoolForm = ({selectedLeague, selectedPool}) => {
                 >
                     Add Game
                 </Button><br/>
-                {/* <Link to="/"> */}
                 <Link key={league.id} to={!!authTokens ? {pathname:"/leagues/league-details"} : "/"} state={{league:league}}>
                     <button 
                     className='done-button' 

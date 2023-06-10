@@ -65,7 +65,6 @@ export const MakePicks = () => {
             setDone(true)
             setPicksSubmited("")
             setPicksForm("hide-element")
-            // navigate("/")
         }
     }
     const resetDone = () =>{
@@ -76,7 +75,6 @@ export const MakePicks = () => {
     // ShowAllGames calls this once all picks have been made for that pool
     // Enables 'Done' button
     const handleAllPicksMade = () =>{
-        // setAllPicksMade(true)
         setAllPicksMade(allPicksMade ? false : true)
     }
 

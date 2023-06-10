@@ -13,7 +13,6 @@ export const NameForm = ({poolDispatch, league_id, pool}) => {
 
     // Checks if it's an edit or initial pool. Send correct data to API function
     const handleSubmit = (e) => {
-        console.log(pool)
         e.preventDefault()
         if(submitValue === 'Done'){
             if(firstSubmit){
@@ -55,17 +54,17 @@ export const NameForm = ({poolDispatch, league_id, pool}) => {
             <label>Name</label><br />
             <span className='pool-input'>
                 <input 
-                disabled={formDisabled} 
-                type="text" 
-                placeholder='eg... Week 14'
-                onChange={handleNameChange}
-                value = {poolName}
+                    disabled={formDisabled} 
+                    type="text" 
+                    placeholder='eg... Week 14'
+                    onChange={handleNameChange}
+                    value = {poolName}
                 ></input>
             </span>
             <span className='pool-input'>
                 <input 
-                type="submit" 
-                value={submitValue}
+                    type="submit" 
+                    value={submitValue}
                 ></input>
             </span>
         </form>
