@@ -44,7 +44,7 @@ const App = () => {
   <>
   <div className='container'>
     {GreetingOrCreate()} 
-    <Link to="/"><h1 className='heading'>Football Pool</h1></Link>
+    <Link to="/"><h1 className='heading'>ootball Pool</h1></Link>
     {loginOrLogout()}
     
       <Routes>        
