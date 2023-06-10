@@ -3,7 +3,7 @@ import axios from 'axios';
 export const RefreshAccessToken = async() => {
    
         try{
-            const result = await axios.post("http://127.0.0.1:8000/api/v1/token/refresh/", {
+            const result = await axios.post(process.env.REACT_APP_SEVER_URL + "/api/v1/token/refresh/", {
                 refresh: localStorage['refresh']
             }, {
                 headers: {'Content-Type': 'application/json'}

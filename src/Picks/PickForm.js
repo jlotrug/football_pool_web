@@ -4,8 +4,8 @@ import { PutPostData } from "../API/PutPostData";
 import { FetchData } from '../API/FetchData';
 import AuthenticationContext from "../Context/AuthenticationContext";
 
-const pickSubmitUrl = "http://127.0.0.1:8000/api/v1/picks/"
-const pickCheckUrl = "http://127.0.0.1:8000/api/v1/pick-check?game="
+const pickSubmitUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/picks/"
+const pickCheckUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/pick-check?game="
 
 // Removing currentPool
 export const PickForm = ({game, triggerDone, resetDone, confirmPick}) => {

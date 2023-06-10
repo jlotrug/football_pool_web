@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import AuthenticationContext from "../Context/AuthenticationContext";
 
-const createAccountUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/registration/"
+const createAccountUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/dj-rest-auth/registration/"
 
 export const CreateAccount = () => {
     const [firstName, setFirstName] = React.useState("")

@@ -6,7 +6,7 @@ import { LeagueReducer } from "../Reducers/LeagueReducer"
 import { FetchData } from '../API/FetchData';
 import AuthenticationContext from "../Context/AuthenticationContext";
 
-const fetchLeaguesUrl = "http://127.0.0.1:8000/api/v1/leagues/"
+const fetchLeaguesUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/leagues/"
 
 export const ShowLeagues = () => {
     const {authTokens} = useContext(AuthenticationContext)

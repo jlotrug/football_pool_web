@@ -3,7 +3,7 @@ import { NewPickReducer } from "../Reducers/PickReducer";
 import { FetchData } from '../API/FetchData';
 import AuthenticationContext from "../Context/AuthenticationContext";
 
-const pickCheckUrl = "http://127.0.0.1:8000/api/v1/pick-check?game="
+const pickCheckUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/pick-check?game="
 
 export const ViewPicks = ({games, player}) => {
     return (

@@ -11,8 +11,8 @@ import { poolFormReducer } from '../Reducers/PoolFormReducer';
 import { GameForm } from '../Games/NewGameForm';
 import { NameForm } from './NameForm';
 
-const gamesUrl = "http://localhost:8000/api/v1/games/"
-const fetchGamesUrl = "http://localhost:8000/api/v1/games?poolid="
+const gamesUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/games/"
+const fetchGamesUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/games?poolid="
 
 export const PoolForm = ({selectedLeague, selectedPool}) => {
     const location = useLocation();

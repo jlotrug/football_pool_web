@@ -11,9 +11,9 @@ import {DisplayScores} from '../Winners/DisplayScores'
 import { DisplayActivePlayers } from './DisplayActivePlayers';
 import { manageVisibility } from '../HelperMethods';
 
-const playersUrl = "http://localhost:8000/api/v1/players?poolid="
-const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
-const gamecardsUrl = "http://localhost:8000/api/v1/gamecards?poolid="
+const playersUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/players?poolid="
+const gamesUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/games?poolid="
+const gamecardsUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/gamecards?poolid="
 
 export const PoolDetails = ({league, pool}) => {
     const {authTokens} = useContext(AuthenticationContext)

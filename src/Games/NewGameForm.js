@@ -3,7 +3,7 @@ import { NewGameReducer } from '../Reducers/NewGameReducer';
 import { PutPostData } from '../API/PutPostData';
 import AuthenticationContext from "../Context/AuthenticationContext";
 
-const gamesUrl = "http://localhost:8000/api/v1/games/"
+const gamesUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/games/"
 
 export const GameForm = ({gameId, poolId, game}) => {
     const [inputHidden, setInputHidden] = React.useState(false)

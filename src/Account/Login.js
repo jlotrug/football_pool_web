@@ -1,7 +1,8 @@
 import React, {useContext} from "react";
 import AuthenticationContext from "../Context/AuthenticationContext";
 
-const loginUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/login/"
+// const loginUrl = "http://127.0.0.1:8000/api/v1/dj-rest-auth/login/"
+const loginUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/dj-rest-auth/login/"
 
 export const Login = () => {
     const [username, setUsername] = React.useState("")

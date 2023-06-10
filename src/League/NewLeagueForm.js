@@ -7,7 +7,7 @@ import AuthenticationContext from "../Context/AuthenticationContext";
 import '../static/style/League.css';
 
 
-let url = "http://127.0.0.1:8000/api/v1/leagues/"
+let url = process.env.REACT_APP_SEVER_URL + "/api/v1/leagues/"
 
 export const NewLeagueForm = () => {
     const [leagueName, setLeagueName] = React.useState("")

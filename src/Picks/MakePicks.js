@@ -8,10 +8,10 @@ import { PoolList } from '../Pools/PoolList';
 import { ShowAllGames } from '../Games/ShowAllGames';
 import { PutPostData } from '../API/PutPostData';
 
-const poolsUrl = "http://127.0.0.1:8000/api/v1/pools?leaguecode="
-const gamesUrl = "http://localhost:8000/api/v1/games?poolid="
-const userLeaguesUrl = "http://127.0.0.1:8000/api/v1/userleagues/"
-const poolUserUrl = "http://127.0.0.1:8000/api/v1/pooluser/"
+const poolsUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/pools?leaguecode="
+const gamesUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/games?poolid="
+const userLeaguesUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/userleagues/"
+const poolUserUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/pooluser/"
 
 export const MakePicks = () => {
     const {user, authTokens} = useContext(AuthenticationContext)

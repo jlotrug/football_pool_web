@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from "react"
 import { PutPostData } from "../API/PutPostData"
 import AuthenticationContext from "../Context/AuthenticationContext";
 
-const poolUrl = "http://127.0.0.1:8000/api/v1/pools/"
+const poolUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/pools/"
 
 export const NameForm = ({poolDispatch, league_id, pool}) => {
     const [formDisabled, setFormDisabled] = React.useState(false)

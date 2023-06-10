@@ -4,7 +4,7 @@ import { PutPostData } from "../API/PutPostData"
 import AuthenticationContext from "../Context/AuthenticationContext";
 import { PickWinnersReducer } from "../Reducers/PickWinnersReducer";
 
-const gamesUrl = "http://127.0.0.1:8000/api/v1/games/"
+const gamesUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/games/"
 
 export const PickWinners = ({games, calculatePlayerScores}) => {
     const [triggerDone, setTriggerDone] = useState(false)

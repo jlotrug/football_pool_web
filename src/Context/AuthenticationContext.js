@@ -7,7 +7,7 @@ const AuthenticationContext = createContext()
 
 export default AuthenticationContext
 
-const refreshUrl = "http://127.0.0.1:8000/api/v1/token/refresh/"
+const refreshUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/token/refresh/"
 
 export const AuthenticationProvider = ({children}) => {
     const [user, setUser] = useState(() => localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): null)

@@ -9,7 +9,7 @@ import { PoolList } from './PoolList';
 import { PoolDetails } from './PoolDetails';
 import { manageVisibility } from '../HelperMethods';
 
-const fetchLeaguePoolsUrl = "http://127.0.0.1:8000/api/v1/pools?leagueid="
+const fetchLeaguePoolsUrl = process.env.REACT_APP_SEVER_URL + "/api/v1/pools?leagueid="
 
 export const ManagePools = ({league_id, league, setLeagueDetailsClass}) => {
     const [selectedPool, setSelectedPool] = useState(null)

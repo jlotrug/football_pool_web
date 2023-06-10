@@ -1,5 +1,3 @@
-
-
 export const PoolList = ({poolsState, handleSelectedPool}) => {
 
     return (

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import '../static/style/MakePicksFormStyle.css'
 import { PickForm } from '../Picks/PickForm';
 
-const url = "http://localhost:8000/api/v1/games?poolid="
+const url = process.env.REACT_APP_SEVER_URL + "/api/v1/games?poolid="
 
 export const ShowAllGames = ({games, triggerDone, resetDone, handleAllPicksMade}) => {
     const [numPicks, setNumPicks] = React.useState(1)

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthenticationContext from './Context/AuthenticationContext';
 
-const logout = "http://127.0.0.1:8000/api/v1/dj-rest-auth/logout/"
+const logout = process.env.REACT_APP_SEVER_URL + "/api/v1/dj-rest-auth/logout/"
 
 export const MainMenu = ({loggedout}) => {
   const [warning, setwarning] = React.useState("")
