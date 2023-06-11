@@ -44,11 +44,16 @@ export const AuthenticationProvider = ({children}) => {
         console.log("TOken updated")
         try{
             const result = await axios.post(refreshUrl, {
-                refresh: authTokens?.refresh,
+                withCredentials: true,                
                 headers: {
-                    "Access-Control-Allow-Origin": true,
-                    "Content-Type": "application/json"
-                }
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+                    "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length"
+                    
+                },
+                refresh: authTokens?.refresh,
+
             })
             setAuthTokens({
                 access: result.data.access,
