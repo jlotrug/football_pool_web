@@ -17,7 +17,7 @@ export const AuthenticationProvider = ({children}) => {
 
     const storeCredentials = (userData, url, setAllErrors) => {
 
-        axios.post(url, userData).then(result => {
+        axios.post(url, userData, {headers:{"Access-Control-Allow-Origin": "*"} }).then(result => {
             setUser(result.data.user)
             localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
             localStorage.setItem('user', JSON.stringify(result.data.user))
@@ -44,7 +44,9 @@ export const AuthenticationProvider = ({children}) => {
         console.log("TOken updated")
         try{
             const result = await axios.post(refreshUrl, {
-                refresh: authTokens?.refresh
+                refresh: authTokens?.refresh,
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
             })
             setAuthTokens({
                 access: result.data.access,
