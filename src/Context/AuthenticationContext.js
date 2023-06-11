@@ -45,8 +45,10 @@ export const AuthenticationProvider = ({children}) => {
         try{
             const result = await axios.post(refreshUrl, {
                 refresh: authTokens?.refresh,
-                "Access-Control-Allow-Origin": true,
-                "Content-Type": "application/json"
+                headers: {
+                    "Access-Control-Allow-Origin": true,
+                    "Content-Type": "application/json"
+                }
             })
             setAuthTokens({
                 access: result.data.access,
