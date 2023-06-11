@@ -17,7 +17,13 @@ export const AuthenticationProvider = ({children}) => {
 
     const storeCredentials = (userData, url, setAllErrors) => {
 
-        axios.post(url, userData, {headers:{"Access-Control-Allow-Origin": "*"} }).then(result => {
+        axios.post(url, {userData, headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": true,
+            "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length"
+            
+        }}).then(result => {
             setUser(result.data.user)
             localStorage.setItem('authTokens', JSON.stringify({access: result.data.access, refresh: result.data.refresh}))
             localStorage.setItem('user', JSON.stringify(result.data.user))
@@ -44,7 +50,7 @@ export const AuthenticationProvider = ({children}) => {
         console.log("TOken updated")
         try{
             const result = await axios.post(refreshUrl, {
-                withCredentials: true,                
+                // withCredentials: true,                
                 headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": true,
